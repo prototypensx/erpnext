@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Monthly Distribution', {
 	onload(frm) {
-		if(frm.doc.__islocal) {
+		if (frm.doc.__islocal) {
 			return frm.call('get_months').then(() => {
 				frm.refresh_field('percentages');
 			});

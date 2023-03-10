@@ -5,10 +5,10 @@ frappe.ui.form.on('Subscription', {
 	setup: function(frm) {
 		frm.set_query('party_type', function() {
 			return {
-				filters : {
+				filters: {
 					name: ['in', ['Customer', 'Supplier']]
 				}
-			}
+			};
 		});
 
 		frm.set_query('cost_center', function() {
@@ -21,8 +21,8 @@ frappe.ui.form.on('Subscription', {
 	},
 
 	refresh: function(frm) {
-		if(!frm.is_new()){
-			if(frm.doc.status !== 'Cancelled'){
+		if (!frm.is_new()) {
+			if (frm.doc.status !== 'Cancelled') {
 				frm.add_custom_button(
 					__('Cancel Subscription'),
 					() => frm.events.cancel_this_subscription(frm)
@@ -31,8 +31,7 @@ frappe.ui.form.on('Subscription', {
 					__('Fetch Subscription Updates'),
 					() => frm.events.get_subscription_updates(frm)
 				);
-			}
-			else if(frm.doc.status === 'Cancelled'){
+			} else if (frm.doc.status === 'Cancelled') {
 				frm.add_custom_button(
 					__('Restart Subscription'),
 					() => frm.events.renew_this_subscription(frm)
@@ -50,8 +49,8 @@ frappe.ui.form.on('Subscription', {
 					method:
 					"erpnext.accounts.doctype.subscription.subscription.cancel_subscription",
 					args: {name: doc.name},
-					callback: function(data){
-						if(!data.exc){
+					callback: function(data) {
+						if (!data.exc) {
 							frm.reload_doc();
 						}
 					}
@@ -69,8 +68,8 @@ frappe.ui.form.on('Subscription', {
 					method:
 					"erpnext.accounts.doctype.subscription.subscription.restart_subscription",
 					args: {name: doc.name},
-					callback: function(data){
-						if(!data.exc){
+					callback: function(data) {
+						if (!data.exc) {
 							frm.reload_doc();
 						}
 					}
@@ -86,8 +85,8 @@ frappe.ui.form.on('Subscription', {
 			"erpnext.accounts.doctype.subscription.subscription.get_subscription_updates",
 			args: {name: doc.name},
 			freeze: true,
-			callback: function(data){
-				if(!data.exc){
+			callback: function(data) {
+				if (!data.exc) {
 					frm.reload_doc();
 				}
 			}

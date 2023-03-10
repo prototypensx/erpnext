@@ -10,7 +10,7 @@ frappe.ui.form.on('Item Tax Template', {
 					['Account', 'is_group', '=', 0],
 					['Account', 'account_type', 'in', ['Tax', 'Chargeable', 'Income Account', 'Expense Account', 'Expenses Included In Valuation']]
 				]
-			}
+			};
 		});
 	},
 	company: function (frm) {
@@ -21,7 +21,7 @@ frappe.ui.form.on('Item Tax Template', {
 					['Account', 'is_group', '=', 0],
 					['Account', 'account_type', 'in', ['Tax', 'Chargeable', 'Income Account', 'Expense Account', 'Expenses Included In Valuation']]
 				]
-			}
+			};
 		});
 	}
 });

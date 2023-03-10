@@ -16,14 +16,16 @@ erpnext.ItemSelector = class ItemSelector {
 
 	setup() {
 		var me = this;
-		if(!this.grid.add_items_button) {
+		if (!this.grid.add_items_button) {
 			this.grid.add_items_button = this.grid.add_custom_button(__('Add Items'), function() {
-				if(!me.dialog) {
+				if (!me.dialog) {
 					me.make_dialog();
 				}
 				me.dialog.show();
 				me.render_items();
-				setTimeout(function() { me.dialog.input.focus(); }, 1000);
+				setTimeout(function() {
+ me.dialog.input.focus(); 
+}, 1000);
 			});
 		}
 	}
@@ -45,7 +47,7 @@ erpnext.ItemSelector = class ItemSelector {
 		});
 
 		this.dialog.input.on('keyup', function() {
-			if(me.timeout_id) {
+			if (me.timeout_id) {
 				clearTimeout(me.timeout_id);
 			}
 			me.timeout_id = setTimeout(function() {
@@ -61,7 +63,7 @@ erpnext.ItemSelector = class ItemSelector {
 
 		// find row with item if exists
 		$.each(this.frm.doc.items || [], (i, d) => {
-			if(d[this.item_field]===item_code) {
+			if (d[this.item_field]===item_code) {
 				frappe.model.set_value(d.doctype, d.name, 'qty', d.qty + 1);
 				frappe.show_alert({message: __("Added {0} ({1})", [item_code, d.qty]), indicator: 'green'});
 				added = true;
@@ -69,10 +71,12 @@ erpnext.ItemSelector = class ItemSelector {
 			}
 		});
 
-		if(!added) {
+		if (!added) {
 			var d = null;
 			frappe.run_serially([
-				() => { d = this.grid.add_new_row(); },
+				() => {
+ d = this.grid.add_new_row(); 
+},
 				() => frappe.model.set_value(d.doctype, d.name, this.item_field, item_code),
 				() => frappe.timeout(0.1),
 				() => {
@@ -99,12 +103,12 @@ erpnext.ItemSelector = class ItemSelector {
 		var me = this;
 		frappe.link_search("Item", args, function(r) {
 			$.each(r.values, function(i, d) {
-				if(!d.image) {
+				if (!d.image) {
 					d.abbr = frappe.get_abbr(d.item_name);
 					d.color = frappe.get_palette(d.item_name);
 				}
 			});
-			me.dialog.results.html(frappe.render_template('item_selector', {'data':r.values}));
+			me.dialog.results.html(frappe.render_template('item_selector', {'data': r.values}));
 		});
 	}
 };

@@ -3,7 +3,7 @@ frappe.listview_settings['Stock Entry'] = {
 		"`tabStock Entry`.`purpose`", "`tabStock Entry`.`work_order`", "`tabStock Entry`.`bom_no`",
 		"`tabStock Entry`.`is_return`"],
 	get_indicator: function (doc) {
-		if(doc.is_return===1 && doc.purpose === "Material Transfer for Manufacture") {
+		if (doc.is_return===1 && doc.purpose === "Material Transfer for Manufacture") {
 			return [__("Material Returned from WIP"), "orange",
 				"is_return,=,1|purpose,=,Material Transfer for Manufacture|docstatus,<,2"];
 		} else if (doc.docstatus === 0) {
@@ -24,7 +24,7 @@ frappe.listview_settings['Stock Entry'] = {
 	column_render: {
 		"from_warehouse": function(doc) {
 			var html = "";
-			if(doc.from_warehouse) {
+			if (doc.from_warehouse) {
 				html += '<span class="filterable h6"\
 					data-filter="from_warehouse,=,'+doc.from_warehouse+'">'
 						+doc.from_warehouse+' </span>';
@@ -32,7 +32,7 @@ frappe.listview_settings['Stock Entry'] = {
 			// if(doc.from_warehouse || doc.to_warehouse) {
 			// 	html += '<i class="fa fa-arrow-right text-muted"></i> ';
 			// }
-			if(doc.to_warehouse) {
+			if (doc.to_warehouse) {
 				html += '<span class="filterable h6"\
 				data-filter="to_warehouse,=,'+doc.to_warehouse+'">'+doc.to_warehouse+'</span>';
 			}

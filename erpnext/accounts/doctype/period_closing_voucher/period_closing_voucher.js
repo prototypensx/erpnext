@@ -15,12 +15,12 @@ frappe.ui.form.on('Period Closing Voucher', {
 					['Account', 'freeze_account', '=', 'No'],
 					['Account', 'root_type', 'in', 'Liability, Equity']
 				]
-			}
+			};
 		});
 	},
 
 	refresh: function(frm) {
-		if(frm.doc.docstatus > 0) {
+		if (frm.doc.docstatus > 0) {
 			frm.add_custom_button(__('Ledger'), function() {
 				frappe.route_options = {
 					"voucher_no": frm.doc.name,
@@ -35,4 +35,4 @@ frappe.ui.form.on('Period Closing Voucher', {
 		}
 	}
 
-})
+});

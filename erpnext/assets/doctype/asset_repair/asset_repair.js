@@ -46,11 +46,11 @@ frappe.ui.form.on('Asset Repair', {
 			frappe.call ({
 				method: "erpnext.assets.doctype.asset_repair.asset_repair.get_downtime",
 				args: {
-					"failure_date":frm.doc.failure_date,
-					"completion_date":frm.doc.completion_date
+					"failure_date": frm.doc.failure_date,
+					"completion_date": frm.doc.completion_date
 				},
 				callback: function(r) {
-					if(r.message) {
+					if (r.message) {
 						frm.set_value("downtime", r.message + " Hrs");
 					}
 				}

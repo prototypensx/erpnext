@@ -11,7 +11,7 @@ frappe.pages['sales-funnel'].on_page_load = function(wrapper) {
 	wrapper.sales_funnel = new erpnext.SalesFunnel(wrapper);
 
 	frappe.breadcrumbs.add("Selling");
-}
+};
 
 erpnext.SalesFunnel = class SalesFunnel {
 	constructor(wrapper) {
@@ -38,11 +38,13 @@ erpnext.SalesFunnel = class SalesFunnel {
 			layout: $(wrapper).find(".layout-main"),
 			from_date: wrapper.page.add_date(__("From Date")),
 			to_date: wrapper.page.add_date(__("To Date")),
-			chart: wrapper.page.add_select(__("Chart"), [{value: 'sales_funnel', label:__("Sales Funnel")},
-				{value: 'sales_pipeline', label:__("Sales Pipeline")},
-				{value: 'opp_by_lead_source', label:__("Opportunities by lead source")}]),
+			chart: wrapper.page.add_select(__("Chart"), [{value: 'sales_funnel', label: __("Sales Funnel")},
+				{value: 'sales_pipeline', label: __("Sales Pipeline")},
+				{value: 'opp_by_lead_source', label: __("Opportunities by lead source")}]),
 			refresh_btn: wrapper.page.set_primary_action(__("Refresh"),
-				function() { me.get_data(); }, "fa fa-refresh"),
+				function() {
+ me.get_data(); 
+}, "fa fa-refresh"),
 		};
 
 		this.elements.no_data = $('<div class="alert alert-warning">' + __("No Data") + '</div>')
@@ -108,7 +110,7 @@ erpnext.SalesFunnel = class SalesFunnel {
 			},
 			btn: btn,
 			callback: function(r) {
-				if(!r.exc) {
+				if (!r.exc) {
 					me.options.data = r.message;
 					if (me.options.data=='empty') {
 						const $parent = me.elements.funnel_wrapper;
@@ -123,11 +125,11 @@ erpnext.SalesFunnel = class SalesFunnel {
 
 	render() {
 		let me = this;
-		if (me.options.chart == 'sales_funnel'){
+		if (me.options.chart == 'sales_funnel') {
 			me.render_funnel();
-		} else if (me.options.chart == 'opp_by_lead_source'){
+		} else if (me.options.chart == 'opp_by_lead_source') {
 			me.render_chart("Sales Opportunities by Source");
-		} else if (me.options.chart == 'sales_pipeline'){
+		} else if (me.options.chart == 'sales_pipeline') {
 			me.render_chart("Sales Pipeline by Stage");
 		}
 	}
@@ -143,7 +145,7 @@ erpnext.SalesFunnel = class SalesFunnel {
 			y = 0,
 			y_old = 0.0;
 
-		if(this.options.total_value === 0) {
+		if (this.options.total_value === 0) {
 			this.elements.no_data.toggle(true);
 			return;
 		}
@@ -182,7 +184,9 @@ erpnext.SalesFunnel = class SalesFunnel {
 		// as height decreases, area decreases by the square of the reduction
 		// hence, compensating by squaring the index value
 		this.options.total_weightage = this.options.data.reduce(
-			function(prev, curr, i) { return prev + Math.pow(i+1, 2) * curr.value; }, 0.0);
+			function(prev, curr, i) {
+ return prev + Math.pow(i+1, 2) * curr.value; 
+}, 0.0);
 
 		// calculate height for each data
 		$.each(this.options.data, function(i, d) {
@@ -211,7 +215,7 @@ erpnext.SalesFunnel = class SalesFunnel {
 	draw_legend(x_mid, y_mid, width, height, title) {
 		var context = this.elements.context;
 
-		if(y_mid == 0) {
+		if (y_mid == 0) {
 			y_mid = 7;
 		}
 

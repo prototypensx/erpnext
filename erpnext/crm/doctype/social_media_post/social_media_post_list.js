@@ -8,4 +8,4 @@ frappe.listview_settings['Social Media Post'] = {
 			"Deleted": "red"
 		}[doc.post_status]];
 	}
-}
+};

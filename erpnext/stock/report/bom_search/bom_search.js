@@ -39,4 +39,4 @@ frappe.query_reports["BOM Search"] = {
 			fieldtype: "Check",
 		},
 	]
-}
+};

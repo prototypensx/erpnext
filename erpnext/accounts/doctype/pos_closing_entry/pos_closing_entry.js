@@ -89,7 +89,7 @@ frappe.ui.form.on('POS Closing Entry', {
 						opening_amount: detail.opening_amount,
 						expected_amount: detail.opening_amount
 					});
-				})
+				});
 			});
 	},
 
@@ -148,7 +148,7 @@ frappe.ui.form.on('POS Closing Entry Detail', {
 		const row = locals[cdt][cdn];
 		frappe.model.set_value(cdt, cdn, "difference", flt(row.expected_amount - row.closing_amount));
 	}
-})
+});
 
 function set_form_data(data, frm) {
 	data.forEach(d => {
@@ -167,7 +167,7 @@ function add_to_pos_transaction(d, frm) {
 		posting_date: d.posting_date,
 		grand_total: d.grand_total,
 		customer: d.customer
-	})
+	});
 }
 
 function refresh_payments(d, frm) {
@@ -185,9 +185,9 @@ function refresh_payments(d, frm) {
 				opening_amount: 0,
 				expected_amount: p.amount,
 				closing_amount: 0
-			})
+			});
 		}
-	})
+	});
 }
 
 function refresh_taxes(d, frm) {
@@ -200,9 +200,9 @@ function refresh_taxes(d, frm) {
 				account_head: t.account_head,
 				rate: t.rate,
 				amount: t.tax_amount
-			})
+			});
 		}
-	})
+	});
 }
 
 function reset_values(frm) {

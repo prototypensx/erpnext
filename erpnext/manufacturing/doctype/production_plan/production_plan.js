@@ -20,8 +20,8 @@ frappe.ui.form.on('Production Plan', {
 				filters: {
 					company: doc.company
 				}
-			}
-		}
+			};
+		};
 
 		frm.set_query('for_warehouse', function(doc) {
 			return {
@@ -29,7 +29,7 @@ frappe.ui.form.on('Production Plan', {
 					company: doc.company,
 					is_group: 0
 				}
-			}
+			};
 		});
 
 		frm.set_query('material_request', 'material_requests', function() {
@@ -45,29 +45,29 @@ frappe.ui.form.on('Production Plan', {
 		frm.fields_dict['po_items'].grid.get_field('item_code').get_query = function(doc) {
 			return {
 				query: "erpnext.controllers.queries.item_query",
-				filters:{
+				filters: {
 					'is_stock_item': 1,
 				}
-			}
-		}
+			};
+		};
 
 		frm.fields_dict['po_items'].grid.get_field('bom_no').get_query = function(doc, cdt, cdn) {
 			var d = locals[cdt][cdn];
 			if (d.item_code) {
 				return {
 					query: "erpnext.controllers.queries.bom",
-					filters:{'item': cstr(d.item_code), 'docstatus': 1}
-				}
+					filters: {'item': cstr(d.item_code), 'docstatus': 1}
+				};
 			} else frappe.msgprint(__("Please enter Item first"));
-		}
+		};
 
 		frm.fields_dict['mr_items'].grid.get_field('warehouse').get_query = function(doc) {
 			return {
 				filters: {
 					company: doc.company
 				}
-			}
-		}
+			};
+		};
 	},
 
 	refresh(frm) {
@@ -163,7 +163,7 @@ frappe.ui.form.on('Production Plan', {
 			method: "set_status",
 			freeze: true,
 			doc: frm.doc,
-			args: {close : close},
+			args: {close: close},
 			callback: function() {
 				frm.reload_doc();
 			}
@@ -348,7 +348,7 @@ frappe.ui.form.on('Production Plan', {
 				warehouses: warehouses || []
 			},
 			callback: function(r) {
-				if(r.message) {
+				if (r.message) {
 					frm.set_value('mr_items', []);
 					r.message.forEach(row => {
 						let d = frm.add_child('mr_items');
@@ -398,12 +398,12 @@ frappe.ui.form.on('Production Plan', {
 		// produced qty
 		let item_wise_qty = {};
 		frm.doc.po_items.forEach((data) => {
-			if(!item_wise_qty[data.item_code]) {
+			if (!item_wise_qty[data.item_code]) {
 				item_wise_qty[data.item_code] = data.produced_qty;
 			} else {
 				item_wise_qty[data.item_code] += data.produced_qty;
 			}
-		})
+		});
 
 		if (item_wise_qty) {
 			for (var key in item_wise_qty) {
@@ -460,7 +460,7 @@ frappe.ui.form.on("Material Request Plan Item", {
 					frappe.model.set_value(cdt, cdn, 'projected_qty', projected_qty);
 					frappe.model.set_value(cdt, cdn, 'actual_qty', actual_qty);
 				}
-			})
+			});
 		}
 	}
 });
@@ -485,11 +485,11 @@ frappe.ui.form.on("Production Plan Sales Order", {
 });
 
 cur_frm.fields_dict['sales_orders'].grid.get_field("sales_order").get_query = function() {
-	return{
+	return {
 		filters: [
 			['Sales Order','docstatus', '=' ,1]
 		]
-	}
+	};
 };
 
 frappe.tour['Production Plan'] = [

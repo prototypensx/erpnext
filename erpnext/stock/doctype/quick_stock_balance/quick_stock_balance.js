@@ -58,16 +58,14 @@ frappe.ui.form.on('Quick Stock Balance', {
 	get_stock_and_item_details: (frm) => {
 		if (!(frm.doc.warehouse && frm.doc.date)) {
 			frm.trigger('check_warehouse_and_date');
-		}
-		else if (frm.doc.item || frm.doc.item_barcode) {
+		} else if (frm.doc.item || frm.doc.item_barcode) {
 			let filters = {
 				warehouse: frm.doc.warehouse,
 				date: frm.doc.date,
 			};
 			if (frappe.flags.last_updated_element === 'item') {
 				filters = { ...filters, ...{ item: frm.doc.item }};
-			}
-			else {
+			} else {
 				filters = { ...filters, ...{ barcode: frm.doc.item_barcode }};
 			}
 			frappe.call({

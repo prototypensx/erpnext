@@ -22,7 +22,7 @@ $.extend(erpnext.queries, {
 
 	item: function(filters) {
 		var args = { query: "erpnext.controllers.queries.item_query" };
-		if(filters) args["filters"] = filters;
+		if (filters) args["filters"] = filters;
 		return args;
 	},
 
@@ -35,7 +35,7 @@ $.extend(erpnext.queries, {
 	},
 
 	customer_filter: function(doc) {
-		if(!doc.customer) {
+		if (!doc.customer) {
 			frappe.throw(__("Please set {0}", [__(frappe.meta.get_label(doc.doctype, "customer", doc.name))]));
 		}
 
@@ -43,8 +43,8 @@ $.extend(erpnext.queries, {
 	},
 
 	contact_query: function(doc) {
-		if(frappe.dynamic_link) {
-			if(!doc[frappe.dynamic_link.fieldname]) {
+		if (frappe.dynamic_link) {
+			if (!doc[frappe.dynamic_link.fieldname]) {
 				frappe.throw(__("Please set {0}",
 					[__(frappe.meta.get_label(doc.doctype, frappe.dynamic_link.fieldname, doc.name))]));
 			}
@@ -60,8 +60,8 @@ $.extend(erpnext.queries, {
 	},
 
 	address_query: function(doc) {
-		if(frappe.dynamic_link) {
-			if(!doc[frappe.dynamic_link.fieldname]) {
+		if (frappe.dynamic_link) {
+			if (!doc[frappe.dynamic_link.fieldname]) {
 				frappe.throw(__("Please set {0}",
 					[__(frappe.meta.get_label(doc.doctype, frappe.dynamic_link.fieldname, doc.name))]));
 			}
@@ -91,7 +91,7 @@ $.extend(erpnext.queries, {
 	},
 
 	supplier_filter: function(doc) {
-		if(!doc.supplier) {
+		if (!doc.supplier) {
 			frappe.throw(__("Please set {0}", [__(frappe.meta.get_label(doc.doctype, "supplier", doc.name))]));
 		}
 
@@ -99,7 +99,7 @@ $.extend(erpnext.queries, {
 	},
 
 	lead_filter: function(doc) {
-		if(!doc.lead) {
+		if (!doc.lead) {
 			frappe.throw(__("Please specify a {0}",
 				[__(frappe.meta.get_label(doc.doctype, "lead", doc.name))]));
 		}
@@ -112,7 +112,7 @@ $.extend(erpnext.queries, {
 	},
 
 	employee: function() {
-		return { query: "erpnext.controllers.queries.employee_query" }
+		return { query: "erpnext.controllers.queries.employee_query" };
 	},
 
 	warehouse: function(doc) {
@@ -151,7 +151,7 @@ erpnext.queries.setup_queries = function(frm, options, query_fn) {
 		var link_fields = frappe.meta.get_docfields(doctype, frm.doc.name,
 			{"fieldtype": "Link", "options": options});
 		$.each(link_fields, function(i, df) {
-			if(parentfield) {
+			if (parentfield) {
 				frm.set_query(df.fieldname, parentfield, query_fn);
 			} else {
 				frm.set_query(df.fieldname, query_fn);
@@ -166,20 +166,20 @@ erpnext.queries.setup_queries = function(frm, options, query_fn) {
 		function(i, df) {
 			set_query(df.options, df.fieldname);
 		});
-}
+};
 
 /* 	if item code is selected in child table
 	then list down warehouses with its quantity
 	else apply default filters.
 */
-erpnext.queries.setup_warehouse_query = function(frm){
+erpnext.queries.setup_warehouse_query = function(frm) {
 	frm.set_query('warehouse', 'items', function(doc, cdt, cdn) {
 		var row  = locals[cdt][cdn];
 		var filters = erpnext.queries.warehouse(frm.doc);
-		if(row.item_code){
-			$.extend(filters, {"query":"erpnext.controllers.queries.warehouse_query"});
+		if (row.item_code) {
+			$.extend(filters, {"query": "erpnext.controllers.queries.warehouse_query"});
 			filters["filters"].push(["Bin", "item_code", "=", row.item_code]);
 		}
-		return filters
+		return filters;
 	});
-}
+};

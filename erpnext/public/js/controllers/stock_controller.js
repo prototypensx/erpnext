@@ -21,14 +21,14 @@ erpnext.stock.StockController = class StockController extends frappe.ui.form.Con
 	setup_posting_date_time_check() {
 		// make posting date default and read only unless explictly checked
 		frappe.ui.form.on(this.frm.doctype, 'set_posting_date_and_time_read_only', function(frm) {
-			if(frm.doc.docstatus == 0 && frm.doc.set_posting_time) {
+			if (frm.doc.docstatus == 0 && frm.doc.set_posting_time) {
 				frm.set_df_property('posting_date', 'read_only', 0);
 				frm.set_df_property('posting_time', 'read_only', 0);
 			} else {
 				frm.set_df_property('posting_date', 'read_only', 1);
 				frm.set_df_property('posting_time', 'read_only', 1);
 			}
-		})
+		});
 
 		frappe.ui.form.on(this.frm.doctype, 'set_posting_time', function(frm) {
 			frm.trigger('set_posting_date_and_time_read_only');
@@ -36,11 +36,11 @@ erpnext.stock.StockController = class StockController extends frappe.ui.form.Con
 
 		frappe.ui.form.on(this.frm.doctype, 'refresh', function(frm) {
 			// set default posting date / time
-			if(frm.doc.docstatus==0) {
-				if(!frm.doc.posting_date) {
+			if (frm.doc.docstatus==0) {
+				if (!frm.doc.posting_date) {
 					frm.set_value('posting_date', frappe.datetime.nowdate());
 				}
-				if(!frm.doc.posting_time) {
+				if (!frm.doc.posting_time) {
 					frm.set_value('posting_time', frappe.datetime.now_time());
 				}
 				frm.trigger('set_posting_date_and_time_read_only');
@@ -50,7 +50,7 @@ erpnext.stock.StockController = class StockController extends frappe.ui.form.Con
 
 	show_stock_ledger() {
 		var me = this;
-		if(this.frm.doc.docstatus > 0) {
+		if (this.frm.doc.docstatus > 0) {
 			cur_frm.add_custom_button(__("Stock Ledger"), function() {
 				frappe.route_options = {
 					voucher_no: me.frm.doc.name,
@@ -67,7 +67,7 @@ erpnext.stock.StockController = class StockController extends frappe.ui.form.Con
 
 	show_general_ledger() {
 		var me = this;
-		if(this.frm.doc.docstatus > 0) {
+		if (this.frm.doc.docstatus > 0) {
 			cur_frm.add_custom_button(__('Accounting Ledger'), function() {
 				frappe.route_options = {
 					voucher_no: me.frm.doc.name,

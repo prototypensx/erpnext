@@ -12,7 +12,7 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -20,7 +20,7 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -42,12 +42,11 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 							"from": "Supplier Quotation Item",
 							"parent": quote
 						}
-					}
-				}
-				else {
+					};
+				} else {
 					return {
 						filters: { "disabled": 0 }
-					}
+					};
 				}
 			}
 		},
@@ -75,11 +74,11 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 			fieldname: "request_for_quotation",
 			default: "",
 			get_query: () => {
-				return { filters: { "docstatus": ["<", 2] } }
+				return { filters: { "docstatus": ["<", 2] } };
 			}
 		},
 		{
-			"fieldname":"group_by",
+			"fieldname": "group_by",
 			"label": __("Group by"),
 			"fieldtype": "Select",
 			"options": [__("Group by Supplier"), __("Group by Item")],
@@ -96,16 +95,15 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 	formatter: (value, row, column, data, default_formatter) => {
 		value = default_formatter(value, row, column, data);
 
-		if(column.fieldname === "valid_till" && data.valid_till){
-			if(frappe.datetime.get_diff(data.valid_till, frappe.datetime.nowdate()) <= 1){
+		if (column.fieldname === "valid_till" && data.valid_till) {
+			if (frappe.datetime.get_diff(data.valid_till, frappe.datetime.nowdate()) <= 1) {
 				value = `<div style="color:red">${value}</div>`;
-			}
-			else if (frappe.datetime.get_diff(data.valid_till, frappe.datetime.nowdate()) <= 7){
+			} else if (frappe.datetime.get_diff(data.valid_till, frappe.datetime.nowdate()) <= 7) {
 				value = `<div style="color:darkorange">${value}</div>`;
 			}
 		}
 
-		if(column.fieldname === "price_per_unit" && data.price_per_unit && data.min && data.min === 1){
+		if (column.fieldname === "price_per_unit" && data.price_per_unit && data.min && data.min === 1) {
 			value = `<div style="color:green">${value}</div>`;
 		}
 		return value;
@@ -123,13 +121,15 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 	},
 	make_default_supplier_dialog: (report) => {
 		// Get the name of the item to change
-		if(!report.data) return;
+		if (!report.data) return;
 
 		let filters = report.get_values();
 		let item_code = filters.item_code;
 
 		// Get a list of the suppliers (with a blank as well) for the user to select
-		let suppliers = $.map(report.data, (row, idx)=>{ return row.supplier_name })
+		let suppliers = $.map(report.data, (row, idx)=>{
+ return row.supplier_name; 
+});
 
 		// Create a dialog window for the user to pick their supplier
 		let dialog = new frappe.ui.Dialog({
@@ -146,7 +146,7 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 							filters: {
 								'name': ['in', suppliers]
 							}
-						}
+						};
 					}
 				}
 			]
@@ -154,7 +154,7 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 
 		dialog.set_primary_action(__("Set Default Supplier"), () => {
 			let values = dialog.get_values();
-			if(values) {
+			if (values) {
 				// Set the default_supplier field of the appropriate Item to the selected supplier
 				frappe.call({
 					method: "frappe.client.set_value",
@@ -174,4 +174,4 @@ frappe.query_reports["Supplier Quotation Comparison"] = {
 		});
 		dialog.show();
 	}
-}
+};

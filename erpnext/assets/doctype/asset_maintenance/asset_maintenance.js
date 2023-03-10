@@ -27,17 +27,17 @@ frappe.ui.form.on('Asset Maintenance', {
 	},
 
 	refresh: (frm) => {
-		if(!frm.is_new()) {
+		if (!frm.is_new()) {
 			frm.trigger('make_dashboard');
 		}
 	},
 	make_dashboard: (frm) => {
-		if(!frm.is_new()) {
+		if (!frm.is_new()) {
 			frappe.call({
 				method: 'erpnext.assets.doctype.asset_maintenance.asset_maintenance.get_maintenance_log',
 				args: {asset_name: frm.doc.asset_name},
 				callback: (r) => {
-					if(!r.message) {
+					if (!r.message) {
 						return;
 					}
 					const section = frm.dashboard.add_section('', __("Maintenance Log"));
@@ -90,8 +90,7 @@ var get_next_due_date = function (frm, cdt, cdn) {
 			callback: function(r) {
 				if (r.message) {
 					frappe.model.set_value(cdt, cdn, "next_due_date", r.message);
-				}
-				else {
+				} else {
 					frappe.model.set_value(cdt, cdn, "next_due_date", "");
 				}
 			}

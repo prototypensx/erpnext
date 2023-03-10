@@ -4,7 +4,7 @@
 frappe.query_reports["Stock Ledger"] = {
 	"filters": [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
@@ -12,21 +12,21 @@ frappe.query_reports["Stock Ledger"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
 			"reqd": 1
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.get_today(),
 			"reqd": 1
 		},
 		{
-			"fieldname":"warehouse",
+			"fieldname": "warehouse",
 			"label": __("Warehouse"),
 			"fieldtype": "Link",
 			"options": "Warehouse",
@@ -34,51 +34,51 @@ frappe.query_reports["Stock Ledger"] = {
 				const company = frappe.query_report.get_filter_value('company');
 				return {
 					filters: { 'company': company }
-				}
+				};
 			}
 		},
 		{
-			"fieldname":"item_code",
+			"fieldname": "item_code",
 			"label": __("Item"),
 			"fieldtype": "Link",
 			"options": "Item",
 			"get_query": function() {
 				return {
 					query: "erpnext.controllers.queries.item_query"
-				}
+				};
 			}
 		},
 		{
-			"fieldname":"item_group",
+			"fieldname": "item_group",
 			"label": __("Item Group"),
 			"fieldtype": "Link",
 			"options": "Item Group"
 		},
 		{
-			"fieldname":"batch_no",
+			"fieldname": "batch_no",
 			"label": __("Batch No"),
 			"fieldtype": "Link",
 			"options": "Batch"
 		},
 		{
-			"fieldname":"brand",
+			"fieldname": "brand",
 			"label": __("Brand"),
 			"fieldtype": "Link",
 			"options": "Brand"
 		},
 		{
-			"fieldname":"voucher_no",
+			"fieldname": "voucher_no",
 			"label": __("Voucher #"),
 			"fieldtype": "Data"
 		},
 		{
-			"fieldname":"project",
+			"fieldname": "project",
 			"label": __("Project"),
 			"fieldtype": "Link",
 			"options": "Project"
 		},
 		{
-			"fieldname":"include_uom",
+			"fieldname": "include_uom",
 			"label": __("Include UOM"),
 			"fieldtype": "Link",
 			"options": "UOM"
@@ -88,8 +88,7 @@ frappe.query_reports["Stock Ledger"] = {
 		value = default_formatter(value, row, column, data);
 		if (column.fieldname == "out_qty" && data && data.out_qty < 0) {
 			value = "<span style='color:red'>" + value + "</span>";
-		}
-		else if (column.fieldname == "in_qty" && data && data.in_qty > 0) {
+		} else if (column.fieldname == "in_qty" && data && data.in_qty > 0) {
 			value = "<span style='color:green'>" + value + "</span>";
 		}
 

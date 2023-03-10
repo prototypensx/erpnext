@@ -69,8 +69,8 @@ erpnext.accounts.bank_reconciliation.DialogManager = class DialogManager {
 				from_date: this.bank_statement_from_date,
 				to_date: this.bank_statement_to_date,
 				filter_by_reference_date: this.filter_by_reference_date,
-				from_reference_date:this.from_reference_date,
-				to_reference_date:this.to_reference_date
+				from_reference_date: this.from_reference_date,
+				to_reference_date: this.to_reference_date
 			},
 
 			callback: (result) => {

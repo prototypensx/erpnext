@@ -12,7 +12,7 @@ frappe.query_reports["Stock Balance"] = {
 			"default": frappe.defaults.get_default("company")
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -20,7 +20,7 @@ frappe.query_reports["Stock Balance"] = {
 			"default": frappe.datetime.add_months(frappe.datetime.get_today(), -1),
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -61,7 +61,7 @@ frappe.query_reports["Stock Balance"] = {
 						...warehouse_type && {warehouse_type},
 						...company && {company}
 					}
-				}
+				};
 			}
 		},
 		{
@@ -72,7 +72,7 @@ frappe.query_reports["Stock Balance"] = {
 			"options": "Warehouse Type"
 		},
 		{
-			"fieldname":"include_uom",
+			"fieldname": "include_uom",
 			"label": __("Include UOM"),
 			"fieldtype": "Link",
 			"options": "UOM"
@@ -94,8 +94,7 @@ frappe.query_reports["Stock Balance"] = {
 
 		if (column.fieldname == "out_qty" && data && data.out_qty > 0) {
 			value = "<span style='color:red'>" + value + "</span>";
-		}
-		else if (column.fieldname == "in_qty" && data && data.in_qty > 0) {
+		} else if (column.fieldname == "in_qty" && data && data.in_qty > 0) {
 			value = "<span style='color:green'>" + value + "</span>";
 		}
 

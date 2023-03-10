@@ -218,6 +218,6 @@ frappe.query_reports["Accounts Receivable"] = {
 			frappe.set_route('query-report', 'Accounts Receivable Summary', {company: filters.company});
 		});
 	}
-}
+};
 
 erpnext.utils.add_dimensions('Accounts Receivable', 9);

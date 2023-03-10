@@ -21,8 +21,7 @@ frappe.ui.form.on("Supplier Scorecard", {
 			method: "erpnext.buying.doctype.supplier_scorecard_criteria.supplier_scorecard_criteria.get_criteria_list",
 			callback: function(r) {
 				frm.set_value('criteria', []);
-				for (var i = 0; i < r.message.length; i++)
-				{
+				for (var i = 0; i < r.message.length; i++) {
 					var row = frm.add_child("criteria");
 					row.criteria_name = r.message[i].name;
 					frm.script_manager.trigger("criteria_name", row.doctype, row.name);
@@ -63,7 +62,7 @@ frappe.ui.form.on("Supplier Scorecard Scoring Criteria", {
 					filters: {name: d.criteria_name}
 				},
 				callback: function(r) {
-					if(r.message){
+					if (r.message) {
 						d.weight = r.message.weight;
 						frm.refresh_field('criteria', 'weight');
 					}
@@ -77,14 +76,12 @@ var loadAllStandings = function(frm) {
 	frappe.call({
 		method: "erpnext.buying.doctype.supplier_scorecard_standing.supplier_scorecard_standing.get_standings_list",
 		callback: function(r) {
-			for (var j = 0; j < frm.doc.standings.length; j++)
-			{
-				if(!frm.doc.standings[j].hasOwnProperty("standing_name")) {
+			for (var j = 0; j < frm.doc.standings.length; j++) {
+				if (!frm.doc.standings[j].hasOwnProperty("standing_name")) {
 					frm.get_field("standings").grid.grid_rows[j].remove();
 				}
 			}
-			for (var i = 0; i < r.message.length; i++)
-			{
+			for (var i = 0; i < r.message.length; i++) {
 				var new_row = frm.add_child("standings");
 				new_row.standing_name = r.message[i].name;
 				frm.script_manager.trigger("standing_name", new_row.doctype, new_row.name);

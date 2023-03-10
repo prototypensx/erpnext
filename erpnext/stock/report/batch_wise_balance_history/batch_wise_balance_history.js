@@ -4,7 +4,7 @@
 frappe.query_reports["Batch-Wise Balance History"] = {
 	"filters": [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
@@ -12,7 +12,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -20,7 +20,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -28,7 +28,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"item_code",
+			"fieldname": "item_code",
 			"label": __("Item Code"),
 			"fieldtype": "Link",
 			"options": "Item",
@@ -41,7 +41,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 			}
 		},
 		{
-			"fieldname":"warehouse",
+			"fieldname": "warehouse",
 			"label": __("Warehouse"),
 			"fieldtype": "Link",
 			"options": "Warehouse",
@@ -55,7 +55,7 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 			}
 		},
 		{
-			"fieldname":"batch_no",
+			"fieldname": "batch_no",
 			"label": __("Batch No"),
 			"fieldtype": "Link",
 			"options": "Batch",
@@ -85,4 +85,4 @@ frappe.query_reports["Batch-Wise Balance History"] = {
 
 		frappe.set_route("query-report", "Stock Ledger");
 	}
-}
+};

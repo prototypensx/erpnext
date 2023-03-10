@@ -3,7 +3,7 @@
 
 frappe.ui.form.on('Pricing Rule', {
 	setup: function(frm) {
-		frm.fields_dict["for_price_list"].get_query = function(doc){
+		frm.fields_dict["for_price_list"].get_query = function(doc) {
 			return {
 				filters: {
 					'selling': doc.selling,
@@ -14,24 +14,24 @@ frappe.ui.form.on('Pricing Rule', {
 		};
 
 		['items', 'item_groups', 'brands'].forEach(d => {
-			frm.fields_dict[d].grid.get_field('uom').get_query = function(doc, cdt, cdn){
+			frm.fields_dict[d].grid.get_field('uom').get_query = function(doc, cdt, cdn) {
 				var row = locals[cdt][cdn];
 				return {
-					query:"erpnext.accounts.doctype.pricing_rule.pricing_rule.get_item_uoms",
+					query: "erpnext.accounts.doctype.pricing_rule.pricing_rule.get_item_uoms",
 					filters: {'value': row[frappe.scrub(doc.apply_on)], apply_on: doc.apply_on}
-				}
+				};
 			};
-		})
+		});
 	},
 
 	onload: function(frm) {
-		if(frm.doc.__islocal && !frm.doc.applicable_for && (frm.doc.customer || frm.doc.supplier)) {
-			if(frm.doc.customer) {
+		if (frm.doc.__islocal && !frm.doc.applicable_for && (frm.doc.customer || frm.doc.supplier)) {
+			if (frm.doc.customer) {
 				frm.doc.applicable_for = "Customer";
-				frm.doc.selling = 1
+				frm.doc.selling = 1;
 			} else {
 				frm.doc.applicable_for = "Supplier";
-				frm.doc.buying = 1
+				frm.doc.buying = 1;
 			}
 		}
 	},
@@ -111,7 +111,7 @@ frappe.ui.form.on('Pricing Rule', {
 			'Item Code': 'items',
 			'Item Group': 'item_groups',
 			'Brand': 'brands'
-		}
+		};
 
 		for (var key in fields) {
 			frm.toggle_reqd(fields[key],
@@ -120,7 +120,7 @@ frappe.ui.form.on('Pricing Rule', {
 	},
 
 	rate_or_discount: function(frm) {
-		if(frm.doc.rate_or_discount == 'Rate') {
+		if (frm.doc.rate_or_discount == 'Rate') {
 			frm.set_value('for_price_list', "");
 		}
 	},
@@ -134,7 +134,7 @@ frappe.ui.form.on('Pricing Rule', {
 	},
 
 	//Dynamically change the description based on type of margin
-	margin_type: function(frm){
+	margin_type: function(frm) {
 		frm.set_df_property('margin_rate_or_amount', 'description', frm.doc.margin_type=='Percentage'?'In Percentage %':'In Amount');
 	},
 
@@ -142,16 +142,16 @@ frappe.ui.form.on('Pricing Rule', {
 		var options = [""];
 		var applicable_for = frm.doc.applicable_for;
 
-		if(frm.doc.selling) {
+		if (frm.doc.selling) {
 			options = $.merge(options, ["Customer", "Customer Group", "Territory", "Sales Partner", "Campaign"]);
 		}
-		if(frm.doc.buying) {
+		if (frm.doc.buying) {
 			$.merge(options, ["Supplier", "Supplier Group"]);
 		}
 
 		set_field_options("applicable_for", options.join("\n"));
 
-		if(!in_list(options, applicable_for)) applicable_for = null;
+		if (!in_list(options, applicable_for)) applicable_for = null;
 		frm.set_value("applicable_for", applicable_for);
 	}
 });

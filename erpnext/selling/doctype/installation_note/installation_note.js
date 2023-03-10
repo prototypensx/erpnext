@@ -3,16 +3,16 @@
 
 frappe.ui.form.on('Installation Note', {
 	setup: function(frm) {
-		frappe.dynamic_link = {doc: frm.doc, fieldname: 'customer', doctype: 'Customer'}
+		frappe.dynamic_link = {doc: frm.doc, fieldname: 'customer', doctype: 'Customer'};
 		frm.set_query('customer_address', erpnext.queries.address_query);
 		frm.set_query('contact_person', erpnext.queries.contact_query);
 		frm.set_query('customer', erpnext.queries.customer);
 	},
 	onload: function(frm) {
-		if(!frm.doc.status) {
-			frm.set_value({ status:'Draft'});
+		if (!frm.doc.status) {
+			frm.set_value({ status: 'Draft'});
 		}
-		if(frm.doc.__islocal) {
+		if (frm.doc.__islocal) {
 			frm.set_value({inst_date: frappe.datetime.get_today()});
 		}
 	},
@@ -50,7 +50,7 @@ erpnext.selling.InstallationNote = class InstallationNote extends frappe.ui.form
 							per_installed: ["<", 99.99],
 							company: me.frm.doc.company
 						}
-					})
+					});
 				}, "fa fa-download", "btn-default"
 			);
 		}

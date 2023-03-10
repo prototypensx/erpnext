@@ -30,7 +30,7 @@ frappe.ui.form.on('Depreciation Schedule', {
 					frappe.model.sync(r.message);
 					frm.refresh();
 				}
-			})
+			});
 		}
 	},
 
@@ -40,12 +40,12 @@ frappe.ui.form.on('Depreciation Schedule', {
 });
 
 erpnext.asset.set_accumulated_depreciation = function(frm) {
-	if(frm.doc.depreciation_method != "Manual") return;
+	if (frm.doc.depreciation_method != "Manual") return;
 
 	var accumulated_depreciation = flt(frm.doc.opening_accumulated_depreciation);
 
 	$.each(frm.doc.depreciation_schedule || [], function(i, row) {
 		accumulated_depreciation  += flt(row.depreciation_amount);
 		frappe.model.set_value(row.doctype, row.name, "accumulated_depreciation_amount", accumulated_depreciation);
-	})
+	});
 };

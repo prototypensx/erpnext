@@ -10,7 +10,7 @@ frappe.ui.form.on('POS Invoice Merge Log', {
 					'customer': doc.customer,
 					'consolidated_invoice': ''
 				}
-			}
+			};
 		});
 	},
 

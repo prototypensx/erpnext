@@ -26,7 +26,7 @@ frappe.ui.form.on('BOM Operation', {
 	operation: function(frm, cdt, cdn) {
 		const d = locals[cdt][cdn];
 
-		if(!d.operation) return;
+		if (!d.operation) return;
 
 		frappe.call({
 			"method": "frappe.client.get",

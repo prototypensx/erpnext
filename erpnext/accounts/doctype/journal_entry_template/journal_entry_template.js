@@ -5,13 +5,13 @@ frappe.ui.form.on("Journal Entry Template", {
 	refresh: function(frm) {
 		frappe.model.set_default_values(frm.doc);
 
-		frm.set_query("account" ,"accounts", function(){
+		frm.set_query("account" ,"accounts", function() {
 			var filters = {
 				company: frm.doc.company,
 				is_group: 0
 			};
 
-			if(!frm.doc.multi_currency) {
+			if (!frm.doc.multi_currency) {
 				$.extend(filters, {
 					account_currency: frappe.get_doc(":Company", frm.doc.company).default_currency
 				});
@@ -23,8 +23,8 @@ frappe.ui.form.on("Journal Entry Template", {
 		frappe.call({
 			type: "GET",
 			method: "erpnext.accounts.doctype.journal_entry_template.journal_entry_template.get_naming_series",
-			callback: function(r){
-				if(r.message){
+			callback: function(r) {
+				if (r.message) {
 					frm.set_df_property("naming_series", "options", r.message.split("\n"));
 					frm.set_value("naming_series", r.message.split("\n")[0]);
 					frm.refresh_field("naming_series");
@@ -41,10 +41,10 @@ frappe.ui.form.on("Journal Entry Template", {
 			refresh_field("accounts");
 		};
 
-		if(!frm.doc.company) return;
+		if (!frm.doc.company) return;
 
 		frm.trigger("clear_child");
-		switch(frm.doc.voucher_type){
+		switch (frm.doc.voucher_type) {
 			case "Bank Entry":
 			case "Cash Entry":
 				frappe.call({
@@ -56,9 +56,9 @@ frappe.ui.form.on("Journal Entry Template", {
 						"company": frm.doc.company
 					},
 					callback: function(r) {
-						if(r.message) {
+						if (r.message) {
 							// If default company bank account not set
-							if(!$.isEmptyObject(r.message)){
+							if (!$.isEmptyObject(r.message)) {
 								add_accounts(frm.doc, [r.message]);
 							}
 						}
@@ -69,7 +69,7 @@ frappe.ui.form.on("Journal Entry Template", {
 				frm.trigger("clear_child");
 		}
 	},
-	clear_child: function(frm){
+	clear_child: function(frm) {
 		frappe.model.clear_table(frm.doc, "accounts");
 		frm.refresh_field("accounts");
 	}

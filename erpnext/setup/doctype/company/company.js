@@ -23,7 +23,7 @@ frappe.ui.form.on("Company", {
 		frm.set_query("parent_company", function() {
 			return {
 				filters: {"is_group": 1}
-			}
+			};
 		});
 
 		frm.set_query("default_selling_terms", function() {
@@ -36,8 +36,8 @@ frappe.ui.form.on("Company", {
 
 		frm.set_query("default_in_transit_warehouse", function() {
 			return {
-				filters:{
-					'warehouse_type' : 'Transit',
+				filters: {
+					'warehouse_type': 'Transit',
 					'is_group': 0,
 					'company': frm.doc.company
 				}
@@ -46,7 +46,7 @@ frappe.ui.form.on("Company", {
 	},
 
 	company_name: function(frm) {
-		if(frm.doc.__islocal) {
+		if (frm.doc.__islocal) {
 			// add missing " " arg in split method
 			let parts = frm.doc.company_name.split(" ");
 			let abbr = $.map(parts, function (p) {
@@ -64,12 +64,11 @@ frappe.ui.form.on("Company", {
 	},
 
 	date_of_commencement: function(frm) {
-		if(frm.doc.date_of_commencement<frm.doc.date_of_incorporation)
-		{
+		if (frm.doc.date_of_commencement<frm.doc.date_of_incorporation) {
 			frappe.throw(__("Date of Commencement should be greater than Date of Incorporation"));
 		}
-		if(!frm.doc.date_of_commencement){
-			frm.doc.date_of_incorporation = ""
+		if (!frm.doc.date_of_commencement) {
+			frm.doc.date_of_incorporation = "";
 		}
 	},
 
@@ -81,7 +80,7 @@ frappe.ui.form.on("Company", {
 			disbale_coa_fields(frm);
 			frappe.contacts.render_address_and_contact(frm);
 
-			frappe.dynamic_link = {doc: frm.doc, fieldname: 'name', doctype: 'Company'}
+			frappe.dynamic_link = {doc: frm.doc, fieldname: 'name', doctype: 'Company'};
 
 			if (frappe.perm.has_perm("Cost Center", 0, 'read')) {
 				frm.add_custom_button(__('Cost Centers'), function() {
@@ -133,7 +132,7 @@ frappe.ui.form.on("Company", {
 			callback: function() {
 				frappe.msgprint(__("Default tax templates for sales, purchase and items are created."));
 			}
-		})
+		});
 	},
 
 	country: function(frm) {
@@ -143,14 +142,14 @@ frappe.ui.form.on("Company", {
 	delete_company_transactions: function(frm) {
 		frappe.verify_password(function() {
 			var d = frappe.prompt({
-				fieldtype:"Data",
+				fieldtype: "Data",
 				fieldname: "company_name",
 				label: __("Please enter the company name to confirm"),
 				reqd: 1,
 				description: __("Please make sure you really want to delete all the transactions for this company. Your master data will remain as it is. This action cannot be undone.")
 			},
 			function(data) {
-				if(data.company_name !== frm.doc.name) {
+				if (data.company_name !== frm.doc.name) {
 					frappe.msgprint(__("Company name not same"));
 					return;
 				}
@@ -161,7 +160,7 @@ frappe.ui.form.on("Company", {
 					},
 					freeze: true,
 					callback: function(r, rt) {
-						if(!r.exc)
+						if (!r.exc)
 							frappe.msgprint(__("Successfully deleted all transactions related to this company!"));
 					},
 					onerror: function() {
@@ -179,7 +178,7 @@ frappe.ui.form.on("Company", {
 
 erpnext.company.set_chart_of_accounts_options = function(doc) {
 	var selected_value = doc.chart_of_accounts;
-	if(doc.country) {
+	if (doc.country) {
 		return frappe.call({
 			method: "erpnext.accounts.doctype.account.chart_of_accounts.chart_of_accounts.get_charts_for_country",
 			args: {
@@ -187,15 +186,15 @@ erpnext.company.set_chart_of_accounts_options = function(doc) {
 				"with_standard": true
 			},
 			callback: function(r) {
-				if(!r.exc) {
+				if (!r.exc) {
 					set_field_options("chart_of_accounts", [""].concat(r.message).join("\n"));
-					if(in_list(r.message, selected_value))
+					if (in_list(r.message, selected_value))
 						cur_frm.set_value("chart_of_accounts", selected_value);
 				}
 			}
-		})
+		});
 	}
-}
+};
 
 erpnext.company.setup_queries = function(frm) {
 	$.each([
@@ -246,7 +245,7 @@ erpnext.company.setup_queries = function(frm) {
 			erpnext.company.set_custom_query(frm, v);
 		});
 	}
-}
+};
 
 erpnext.company.set_custom_query = function(frm, v) {
 	var filters = {
@@ -261,12 +260,12 @@ erpnext.company.set_custom_query = function(frm, v) {
 	frm.set_query(v[0], function() {
 		return {
 			filters: filters
-		}
+		};
 	});
-}
+};
 
 var disbale_coa_fields = function(frm, bool=true) {
 	frm.set_df_property("create_chart_of_accounts_based_on", "read_only", bool);
 	frm.set_df_property("chart_of_accounts", "read_only", bool);
 	frm.set_df_property("existing_company", "read_only", bool);
-}
+};

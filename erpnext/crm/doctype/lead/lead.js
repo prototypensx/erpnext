@@ -18,11 +18,11 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 
 	onload () {
 		this.frm.set_query("customer", function (doc, cdt, cdn) {
-			return { query: "erpnext.controllers.queries.customer_query" }
+			return { query: "erpnext.controllers.queries.customer_query" };
 		});
 
 		this.frm.set_query("lead_owner", function (doc, cdt, cdn) {
-			return { query: "frappe.core.doctype.user.user.user_query" }
+			return { query: "frappe.core.doctype.user.user.user_query" };
 		});
 	}
 
@@ -90,14 +90,14 @@ erpnext.LeadController = class LeadController extends frappe.ui.form.Controller 
 		frappe.model.open_mapped_doc({
 			method: "erpnext.crm.doctype.lead.lead.make_customer",
 			frm: cur_frm
-		})
+		});
 	}
 
 	make_quotation () {
 		frappe.model.open_mapped_doc({
 			method: "erpnext.crm.doctype.lead.lead.make_quotation",
 			frm: cur_frm
-		})
+		});
 	}
 
 	make_prospect () {

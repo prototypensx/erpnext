@@ -41,7 +41,7 @@ frappe.listview_settings['Asset'] = {
 			frappe.call({
 				method: "erpnext.assets.doctype.asset.asset.make_asset_movement",
 				freeze: true,
-				args:{
+				args: {
 					"assets": assets
 				},
 				callback: function (r) {
@@ -53,4 +53,4 @@ frappe.listview_settings['Asset'] = {
 			});
 		});
 	},
-}
+};

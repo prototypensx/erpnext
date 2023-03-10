@@ -72,8 +72,7 @@ erpnext.stock.ItemDashboard = class ItemDashboard {
 
 				if (entry_type === "Material Transfer") {
 					row.s_warehouse = warehouse;
-				}
-				else {
+				} else {
 					row.t_warehouse = warehouse;
 				}
 
@@ -89,7 +88,7 @@ erpnext.stock.ItemDashboard = class ItemDashboard {
 
 	}
 	refresh() {
-		if(this.before_refresh) {
+		if (this.before_refresh) {
 			this.before_refresh();
 		}
 
@@ -110,7 +109,7 @@ erpnext.stock.ItemDashboard = class ItemDashboard {
 			args: args,
 			callback: function (r) {
 				me.render(r.message);
-				if(me.after_refresh) {
+				if (me.after_refresh) {
 					me.after_refresh();
 				}
 			}
@@ -155,8 +154,8 @@ erpnext.stock.ItemDashboard = class ItemDashboard {
 	}
 
 	get_item_dashboard_data(data, max_count, show_item) {
-		if(!max_count) max_count = 0;
-		if(!data) data = [];
+		if (!max_count) max_count = 0;
+		if (!data) data = [];
 
 		data.forEach(function (d) {
 			d.actual_or_pending = d.projected_qty + d.reserved_qty + d.reserved_qty_for_production + d.reserved_qty_for_sub_contract;
@@ -230,7 +229,7 @@ erpnext.stock.move_item = function (item, source, target, actual_qty, rate, call
 					filters: {
 						is_group: 0
 					}
-				}
+				};
 			}
 		},
 		{

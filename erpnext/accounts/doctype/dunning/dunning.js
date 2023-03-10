@@ -45,7 +45,7 @@ frappe.ui.form.on("Dunning", {
 			frm.page.set_inner_btn_group_as_primary(__("Create"));
 		}
 
-		if(frm.doc.docstatus > 0) {
+		if (frm.doc.docstatus > 0) {
 			frm.add_custom_button(__('Ledger'), function() {
 				frappe.route_options = {
 					"voucher_no": frm.doc.name,

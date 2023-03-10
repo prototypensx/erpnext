@@ -194,7 +194,7 @@ agriculture.TernaryPlot = class TernaryPlot {
 		let offset = 0;
 		let exec_once = true;
 		for (let soil_type in this.coords) {
-			if (index > 6 && exec_once){
+			if (index > 6 && exec_once) {
 				offset = 300;
 				index = 1;
 				exec_once = false;
@@ -212,7 +212,7 @@ agriculture.TernaryPlot = class TernaryPlot {
 	}
 
 	mark_blip({clay, sand, silt} = this) {
-		if (clay + sand + silt != 0){
+		if (clay + sand + silt != 0) {
 			let { triangle_side: t, spacing: s, scaling_factor: p } = this.config;
 
 			let x_blip = s + clay * p * Snap.cos(60) + silt * p;

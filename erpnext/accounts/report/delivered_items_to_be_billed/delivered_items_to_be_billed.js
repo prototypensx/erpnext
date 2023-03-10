@@ -5,4 +5,4 @@ frappe.query_reports["Delivered Items To Be Billed"] = {
 	"filters": [
 
 	]
-}
+};

@@ -171,7 +171,7 @@ erpnext.utils.BarcodeScanner = class BarcodeScanner {
 		this.dialog = new frappe.ui.Dialog({
 			title: __("Scan barcode for item {0}", [item_code]),
 			fields: me.get_fields_for_dialog(row, item_code, barcode, batch_no, serial_no),
-		})
+		});
 
 		this.dialog.set_primary_action(__("Update"), () => {
 			const item_data = {item_code: item_code};
@@ -215,7 +215,7 @@ erpnext.utils.BarcodeScanner = class BarcodeScanner {
 							if (r.message) {
 								this.update_dialog_values(item_code, r);
 							}
-						})
+						});
 					}
 				}
 			},
@@ -242,7 +242,7 @@ erpnext.utils.BarcodeScanner = class BarcodeScanner {
 			{
 				fieldtype: "Section Break",
 			}
-		]
+		];
 
 		if (batch_no) {
 			fields.push({
@@ -375,7 +375,7 @@ erpnext.utils.BarcodeScanner = class BarcodeScanner {
 		if (exist) {
 			this.show_alert(__("Row #{0}: Qty increased by {1}", [idx, qty]), "green");
 		} else {
-			this.show_alert(__("Row #{0}: Item added", [idx]), "green")
+			this.show_alert(__("Row #{0}: Item added", [idx]), "green");
 		}
 	}
 
@@ -406,8 +406,8 @@ erpnext.utils.BarcodeScanner = class BarcodeScanner {
 				&& uom_match
 				&& !item_scanned
 				&& (!is_batch_no_scan || batch_match)
-				&& (!check_max_qty || qty_in_limit)
-		}
+				&& (!check_max_qty || qty_in_limit);
+		};
 
 		return this.items_table.find(matching_row) || this.get_existing_blank_row();
 	}

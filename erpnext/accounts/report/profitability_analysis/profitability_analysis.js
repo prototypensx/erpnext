@@ -91,10 +91,10 @@ frappe.require("assets/erpnext/js/financial_statements.js", function() {
 				"to_fiscal_year": data.fiscal_year
 			};
 
-			if(data.based_on == 'cost_center'){
-				frappe.route_options["cost_center"] = data.account
+			if (data.based_on == 'cost_center') {
+				frappe.route_options["cost_center"] = data.account;
 			} else {
-				frappe.route_options["project"] = data.account
+				frappe.route_options["project"] = data.account;
 			}
 
 			frappe.set_route("query-report", "Profit and Loss Statement");
@@ -103,7 +103,7 @@ frappe.require("assets/erpnext/js/financial_statements.js", function() {
 		"name_field": "account",
 		"parent_field": "parent_account",
 		"initial_depth": 3
-	}
+	};
 
 	erpnext.dimension_filters.forEach((dimension) => {
 		frappe.query_reports["Profitability Analysis"].filters[1].options.push(dimension["document_type"]);

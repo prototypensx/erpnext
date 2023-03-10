@@ -34,7 +34,7 @@ erpnext.PointOfSale.NumberPad = class {
 			`<div class="numpad-container">
 				${get_keys()}
 			</div>`
-		)
+		);
 	}
 
 	bind_events() {
@@ -44,4 +44,4 @@ erpnext.PointOfSale.NumberPad = class {
 			me.events.numpad_event($btn);
 		});
 	}
-}
+};

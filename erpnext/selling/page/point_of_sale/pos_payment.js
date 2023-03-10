@@ -395,7 +395,7 @@ erpnext.PointOfSale.Payment = class {
 						if (current_value != this.value) {
 							frappe.model
 								.set_value(p.doctype, p.name, 'amount', flt(this.value))
-								.then(() => me.update_totals_section())
+								.then(() => me.update_totals_section());
 
 							const formatted_currency = format_currency(this.value, currency);
 							me.$payment_modes.find(`.${mode}-amount`).html(formatted_currency);

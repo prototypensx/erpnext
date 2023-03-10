@@ -21,7 +21,7 @@ var getParams = function (url) {
 frappe.ready(function() {
 	var full_name = frappe.session && frappe.session.user_fullname;
 	// update user
-	if(full_name) {
+	if (full_name) {
 		$('.navbar li[data-label="User"] a')
 			.html('<i class="fa fa-fixed-width fa fa-user"></i> ' + full_name);
 	}
@@ -97,7 +97,7 @@ $.extend(shopping_cart, {
 				callback: function(r) {
 					shopping_cart.unfreeze();
 					shopping_cart.set_cart_count(true);
-					if(opts.callback)
+					if (opts.callback)
 						opts.callback(r);
 				}
 			});
@@ -108,18 +108,18 @@ $.extend(shopping_cart, {
 		$(".intermediate-empty-cart").remove();
 
 		var cart_count = frappe.get_cookie("cart_count");
-		if(frappe.session.user==="Guest") {
+		if (frappe.session.user==="Guest") {
 			cart_count = 0;
 		}
 
-		if(cart_count) {
+		if (cart_count) {
 			$(".shopping-cart").toggleClass('hidden', false);
 		}
 
 		var $cart = $('.cart-icon');
 		var $badge = $cart.find("#cart-count");
 
-		if(parseInt(cart_count) === 0 || cart_count === undefined) {
+		if (parseInt(cart_count) === 0 || cart_count === undefined) {
 			$cart.css("display", "none");
 			$(".cart-tax-items").hide();
 			$(".btn-place-order").hide();
@@ -131,13 +131,12 @@ $.extend(shopping_cart, {
 				</div>
 			`;
 			$(".cart-table").after(intermediate_empty_cart_msg);
-		}
-		else {
+		} else {
 			$cart.css("display", "inline");
 			$("#cart-count").text(cart_count);
 		}
 
-		if(cart_count) {
+		if (cart_count) {
 			$badge.html(cart_count);
 
 			if (animate) {
@@ -159,7 +158,7 @@ $.extend(shopping_cart, {
 			with_items: 1,
 			btn: this,
 			callback: function(r) {
-				if(!r.exc) {
+				if (!r.exc) {
 					$(".cart-items").html(r.message.items);
 					$(".cart-tax-items").html(r.message.total);
 					$(".payment-summary").html(r.message.taxes_and_totals);

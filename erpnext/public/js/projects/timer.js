@@ -67,7 +67,7 @@ erpnext.timesheet.control_timer = function(frm, dialog, row, timestamp=0) {
 		if (!initialized) {
 			// New activity if no activities found
 			var args = dialog.get_values();
-			if(!args) return;
+			if (!args) return;
 			if (frm.doc.time_logs.length <= 1 && !frm.doc.time_logs[0].activity_type && !frm.doc.time_logs[0].from_time) {
 				frm.doc.time_logs = [];
 			}
@@ -79,7 +79,7 @@ erpnext.timesheet.control_timer = function(frm, dialog, row, timestamp=0) {
 			row.expected_hours = args.expected_hours;
 			row.completed = 0;
 			let d = moment(row.from_time);
-			if(row.expected_hours) {
+			if (row.expected_hours) {
 				d.add(row.expected_hours, "hours");
 				row.to_time = d.format(frappe.defaultDatetimeFormat);
 			}
@@ -134,10 +134,10 @@ erpnext.timesheet.control_timer = function(frm, dialog, row, timestamp=0) {
 		if (!$('.modal-dialog').is(':visible')) {
 			reset();
 		}
-		if(hours > 99999)
+		if (hours > 99999)
 			reset();
-		if(cur_dialog && cur_dialog.get_value('expected_hours') > 0) {
-			if(flag && (currentIncrement >= (cur_dialog.get_value('expected_hours') * 3600))) {
+		if (cur_dialog && cur_dialog.get_value('expected_hours') > 0) {
+			if (flag && (currentIncrement >= (cur_dialog.get_value('expected_hours') * 3600))) {
 				frappe.utils.play_sound("alert");
 				frappe.msgprint(__("Timer exceeded the given hours."));
 				flag = false;

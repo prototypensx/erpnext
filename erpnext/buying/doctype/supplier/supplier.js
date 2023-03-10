@@ -15,14 +15,14 @@ frappe.ui.form.on("Supplier", {
 					'company': d.company,
 					"is_group": 0
 				}
-			}
+			};
 		});
 		frm.set_query("default_bank_account", function() {
 			return {
 				filters: {
-					"is_company_account":1
+					"is_company_account": 1
 				}
-			}
+			};
 		});
 
 		frm.set_query("supplier_primary_contact", function(doc) {
@@ -45,7 +45,7 @@ frappe.ui.form.on("Supplier", {
 	},
 
 	refresh: function (frm) {
-		frappe.dynamic_link = { doc: frm.doc, fieldname: 'name', doctype: 'Supplier' }
+		frappe.dynamic_link = { doc: frm.doc, fieldname: 'name', doctype: 'Supplier' };
 
 		if (frappe.defaults.get_default("supp_master_name") != "Naming Series") {
 			frm.toggle_display("naming_series", false);
@@ -56,8 +56,7 @@ frappe.ui.form.on("Supplier", {
 		if (frm.doc.__islocal) {
 			hide_field(['address_html','contact_html']);
 			frappe.contacts.clear_address_and_contact(frm);
-		}
-		else {
+		} else {
 			unhide_field(['address_html','contact_html']);
 			frappe.contacts.render_address_and_contact(frm);
 
@@ -130,8 +129,7 @@ frappe.ui.form.on("Supplier", {
 	is_internal_supplier: function(frm) {
 		if (frm.doc.is_internal_supplier == 1) {
 			frm.toggle_reqd("represents_company", true);
-		}
-		else {
+		} else {
 			frm.toggle_reqd("represents_company", false);
 		}
 	},

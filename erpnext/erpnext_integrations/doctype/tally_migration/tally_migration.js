@@ -44,9 +44,9 @@ frappe.ui.form.on("Tally Migration", {
 		erpnext.tally_migration.fixed_errors_log = JSON.parse(frm.doc.fixed_errors_log);
 
 		["default_round_off_account", "default_warehouse", "default_cost_center"].forEach(account => {
-			frm.toggle_reqd(account, frm.doc.is_master_data_imported === 1)
-			frm.toggle_enable(account, frm.doc.is_day_book_data_processed != 1)
-		})
+			frm.toggle_reqd(account, frm.doc.is_master_data_imported === 1);
+			frm.toggle_enable(account, frm.doc.is_day_book_data_processed != 1);
+		});
 
 		if (frm.doc.master_data && !frm.doc.is_master_data_imported) {
 			if (frm.doc.is_master_data_processed) {
@@ -102,7 +102,7 @@ frappe.ui.form.on("Tally Migration", {
 			frm.toggle_display(field, true);
 		} else {
 			frm.toggle_display(field, false);
-			return
+			return;
 		}
 		let rows = erpnext.tally_migration.get_html_rows(shown_logs, field);
 		let rows_head, table_caption;
@@ -113,12 +113,12 @@ frappe.ui.form.on("Tally Migration", {
 
 		if (field === "fixed_error_log_preview") {
 			rows_head = `<th width="75%">${__("Meta Data")}</th>
-			<th width="10%">${__("Unresolve")}</th>`
-			table_caption = "Resolved Issues"
+			<th width="10%">${__("Unresolve")}</th>`;
+			table_caption = "Resolved Issues";
 		} else {
 			rows_head = `<th width="75%">${__("Error Message")}</th>
-			<th width="10%">${__("Create")}</th>`
-			table_caption = "Error Log"
+			<th width="10%">${__("Create")}</th>`;
+			table_caption = "Error Log";
 		}
 
 		frm.get_field(field).$wrapper.html(`
@@ -144,7 +144,7 @@ frappe.ui.form.on("Tally Migration", {
 					summary[row.doc.doctype] = 1;
 				}
 			}
-			return summary
+			return summary;
 		}, {});
 		console.table(summary);
 	},
@@ -186,31 +186,33 @@ erpnext.tally_migration.getError = (traceback) => {
 	let message;
 
 	if (is_multiline) {
-		let exc_error_idx = traceback.trim().lastIndexOf("\n") + 1
-		let error_line = traceback.substr(exc_error_idx)
+		let exc_error_idx = traceback.trim().lastIndexOf("\n") + 1;
+		let error_line = traceback.substr(exc_error_idx);
 		let split_str_idx = (error_line.indexOf(':') > 0) ? error_line.indexOf(':') + 1 : 0;
 		message = error_line.slice(split_str_idx).trim();
 	} else {
 		message = traceback;
 	}
 
-	return message
-}
+	return message;
+};
 
 erpnext.tally_migration.cleanDoc = (obj) => {
 	/* Strips all null and empty values of your JSON object */
 	let temp = obj;
-	$.each(temp, function(key, value){
-		if (value === "" || value === null){
+	$.each(temp, function(key, value) {
+		if (value === "" || value === null) {
 			delete obj[key];
 		} else if (Object.prototype.toString.call(value) === '[object Object]') {
 			erpnext.tally_migration.cleanDoc(value);
 		} else if ($.isArray(value)) {
-			$.each(value, function (k,v) { erpnext.tally_migration.cleanDoc(v); });
+			$.each(value, function (k,v) {
+ erpnext.tally_migration.cleanDoc(v); 
+});
 		}
 	});
 	return temp;
-}
+};
 
 erpnext.tally_migration.unresolve = (document) => {
 	/* Mark document migration as unresolved ie. move to failed error log */
@@ -220,7 +222,7 @@ erpnext.tally_migration.unresolve = (document) => {
 
 	let modified_fixed_log = fixed_log.filter(row => {
 		if (!frappe.utils.deep_equal(erpnext.tally_migration.cleanDoc(row.doc), document)) {
-			return row
+			return row;
 		}
 	});
 
@@ -231,7 +233,7 @@ erpnext.tally_migration.unresolve = (document) => {
 
 	frm.dirty();
 	frm.save();
-}
+};
 
 erpnext.tally_migration.resolve = (document) => {
 	/* Mark document migration as resolved ie. move to fixed error log */
@@ -241,7 +243,7 @@ erpnext.tally_migration.resolve = (document) => {
 
 	let modified_failed_log = failed_log.filter(row => {
 		if (!frappe.utils.deep_equal(erpnext.tally_migration.cleanDoc(row.doc), document)) {
-			return row
+			return row;
 		}
 	});
 	fixed_log.push({ doc: document, exc: `Solved on ${Date()}` });
@@ -251,7 +253,7 @@ erpnext.tally_migration.resolve = (document) => {
 
 	frm.dirty();
 	frm.save();
-}
+};
 
 erpnext.tally_migration.create_new_doc = (document) => {
 	/* Mark as resolved and create new document */
@@ -264,14 +266,14 @@ erpnext.tally_migration.create_new_doc = (document) => {
 		},
 		freeze: true,
 		callback: function(r) {
-			if(!r.exc) {
+			if (!r.exc) {
 				frappe.model.sync(r.message);
 				frappe.get_doc(r.message.doctype, r.message.name).__run_link_triggers = true;
 				frappe.set_route("Form", r.message.doctype, r.message.name);
 			}
 		}
 	});
-}
+};
 
 erpnext.tally_migration.get_html_rows = (logs, field) => {
 	let index = 0;
@@ -306,12 +308,12 @@ erpnext.tally_migration.get_html_rows = (logs, field) => {
 			let create_button = `
 				<button class='btn btn-default btn-xs m-3' type='button' onclick='erpnext.tally_migration.create_new_doc(${JSON.stringify(doc)})'>
 					${__("Create Document")}
-				</button>`
+				</button>`;
 
 			let mark_as_unresolved = `
 				<button class='btn btn-default btn-xs m-3' type='button' onclick='erpnext.tally_migration.unresolve(${JSON.stringify(doc)})'>
 					${__("Mark as unresolved")}
-				</button>`
+				</button>`;
 
 			if (field === "fixed_error_log_preview") {
 				return `<tr>
@@ -345,5 +347,5 @@ erpnext.tally_migration.get_html_rows = (logs, field) => {
 			}
 		}).join("");
 
-	return rows
-}
+	return rows;
+};

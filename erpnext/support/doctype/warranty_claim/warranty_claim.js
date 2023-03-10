@@ -21,7 +21,7 @@ frappe.ui.form.on("Warranty Claim", {
 		frm.add_fetch('item_code', 'description', 'description');
 	},
 	onload: function(frm) {
-		if(!frm.doc.status) {
+		if (!frm.doc.status) {
 			frm.set_value('status', 'Open');
 		}
 	},
@@ -38,9 +38,9 @@ frappe.ui.form.on("Warranty Claim", {
 
 erpnext.support.WarrantyClaim = class WarrantyClaim extends frappe.ui.form.Controller {
 	refresh() {
-		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'}
+		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'};
 
-		if(!cur_frm.doc.__islocal &&
+		if (!cur_frm.doc.__islocal &&
 			(cur_frm.doc.status=='Open' || cur_frm.doc.status == 'Work In Progress')) {
 			cur_frm.add_custom_button(__('Maintenance Visit'),
 				this.make_maintenance_visit);
@@ -51,7 +51,7 @@ erpnext.support.WarrantyClaim = class WarrantyClaim extends frappe.ui.form.Contr
 		frappe.model.open_mapped_doc({
 			method: "erpnext.support.doctype.warranty_claim.warranty_claim.make_maintenance_visit",
 			frm: cur_frm
-		})
+		});
 	}
 };
 
@@ -62,35 +62,34 @@ cur_frm.fields_dict['serial_no'].get_query = function(doc, cdt, cdn) {
 	var filter = [
 		['Serial No', 'docstatus', '!=', 2]
 	];
-	if(doc.item_code) {
+	if (doc.item_code) {
 		cond = ['Serial No', 'item_code', '=', doc.item_code];
 		filter.push(cond);
 	}
-	if(doc.customer) {
+	if (doc.customer) {
 		cond = ['Serial No', 'customer', '=', doc.customer];
 		filter.push(cond);
 	}
-	return{
-		filters:filter
-	}
-}
+	return {
+		filters: filter
+	};
+};
 
 cur_frm.fields_dict['item_code'].get_query = function(doc, cdt, cdn) {
-	if(doc.serial_no) {
-		return{
+	if (doc.serial_no) {
+		return {
 			doctype: "Serial No",
 			fields: "item_code",
-			filters:{
+			filters: {
 				name: doc.serial_no
 			}
-		}
-	}
-	else{
-		return{
-			filters:[
+		};
+	} else {
+		return {
+			filters: [
 				['Item', 'docstatus', '!=', 2],
 				['Item', 'disabled', '=', 0]
 			]
-		}
+		};
 	}
 };

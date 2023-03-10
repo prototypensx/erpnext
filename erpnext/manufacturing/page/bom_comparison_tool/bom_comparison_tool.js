@@ -6,7 +6,7 @@ frappe.pages['bom-comparison-tool'].on_page_load = function(wrapper) {
 	});
 
 	new erpnext.BOMComparisonTool(page);
-}
+};
 
 erpnext.BOMComparisonTool = class BOMComparisonTool {
 	constructor(page) {
@@ -28,7 +28,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 							filters: {
 								"name": ["not in", [this.form.get_value("name2") || ""]]
 							}
-						}
+						};
 					}
 				},
 				{
@@ -45,7 +45,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 							filters: {
 								"name": ["not in", [this.form.get_value("name1") || ""]]
 							}
-						}
+						};
 					}
 				},
 				{
@@ -115,7 +115,7 @@ erpnext.BOMComparisonTool = class BOMComparisonTool {
 					</table>
 				</div>
 			`;
-		}
+		};
 
 		let value_changes = change_html(__('Values Changed'), doctype, diff.changed);
 

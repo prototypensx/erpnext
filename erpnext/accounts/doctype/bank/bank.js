@@ -16,8 +16,7 @@ frappe.ui.form.on('Bank', {
 		if (frm.doc.__islocal) {
 			frm.set_df_property('address_and_contact', 'hidden', 1);
 			frappe.contacts.clear_address_and_contact(frm);
-		}
-		else {
+		} else {
 			frm.set_df_property('address_and_contact', 'hidden', 0);
 			frappe.contacts.render_address_and_contact(frm);
 		}
@@ -64,7 +63,7 @@ erpnext.integrations.refreshPlaidLink = class refreshPlaidLink {
 		const token = frappe.xcall(
 			'erpnext.erpnext_integrations.doctype.plaid_settings.plaid_settings.get_link_token_for_update',
 			{ access_token: this.access_token }
-		)
+		);
 		if (!token) {
 			frappe.throw(__('Cannot retrieve link token for update. Check Error Log for more information'));
 		}

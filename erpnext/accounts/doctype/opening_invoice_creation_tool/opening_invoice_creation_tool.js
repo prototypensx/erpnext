@@ -80,7 +80,7 @@ frappe.ui.form.on('Opening Invoice Creation Tool', {
 				filters: {
 					'company': doc.company
 				}
-			}
+			};
 		});
 	},
 
@@ -100,7 +100,7 @@ frappe.ui.form.on('Opening Invoice Creation Tool', {
 						frm.trigger('update_invoice_table');
 					}
 				}
-			})
+			});
 		}
 		erpnext.accounts.dimensions.update_dimension(frm, frm.doctype);
 	},
@@ -116,7 +116,7 @@ frappe.ui.form.on('Opening Invoice Creation Tool', {
 	make_dashboard: function(frm) {
 		let max_count = frm.doc.__onload.max_count;
 		let opening_invoices_summary = frm.doc.__onload.opening_invoices_summary;
-		if(!$.isEmptyObject(opening_invoices_summary)) {
+		if (!$.isEmptyObject(opening_invoices_summary)) {
 			let section = frm.dashboard.add_section(
 				frappe.render_template('opening_invoice_creation_tool_dashboard', {
 					data: opening_invoices_summary,
@@ -141,7 +141,7 @@ frappe.ui.form.on('Opening Invoice Creation Tool', {
 				row.temporary_opening_account = frm.doc.__onload.temporary_opening_account;
 			}
 
-			if(!row.cost_center) {
+			if (!row.cost_center) {
 				row.cost_center = frm.doc.cost_center;
 			}
 

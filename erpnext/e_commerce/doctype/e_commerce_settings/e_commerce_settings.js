@@ -3,7 +3,7 @@
 
 frappe.ui.form.on("E Commerce Settings", {
 	onload: function(frm) {
-		if(frm.doc.__onload && frm.doc.__onload.quotation_series) {
+		if (frm.doc.__onload && frm.doc.__onload.quotation_series) {
 			frm.fields_dict.quotation_series.df.options = frm.doc.__onload.quotation_series;
 			frm.refresh_field("quotation_series");
 		}
@@ -41,8 +41,7 @@ frappe.ui.form.on("E Commerce Settings", {
 	enabled: function(frm) {
 		if (frm.doc.enabled === 1) {
 			frm.set_value('enable_variants', 1);
-		}
-		else {
+		} else {
 			frm.set_value('company', '');
 			frm.set_value('price_list', '');
 			frm.set_value('default_customer_group', '');

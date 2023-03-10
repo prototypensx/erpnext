@@ -27,7 +27,7 @@ frappe.listview_settings['POS Invoice'] = {
 			frappe.call({
 				method: "erpnext.accounts.doctype.pos_invoice.pos_invoice.make_merge_log",
 				freeze: true,
-				args:{
+				args: {
 					"invoices": invoices
 				},
 				callback: function (r) {

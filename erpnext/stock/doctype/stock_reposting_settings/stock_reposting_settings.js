@@ -17,7 +17,7 @@ frappe.ui.form.on('Stock Reposting Settings', {
 						frm.reload_doc();
 					}
 				}
-			})
-		})
+			});
+		});
 	}
 });

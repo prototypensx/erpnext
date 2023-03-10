@@ -16,7 +16,7 @@ erpnext.accounts.PaymentReconciliationController = class PaymentReconciliationCo
 				"filters": {
 					"name": ["in", Object.keys(frappe.boot.party_account_types)],
 				}
-			}
+			};
 		});
 
 		this.frm.set_query('receivable_payable_account', () => {
@@ -31,7 +31,7 @@ erpnext.accounts.PaymentReconciliationController = class PaymentReconciliationCo
 
 		this.frm.set_query('bank_cash_account', () => {
 			return {
-				filters:[
+				filters: [
 					['Account', 'company', '=', this.frm.doc.company],
 					['Account', 'is_group', '=', 0],
 					['Account', 'account_type', 'in', ['Bank', 'Cash']]
@@ -45,7 +45,7 @@ erpnext.accounts.PaymentReconciliationController = class PaymentReconciliationCo
 					"company": this.frm.doc.company,
 					"is_group": 0
 				}
-			}
+			};
 		});
 	}
 
@@ -189,18 +189,18 @@ erpnext.accounts.PaymentReconciliationController = class PaymentReconciliationCo
 							return this.data;
 						},
 						fields: [{
-							fieldtype:'Data',
-							fieldname:"docname",
+							fieldtype: 'Data',
+							fieldname: "docname",
 							in_list_view: 1,
 							hidden: 1
 						}, {
-							fieldtype:'Data',
-							fieldname:"reference_name",
+							fieldtype: 'Data',
+							fieldname: "reference_name",
 							label: __("Voucher No"),
 							in_list_view: 1,
 							read_only: 1
 						}, {
-							fieldtype:'Link',
+							fieldtype: 'Link',
 							options: 'Account',
 							in_list_view: 1,
 							label: __("Difference Account"),
@@ -212,10 +212,10 @@ erpnext.accounts.PaymentReconciliationController = class PaymentReconciliationCo
 										company: this.frm.doc.company,
 										is_group: 0
 									}
-								}
+								};
 							}
 						}, {
-							fieldtype:'Currency',
+							fieldtype: 'Currency',
 							in_list_view: 1,
 							label: __("Difference Amount"),
 							fieldname: 'difference_amount',

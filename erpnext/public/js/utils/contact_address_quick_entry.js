@@ -97,4 +97,4 @@ frappe.ui.form.ContactAddressQuickEntryForm = class ContactAddressQuickEntryForm
 
 		return variant_fields;
 	}
-}
+};

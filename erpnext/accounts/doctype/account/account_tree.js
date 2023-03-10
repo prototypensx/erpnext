@@ -1,4 +1,4 @@
-frappe.provide("frappe.treeview_settings")
+frappe.provide("frappe.treeview_settings");
 
 frappe.treeview_settings["Account"] = {
 	breadcrumb: "Accounts",
@@ -7,7 +7,7 @@ frappe.treeview_settings["Account"] = {
 	filters: [
 		{
 			fieldname: "company",
-			fieldtype:"Select",
+			fieldtype: "Select",
 			options: erpnext.utils.get_tree_options("company"),
 			label: __("Company"),
 			default: erpnext.utils.get_tree_default("company"),
@@ -23,7 +23,7 @@ frappe.treeview_settings["Account"] = {
 						company: company,
 					},
 					callback: function(r) {
-						if(r.message) {
+						if (r.message) {
 							let root_company = r.message.length ? r.message[0] : "";
 							me.page.fields_dict.root_company.set_value(root_company);
 
@@ -37,7 +37,7 @@ frappe.treeview_settings["Account"] = {
 		},
 		{
 			fieldname: "root_company",
-			fieldtype:"Data",
+			fieldtype: "Data",
 			label: __("Root Company"),
 			hidden: true,
 			disable_onchange: true
@@ -57,7 +57,7 @@ frappe.treeview_settings["Account"] = {
 		}
 
 		frappe.db.get_single_value("Accounts Settings", "show_balance_in_coa").then((value) => {
-			if(value) {
+			if (value) {
 
 				const get_balances = frappe.call({
 					method: 'erpnext.accounts.utils.get_account_balances',
@@ -95,33 +95,35 @@ frappe.treeview_settings["Account"] = {
 		});
 	},
 	add_tree_node: 'erpnext.accounts.utils.add_ac',
-	menu_items:[
+	menu_items: [
 		{
 			label: __('New Company'),
-			action: function() { frappe.new_doc("Company", true) },
+			action: function() {
+ frappe.new_doc("Company", true); 
+},
 			condition: 'frappe.boot.user.can_create.indexOf("Company") !== -1'
 		}
 	],
 	fields: [
-		{fieldtype:'Data', fieldname:'account_name', label:__('New Account Name'), reqd:true,
+		{fieldtype: 'Data', fieldname: 'account_name', label: __('New Account Name'), reqd: true,
 			description: __("Name of new Account. Note: Please don't create accounts for Customers and Suppliers")},
-		{fieldtype:'Data', fieldname:'account_number', label:__('Account Number'),
+		{fieldtype: 'Data', fieldname: 'account_number', label: __('Account Number'),
 			description: __("Number of new Account, it will be included in the account name as a prefix")},
-		{fieldtype:'Check', fieldname:'is_group', label:__('Is Group'),
+		{fieldtype: 'Check', fieldname: 'is_group', label: __('Is Group'),
 			description: __('Further accounts can be made under Groups, but entries can be made against non-Groups')},
-		{fieldtype:'Select', fieldname:'root_type', label:__('Root Type'),
+		{fieldtype: 'Select', fieldname: 'root_type', label: __('Root Type'),
 			options: ['Asset', 'Liability', 'Equity', 'Income', 'Expense'].join('\n'),
 			depends_on: 'eval:doc.is_group && !doc.parent_account'},
-		{fieldtype:'Select', fieldname:'account_type', label:__('Account Type'),
+		{fieldtype: 'Select', fieldname: 'account_type', label: __('Account Type'),
 			options: frappe.get_meta("Account").fields.filter(d => d.fieldname=='account_type')[0].options,
 			description: __("Optional. This setting will be used to filter in various transactions.")
 		},
-		{fieldtype:'Float', fieldname:'tax_rate', label:__('Tax Rate'),
+		{fieldtype: 'Float', fieldname: 'tax_rate', label: __('Tax Rate'),
 			depends_on: 'eval:doc.is_group==0&&doc.account_type=="Tax"'},
-		{fieldtype:'Link', fieldname:'account_currency', label:__('Currency'), options:"Currency",
+		{fieldtype: 'Link', fieldname: 'account_currency', label: __('Currency'), options: "Currency",
 			description: __("Optional. Sets company's default currency, if not specified.")}
 	],
-	ignore_fields:["parent_account"],
+	ignore_fields: ["parent_account"],
 	onload: function(treeview) {
 		frappe.treeview_settings['Account'].treeview = {};
 		$.extend(frappe.treeview_settings['Account'].treeview, treeview);
@@ -164,7 +166,7 @@ frappe.treeview_settings["Account"] = {
 		treeview.page.set_primary_action(__("New"), function() {
 			let root_company = treeview.page.fields_dict.root_company.get_value();
 
-			if(root_company) {
+			if (root_company) {
 				frappe.throw(__("Please add the account to root level Company - {0}"), [root_company]);
 			} else {
 				treeview.new_node();
@@ -173,7 +175,7 @@ frappe.treeview_settings["Account"] = {
 	},
 	toolbar: [
 		{
-			label:__("Add Child"),
+			label: __("Add Child"),
 			condition: function(node) {
 				return frappe.boot.user.can_create.indexOf("Account") !== -1
 					&& (!frappe.treeview_settings['Account'].treeview.page.fields_dict.root_company.get_value()
@@ -188,7 +190,7 @@ frappe.treeview_settings["Account"] = {
 		},
 		{
 			condition: function(node) {
-				return !node.root && frappe.boot.user.can_read.indexOf("GL Entry") !== -1
+				return !node.root && frappe.boot.user.can_read.indexOf("GL Entry") !== -1;
 			},
 			label: __("View Ledger"),
 			click: function(node, btn) {
@@ -204,4 +206,4 @@ frappe.treeview_settings["Account"] = {
 		}
 	],
 	extend_toolbar: true
-}
+};

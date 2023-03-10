@@ -4,14 +4,14 @@
 frappe.query_reports["Stock Projected Qty"] = {
 	"filters": [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
-			"fieldname":"warehouse",
+			"fieldname": "warehouse",
 			"label": __("Warehouse"),
 			"fieldtype": "Link",
 			"options": "Warehouse",
@@ -20,37 +20,37 @@ frappe.query_reports["Stock Projected Qty"] = {
 					filters: {
 						company: frappe.query_report.get_filter_value('company')
 					}
-				}
+				};
 			}
 		},
 		{
-			"fieldname":"item_code",
+			"fieldname": "item_code",
 			"label": __("Item"),
 			"fieldtype": "Link",
 			"options": "Item",
 			"get_query": function() {
 				return {
 					query: "erpnext.controllers.queries.item_query"
-				}
+				};
 			}
 		},
 		{
-			"fieldname":"item_group",
+			"fieldname": "item_group",
 			"label": __("Item Group"),
 			"fieldtype": "Link",
 			"options": "Item Group"
 		},
 		{
-			"fieldname":"brand",
+			"fieldname": "brand",
 			"label": __("Brand"),
 			"fieldtype": "Link",
 			"options": "Brand"
 		},
 		{
-			"fieldname":"include_uom",
+			"fieldname": "include_uom",
 			"label": __("Include UOM"),
 			"fieldtype": "Link",
 			"options": "UOM"
 		}
 	]
-}
+};

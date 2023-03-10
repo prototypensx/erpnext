@@ -9,7 +9,7 @@ frappe.ui.form.on('Loan Security Pledge', {
 
 		let amount = 0;
 		let maximum_amount = 0;
-		$.each(frm.doc.securities || [], function(i, item){
+		$.each(frm.doc.securities || [], function(i, item) {
 			amount += item.amount;
 			maximum_amount += item.post_haircut_amount;
 		});

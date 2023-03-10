@@ -4,7 +4,9 @@
 frappe.ui.form.on('Pick List', {
 	setup: (frm) => {
 		frm.set_indicator_formatter('item_code',
-			function(doc) { return (doc.stock_qty === 0) ? "red" : "green"; });
+			function(doc) {
+ return (doc.stock_qty === 0) ? "red" : "green"; 
+});
 
 		frm.custom_make_buttons = {
 			'Delivery Note': 'Delivery Note',
@@ -47,7 +49,7 @@ frappe.ui.form.on('Pick List', {
 			};
 		});
 	},
-	set_item_locations:(frm, save) => {
+	set_item_locations: (frm, save) => {
 		if (!(frm.doc.locations && frm.doc.locations.length)) {
 			frappe.msgprint(__('Add items in the Item Locations table'));
 		} else {

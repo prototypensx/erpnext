@@ -30,8 +30,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 				frm.set_value("applicant_name",
 					applicant.employee_name || applicant.member_name);
 			});
-		}
-		else {
+		} else {
 			frm.set_value("applicant_name", null);
 		}
 	}

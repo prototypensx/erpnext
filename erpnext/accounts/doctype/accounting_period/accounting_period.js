@@ -3,12 +3,12 @@
 
 frappe.ui.form.on('Accounting Period', {
 	onload: function(frm) {
-		if(frm.doc.closed_documents.length === 0 || (frm.doc.closed_documents.length === 1 && frm.doc.closed_documents[0].document_type == undefined)) {
+		if (frm.doc.closed_documents.length === 0 || (frm.doc.closed_documents.length === 1 && frm.doc.closed_documents[0].document_type == undefined)) {
 			frappe.call({
 				method: "get_doctypes_for_closing",
-				doc:frm.doc,
+				doc: frm.doc,
 				callback: function(r) {
-					if(r.message) {
+					if (r.message) {
 						cur_frm.clear_table("closed_documents");
 						r.message.forEach(function(element) {
 							var c = frm.add_child("closed_documents");

@@ -57,7 +57,7 @@ frappe.require("assets/erpnext/js/financial_statements.js", function() {
 						"filters": {
 							"company": company,
 						}
-					}
+					};
 				}
 			},
 			{
@@ -106,7 +106,7 @@ frappe.require("assets/erpnext/js/financial_statements.js", function() {
 		"name_field": "account",
 		"parent_field": "parent_account",
 		"initial_depth": 3
-	}
+	};
 
 	erpnext.utils.add_dimensions('Trial Balance', 6);
 });

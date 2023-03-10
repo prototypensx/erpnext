@@ -20,7 +20,7 @@ erpnext.PointOfSale.ItemDetails = class {
 	prepare_dom() {
 		this.wrapper.append(
 			`<section class="item-details-container"></section>`
-		)
+		);
 
 		this.$component = this.wrapper.find('.item-details-container');
 	}
@@ -45,7 +45,7 @@ erpnext.PointOfSale.ItemDetails = class {
 			</div>
 			<div class="discount-section"></div>
 			<div class="form-container"></div>`
-		)
+		);
 
 		this.$item_name = this.$component.find('.item-name');
 		this.$item_description = this.$component.find('.item-desc');
@@ -154,10 +154,10 @@ erpnext.PointOfSale.ItemDetails = class {
 			this.$dicount_section.html(
 				`<div class="item-rate">${format_currency(item.price_list_rate, this.currency)}</div>
 				<div class="item-discount">${item.discount_percentage}% off</div>`
-			)
+			);
 			this.$item_price.html(format_currency(item.rate, this.currency));
 		} else {
-			this.$dicount_section.html(``)
+			this.$dicount_section.html(``);
 		}
 	}
 
@@ -168,7 +168,7 @@ erpnext.PointOfSale.ItemDetails = class {
 		fields_to_display.forEach((fieldname, idx) => {
 			this.$form_container.append(
 				`<div class="${fieldname}-control" data-fieldname="${fieldname}"></div>`
-			)
+			);
 
 			const field_meta = this.item_meta.fields.find(df => df.fieldname === fieldname);
 			fieldname === 'discount_percentage' ? (field_meta.label = __('Discount (%)')) : '';
@@ -183,7 +183,7 @@ erpnext.PointOfSale.ItemDetails = class {
 				},
 				parent: this.$form_container.find(`.${fieldname}-control`),
 				render_input: true,
-			})
+			});
 			this[`${fieldname}_control`].set_value(item[fieldname]);
 		});
 
@@ -248,7 +248,7 @@ erpnext.PointOfSale.ItemDetails = class {
 							me.events.get_available_stock(me.item_row.item_code, this.value).then(() => {
 								// item stock map is updated now reset warehouse
 								me.warehouse_control.set_value(this.value);
-							})
+							});
 						} else if (available_qty === 0 && is_stock_item) {
 							me.warehouse_control.set_value('');
 							const bold_item_code = me.item_row.item_code.bold();
@@ -260,11 +260,11 @@ erpnext.PointOfSale.ItemDetails = class {
 						me.actual_qty_control.set_value(available_qty);
 					});
 				}
-			}
+			};
 			this.warehouse_control.df.get_query = () => {
 				return {
 					filters: { company: this.events.get_frm().doc.company }
-				}
+				};
 			};
 			this.warehouse_control.refresh();
 		}
@@ -274,7 +274,7 @@ erpnext.PointOfSale.ItemDetails = class {
 			this.serial_no_control.df.onchange = async function() {
 				!me.current_item.batch_no && await me.auto_update_batch_no();
 				me.events.form_updated(me.current_item, 'serial_no', this.value);
-			}
+			};
 			this.serial_no_control.refresh();
 		}
 
@@ -288,7 +288,7 @@ erpnext.PointOfSale.ItemDetails = class {
 						warehouse: me.item_row.warehouse,
 						posting_date: me.events.get_frm().doc.posting_date
 					}
-				}
+				};
 			};
 			this.batch_no_control.refresh();
 		}
@@ -300,7 +300,7 @@ erpnext.PointOfSale.ItemDetails = class {
 				const item_row = frappe.get_doc(me.doctype, me.name);
 				me.conversion_factor_control.df.read_only = (item_row.stock_uom == this.value);
 				me.conversion_factor_control.refresh();
-			}
+			};
 		}
 
 		frappe.model.on("POS Invoice Item", "*", (fieldname, value, item_row) => {
@@ -417,10 +417,10 @@ erpnext.PointOfSale.ItemDetails = class {
 				numbers = auto_fetched_serial_numbers.join(`\n`);
 				this.serial_no_control.set_value(numbers);
 			});
-		})
+		});
 	}
 
 	toggle_component(show) {
 		show ? this.$component.css('display', 'flex') : this.$component.css('display', 'none');
 	}
-}
+};

@@ -6,7 +6,7 @@ let do_not_include_fields = ["naming_series", "item_code", "item_name", "stock_u
 	"default_material_request_type", "valuation_method", "warranty_period", "weight_uom", "batch_number_series",
 	"serial_no_series", "purchase_uom", "customs_tariff_number", "sales_uom", "deferred_revenue_account",
 	"deferred_expense_account", "quality_inspection_template", "route", "slideshow", "website_image_alt", "thumbnail",
-	"web_long_description"]
+	"web_long_description"];
 
 frappe.ui.form.on('POS Settings', {
 	onload: function(frm) {

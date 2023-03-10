@@ -28,7 +28,9 @@ erpnext.financial_statements = {
 	},
 	"open_general_ledger": function(data) {
 		if (!data.account) return;
-		let project = $.grep(frappe.query_report.filters, function(e){ return e.df.fieldname == 'project'; });
+		let project = $.grep(frappe.query_report.filters, function(e) {
+ return e.df.fieldname == 'project'; 
+});
 
 		frappe.route_options = {
 			"account": data.account,
@@ -54,9 +56,9 @@ erpnext.financial_statements = {
 	"initial_depth": 3,
 	onload: function(report) {
 		// dropdown for links to other financial statements
-		erpnext.financial_statements.filters = get_filters()
+		erpnext.financial_statements.filters = get_filters();
 
-		let fiscal_year = frappe.defaults.get_user_default("fiscal_year")
+		let fiscal_year = frappe.defaults.get_user_default("fiscal_year");
 
 		frappe.model.with_doc("Fiscal Year", fiscal_year, function(r) {
 			var fy = frappe.model.get_doc("Fiscal Year", fiscal_year);
@@ -88,7 +90,7 @@ erpnext.financial_statements = {
 function get_filters() {
 	let filters = [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
@@ -96,13 +98,13 @@ function get_filters() {
 			"reqd": 1
 		},
 		{
-			"fieldname":"finance_book",
+			"fieldname": "finance_book",
 			"label": __("Finance Book"),
 			"fieldtype": "Link",
 			"options": "Finance Book"
 		},
 		{
-			"fieldname":"filter_based_on",
+			"fieldname": "filter_based_on",
 			"label": __("Filter Based On"),
 			"fieldtype": "Select",
 			"options": ["Fiscal Year", "Date Range"],
@@ -119,21 +121,21 @@ function get_filters() {
 			}
 		},
 		{
-			"fieldname":"period_start_date",
+			"fieldname": "period_start_date",
 			"label": __("Start Date"),
 			"fieldtype": "Date",
 			"reqd": 1,
 			"depends_on": "eval:doc.filter_based_on == 'Date Range'"
 		},
 		{
-			"fieldname":"period_end_date",
+			"fieldname": "period_end_date",
 			"label": __("End Date"),
 			"fieldtype": "Date",
 			"reqd": 1,
 			"depends_on": "eval:doc.filter_based_on == 'Date Range'"
 		},
 		{
-			"fieldname":"from_fiscal_year",
+			"fieldname": "from_fiscal_year",
 			"label": __("Start Year"),
 			"fieldtype": "Link",
 			"options": "Fiscal Year",
@@ -142,7 +144,7 @@ function get_filters() {
 			"depends_on": "eval:doc.filter_based_on == 'Fiscal Year'"
 		},
 		{
-			"fieldname":"to_fiscal_year",
+			"fieldname": "to_fiscal_year",
 			"label": __("End Year"),
 			"fieldtype": "Link",
 			"options": "Fiscal Year",
@@ -183,7 +185,7 @@ function get_filters() {
 				});
 			}
 		}
-	]
+	];
 
 	return filters;
 }
