@@ -34,19 +34,19 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 					return;
 				}
 			});
-		})
+		});
 	}
 
-	make_keyboard(){
+	make_keyboard() {
 		var me = this;
 		$(this.$body).empty();
-		$(this.$body).html(frappe.render_template('pos_payment', this.frm.doc))
+		$(this.$body).html(frappe.render_template('pos_payment', this.frm.doc));
 		this.show_payment_details();
-		this.bind_keyboard_event()
-		this.clear_amount()
+		this.bind_keyboard_event();
+		this.clear_amount();
 	}
 
-	make_multimode_payment(){
+	make_multimode_payment() {
 		var me = this;
 
 		if (this.frm.doc.change_amount > 0) {
@@ -58,7 +58,7 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 		this.payments.amount = flt(this.payment_val);
 	}
 
-	show_payment_details(){
+	show_payment_details() {
 		var me = this;
 		var multimode_payments = $(this.$body).find('.multimode-payments').empty();
 		if (this.frm.doc.payments.length) {
@@ -69,7 +69,7 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 					idx: data.idx,
 					currency: me.frm.doc.currency,
 					type: data.type
-				})).appendTo(multimode_payments)
+				})).appendTo(multimode_payments);
 
 				if (data.type == 'Cash' && data.amount == me.frm.doc.paid_amount) {
 					me.idx = data.idx;
@@ -77,30 +77,30 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 					me.highlight_selected_row();
 					me.bind_amount_change_event();
 				}
-			})
-		}else{
-			$("<p>No payment mode selected in pos profile</p>").appendTo(multimode_payments)
+			});
+		} else {
+			$("<p>No payment mode selected in pos profile</p>").appendTo(multimode_payments);
 		}
 	}
 
-	set_outstanding_amount(){
+	set_outstanding_amount() {
 		this.selected_mode = $(this.$body).find(repl("input[idx='%(idx)s']",{'idx': this.idx}));
 		this.highlight_selected_row();
 		this.payment_val = 0.0;
 		if (this.frm.doc.outstanding_amount > 0 && flt(this.selected_mode.val()) == 0.0) {
 			//When user first time click on row
-			this.payment_val = flt(this.frm.doc.outstanding_amount / this.frm.doc.conversion_rate, precision("outstanding_amount"))
+			this.payment_val = flt(this.frm.doc.outstanding_amount / this.frm.doc.conversion_rate, precision("outstanding_amount"));
 			this.selected_mode.val(format_currency(this.payment_val, this.frm.doc.currency));
 			this.update_payment_amount();
 		} else if (flt(this.selected_mode.val()) > 0) {
 			//If user click on existing row which has value
 			this.payment_val = flt(this.selected_mode.val());
 		}
-		this.selected_mode.select()
+		this.selected_mode.select();
 		this.bind_amount_change_event();
 	}
 
-	bind_keyboard_event(){
+	bind_keyboard_event() {
 		var me = this;
 		this.payment_val = '';
 		this.bind_form_control_event();
@@ -139,7 +139,7 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 
 	bind_numeric_keys_event() {
 		var me = this;
-		$(this.$body).find('.pos-keyboard-key').click(function(){
+		$(this.$body).find('.pos-keyboard-key').click(function() {
 			me.payment_val += $(this).text();
 			me.selected_mode.val(format_currency(me.payment_val, me.frm.doc.currency));
 			me.idx = me.selected_mode.attr("idx");
@@ -151,7 +151,7 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 			me.selected_mode.val(format_currency(me.payment_val, me.frm.doc.currency));
 			me.idx = me.selected_mode.attr("idx");
 			me.update_paid_amount();
-		})
+		});
 
 	}
 
@@ -201,7 +201,7 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 			if (me.idx == 'change_amount') {
 				me.change_amount(value);
 			} else {
-				if(flt(value) == 0 && update_write_off && me.frm.doc.outstanding_amount > 0) {
+				if (flt(value) == 0 && update_write_off && me.frm.doc.outstanding_amount > 0) {
 					value = flt(me.frm.doc.outstanding_amount / me.frm.doc.conversion_rate, precision(me.idx));
 				}
 				me.write_off_amount(value);
@@ -211,20 +211,20 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 		}
 	}
 
-	update_payment_amount(){
+	update_payment_amount() {
 		var me = this;
 
 		$.each(this.frm.doc.payments, function(index, data) {
 			if (cint(me.idx) == cint(data.idx)) {
 				data.amount = flt(me.selected_mode.val(), 2);
 			}
-		})
+		});
 
 		this.calculate_outstanding_amount(false);
 		this.show_amounts();
 	}
 
-	show_amounts(){
+	show_amounts() {
 		var me = this;
 		$(this.$body).find(".write_off_amount").val(format_currency(this.frm.doc.write_off_amount, this.frm.doc.currency));
 		$(this.$body).find('.paid_amount').text(format_currency(this.frm.doc.paid_amount, this.frm.doc.currency));
@@ -232,4 +232,4 @@ erpnext.payments = class payments extends erpnext.stock.StockController {
 		$(this.$body).find('.outstanding_amount').text(format_currency(this.frm.doc.outstanding_amount, frappe.get_doc(":Company", this.frm.doc.company).default_currency));
 		this.update_invoice();
 	}
-}
+};

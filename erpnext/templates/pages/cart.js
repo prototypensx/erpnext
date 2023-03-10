@@ -166,9 +166,10 @@ $.extend(shopping_cart, {
 
 	render_tax_row: function($cart_taxes, doc, shipping_rules) {
 		var shipping_selector;
-		if(shipping_rules) {
+		if (shipping_rules) {
 			shipping_selector = '<select class="form-control">' + $.map(shipping_rules, function(rule) {
-				return '<option value="' + rule[0] + '">' + rule[1] + '</option>' }).join("\n") +
+				return '<option value="' + rule[0] + '">' + rule[1] + '</option>'; 
+}).join("\n") +
 			'</select>';
 		}
 
@@ -185,9 +186,9 @@ $.extend(shopping_cart, {
 			</div>\
 		</div>', doc)).appendTo($cart_taxes);
 
-		if(shipping_selector) {
+		if (shipping_selector) {
 			$tax_row.find('select option').each(function(i, opt) {
-				if($(opt).html() == doc.description) {
+				if ($(opt).html() == doc.description) {
 					$(opt).attr("selected", "selected");
 				}
 			});
@@ -204,7 +205,7 @@ $.extend(shopping_cart, {
 			method: "erpnext.e_commerce.shopping_cart.cart.apply_shipping_rule",
 			args: { shipping_rule: rule },
 			callback: function(r) {
-				if(!r.exc) {
+				if (!r.exc) {
 					shopping_cart.render(r.message);
 				}
 			}
@@ -219,10 +220,10 @@ $.extend(shopping_cart, {
 			method: "erpnext.e_commerce.shopping_cart.cart.place_order",
 			btn: btn,
 			callback: function(r) {
-				if(r.exc) {
+				if (r.exc) {
 					shopping_cart.unfreeze();
 					var msg = "";
-					if(r._server_messages) {
+					if (r._server_messages) {
 						msg = JSON.parse(r._server_messages || []).join("<br>");
 					}
 
@@ -246,10 +247,10 @@ $.extend(shopping_cart, {
 			method: "erpnext.e_commerce.shopping_cart.cart.request_for_quotation",
 			btn: btn,
 			callback: function(r) {
-				if(r.exc) {
+				if (r.exc) {
 					shopping_cart.unfreeze();
 					var msg = "";
-					if(r._server_messages) {
+					if (r._server_messages) {
 						msg = JSON.parse(r._server_messages || []).join("<br>");
 					}
 
@@ -276,12 +277,12 @@ $.extend(shopping_cart, {
 			type: "POST",
 			method: "erpnext.e_commerce.shopping_cart.cart.apply_coupon_code",
 			btn: btn,
-			args : {
-				applied_code : $('.txtcoupon').val(),
+			args: {
+				applied_code: $('.txtcoupon').val(),
 				applied_referral_sales_partner: $('.txtreferral_sales_partner').val()
 			},
 			callback: function(r) {
-				if (r && r.message){
+				if (r && r.message) {
 					location.reload();
 				}
 			}

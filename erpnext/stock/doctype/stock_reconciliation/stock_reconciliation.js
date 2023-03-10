@@ -12,10 +12,10 @@ frappe.ui.form.on("Stock Reconciliation", {
 		frm.set_query("item_code", "items", function(doc, cdt, cdn) {
 			return {
 				query: "erpnext.controllers.queries.item_query",
-				filters:{
+				filters: {
 					"is_stock_item": 1
 				}
-			}
+			};
 		});
 		frm.set_query("batch_no", "items", function(doc, cdt, cdn) {
 			var item = locals[cdt][cdn];
@@ -44,19 +44,19 @@ frappe.ui.form.on("Stock Reconciliation", {
 	},
 
 	refresh: function(frm) {
-		if(frm.doc.docstatus < 1) {
+		if (frm.doc.docstatus < 1) {
 			frm.add_custom_button(__("Fetch Items from Warehouse"), function() {
 				frm.events.get_items(frm);
 			});
 		}
 
-		if(frm.doc.company) {
+		if (frm.doc.company) {
 			frm.trigger("toggle_display_account_head");
 		}
 	},
 
 	scan_barcode: function(frm) {
-		const barcode_scanner = new erpnext.utils.BarcodeScanner({frm:frm});
+		const barcode_scanner = new erpnext.utils.BarcodeScanner({frm: frm});
 		barcode_scanner.process_scan();
 	},
 
@@ -70,7 +70,7 @@ frappe.ui.form.on("Stock Reconciliation", {
 	},
 
 	set_warehouse: function(frm) {
-		let transaction_controller = new erpnext.TransactionController({frm:frm});
+		let transaction_controller = new erpnext.TransactionController({frm: frm});
 		transaction_controller.autofill_warehouse(frm.doc.items, "warehouse", frm.doc.set_warehouse);
 	},
 
@@ -156,7 +156,7 @@ frappe.ui.form.on("Stock Reconciliation", {
 	set_valuation_rate_and_qty: function(frm, cdt, cdn) {
 		var d = frappe.model.get_doc(cdt, cdn);
 
-		if(d.item_code && d.warehouse) {
+		if (d.item_code && d.warehouse) {
 			frappe.call({
 				method: "erpnext.stock.doctype.stock_reconciliation.stock_reconciliation.get_stock_balance_for",
 				args: {
@@ -282,29 +282,29 @@ erpnext.stock.StockReconciliation = class StockReconciliation extends erpnext.st
 			this.frm.add_fetch("company", "cost_center", "cost_center");
 		}
 		this.frm.fields_dict["expense_account"].get_query = function() {
-			if(erpnext.is_perpetual_inventory_enabled(me.frm.doc.company)) {
+			if (erpnext.is_perpetual_inventory_enabled(me.frm.doc.company)) {
 				return {
 					"filters": {
 						'company': me.frm.doc.company,
 						"is_group": 0
 					}
-				}
+				};
 			}
-		}
+		};
 		this.frm.fields_dict["cost_center"].get_query = function() {
-			if(erpnext.is_perpetual_inventory_enabled(me.frm.doc.company)) {
+			if (erpnext.is_perpetual_inventory_enabled(me.frm.doc.company)) {
 				return {
 					"filters": {
 						'company': me.frm.doc.company,
 						"is_group": 0
 					}
-				}
+				};
 			}
-		}
+		};
 	}
 
 	refresh() {
-		if(this.frm.doc.docstatus > 0) {
+		if (this.frm.doc.docstatus > 0) {
 			this.show_stock_ledger();
 			if (erpnext.is_perpetual_inventory_enabled(this.frm.doc.company)) {
 				this.show_general_ledger();

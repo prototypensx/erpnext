@@ -35,7 +35,7 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 		});
 
 		this.filters = [
-			{fieldtype: "Select", label: __("Company"), link:"Company", fieldname: "company",
+			{fieldtype: "Select", label: __("Company"), link: "Company", fieldname: "company",
 				default_value: __("Select Company..."),
 				filter: function(val, item, opts, me) {
 					if (item.company == val || val == opts.default_value) {
@@ -43,12 +43,12 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 					}
 					return false;
 				}},
-			{fieldtype: "Select", label: "Fiscal Year", link:"Fiscal Year", fieldname: "fiscal_year",
+			{fieldtype: "Select", label: "Fiscal Year", link: "Fiscal Year", fieldname: "fiscal_year",
 				default_value: __("Select Fiscal Year...")},
 			{fieldtype: "Date", label: __("From Date"), fieldname: "from_date"},
 			{fieldtype: "Label", label: __("To")},
 			{fieldtype: "Date", label: __("To Date"), fieldname: "to_date"}
-		]
+		];
 	}
 	setup_columns() {
 		this.columns = [
@@ -82,12 +82,12 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 			});
 			me.refresh();
 		});
-		me.show_zero_check()
-		if(me.ignore_closing_entry) me.ignore_closing_entry();
+		me.show_zero_check();
+		if (me.ignore_closing_entry) me.ignore_closing_entry();
 	}
 	prepare_data() {
 		var me = this;
-		if(!this.primary_data) {
+		if (!this.primary_data) {
 			// make accounts list
 			me.data = [];
 			me.parent_map = {};
@@ -98,7 +98,7 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 
 				me.data.push(d);
 				me.item_by_name[d.name] = d;
-				if(d.parent_account) {
+				if (d.parent_account) {
 					me.parent_map[d.name] = d.parent_account;
 				}
 			});
@@ -164,7 +164,7 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 		this.set_debit_or_credit(account, "closing", closing_bal);
 	}
 	set_debit_or_credit(account, field, balance) {
-		if(balance > 0) {
+		if (balance > 0) {
 			account[field+"_dr"] = balance;
 			account[field+"_cr"] = 0;
 		} else {
@@ -177,23 +177,23 @@ erpnext.AccountTreeGrid = class AccountTreeGrid extends frappe.views.TreeGridRep
 		var me= this;
 		$.each(this.data, function(i, account) {
 			// update groups
-			if((account.is_group == 0) || (account.rgt - account.lft == 1)) {
+			if ((account.is_group == 0) || (account.rgt - account.lft == 1)) {
 				var parent = me.parent_map[account.name];
-				while(parent) {
+				while (parent) {
 					var parent_account = me.item_by_name[parent];
 					$.each(me.columns, function(c, col) {
 						if (col.formatter == me.currency_formatter) {
-							if(col.field=="opening_dr") {
+							if (col.field=="opening_dr") {
 								var bal = flt(parent_account.opening_dr) -
 									flt(parent_account.opening_cr) +
 									flt(account.opening_dr) - flt(account.opening_cr);
 								me.set_debit_or_credit(parent_account, "opening", bal);
-							} else if(col.field=="closing_dr") {
+							} else if (col.field=="closing_dr") {
 								var bal = flt(parent_account.closing_dr) -
 									flt(parent_account.closing_cr) +
 									flt(account.closing_dr) - flt(account.closing_cr);
 								me.set_debit_or_credit(parent_account, "closing", bal);
-							} else if(in_list(["debit", "credit"], col.field)) {
+							} else if (in_list(["debit", "credit"], col.field)) {
 								parent_account[col.field] = flt(parent_account[col.field]) +
 									flt(account[col.field]);
 							}

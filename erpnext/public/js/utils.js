@@ -5,9 +5,9 @@ frappe.provide("erpnext.utils");
 
 $.extend(erpnext, {
 	get_currency: function(company) {
-		if(!company && cur_frm)
+		if (!company && cur_frm)
 			company = cur_frm.doc.company;
-		if(company)
+		if (company)
 			return frappe.get_doc(":Company", company).default_currency || frappe.boot.sysdefaults.currency;
 		else
 			return frappe.boot.sysdefaults.currency;
@@ -21,26 +21,26 @@ $.extend(erpnext, {
 	},
 
 	toggle_naming_series: function() {
-		if(cur_frm.fields_dict.naming_series) {
+		if (cur_frm.fields_dict.naming_series) {
 			cur_frm.toggle_display("naming_series", cur_frm.doc.__islocal?true:false);
 		}
 	},
 
 	hide_company: function() {
-		if(cur_frm.fields_dict.company) {
+		if (cur_frm.fields_dict.company) {
 			var companies = Object.keys(locals[":Company"] || {});
-			if(companies.length === 1) {
-				if(!cur_frm.doc.company) cur_frm.set_value("company", companies[0]);
+			if (companies.length === 1) {
+				if (!cur_frm.doc.company) cur_frm.set_value("company", companies[0]);
 				cur_frm.toggle_display("company", false);
-			} else if(erpnext.last_selected_company) {
-				if(!cur_frm.doc.company) cur_frm.set_value("company", erpnext.last_selected_company);
+			} else if (erpnext.last_selected_company) {
+				if (!cur_frm.doc.company) cur_frm.set_value("company", erpnext.last_selected_company);
 			}
 		}
 	},
 
 	is_perpetual_inventory_enabled: function(company) {
-		if(company) {
-			return frappe.get_doc(":Company", company).enable_perpetual_inventory
+		if (company) {
+			return frappe.get_doc(":Company", company).enable_perpetual_inventory;
 		}
 	},
 
@@ -92,9 +92,9 @@ $.extend(erpnext, {
 
 $.extend(erpnext.utils, {
 	set_party_dashboard_indicators: function(frm) {
-		if(frm.doc.__onload && frm.doc.__onload.dashboard_info) {
+		if (frm.doc.__onload && frm.doc.__onload.dashboard_info) {
 			var company_wise_info = frm.doc.__onload.dashboard_info;
-			if(company_wise_info.length > 1) {
+			if (company_wise_info.length > 1) {
 				company_wise_info.forEach(function(info) {
 					erpnext.utils.add_indicator_for_multicompany(frm, info);
 				});
@@ -105,7 +105,7 @@ $.extend(erpnext.utils, {
 					[format_currency(company_wise_info[0].total_unpaid, company_wise_info[0].currency)]),
 				company_wise_info[0].total_unpaid ? 'orange' : 'green');
 
-				if(company_wise_info[0].loyalty_points) {
+				if (company_wise_info[0].loyalty_points) {
 					frm.dashboard.add_indicator(__('Loyalty Points: {0}',
 						[company_wise_info[0].loyalty_points]), 'blue');
 				}
@@ -133,7 +133,7 @@ $.extend(erpnext.utils, {
 
 			'</div>').appendTo(frm.dashboard.stats_area_row);
 
-		if(info.loyalty_points){
+		if (info.loyalty_points) {
 			$('<div class="badge-link small" style="margin-bottom:10px"><span class="indicator blue">'+
 			'Loyalty Points: '+info.loyalty_points+'</span></div>').appendTo(indicator);
 		}
@@ -149,17 +149,17 @@ $.extend(erpnext.utils, {
 
 	copy_value_in_all_rows: function(doc, dt, dn, table_fieldname, fieldname) {
 		var d = locals[dt][dn];
-		if(d[fieldname]){
+		if (d[fieldname]) {
 			var cl = doc[table_fieldname] || [];
-			for(var i = 0; i < cl.length; i++) {
-				if(!cl[i][fieldname]) cl[i][fieldname] = d[fieldname];
+			for (var i = 0; i < cl.length; i++) {
+				if (!cl[i][fieldname]) cl[i][fieldname] = d[fieldname];
 			}
 		}
 		refresh_field(table_fieldname);
 	},
 
 	get_terms: function(tc_name, doc, callback) {
-		if(tc_name) {
+		if (tc_name) {
 			return frappe.call({
 				method: 'erpnext.setup.doctype.terms_and_conditions.terms_and_conditions.get_terms_and_conditions',
 				args: {
@@ -167,7 +167,7 @@ $.extend(erpnext.utils, {
 					doc: doc
 				},
 				callback: function(r) {
-					callback(r)
+					callback(r);
 				}
 			});
 		}
@@ -185,7 +185,7 @@ $.extend(erpnext.utils, {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	add_dimensions: function(report_name, index) {
@@ -236,7 +236,7 @@ $.extend(erpnext.utils, {
 							existing_filter[0]['fieldtype'] = "MultiSelectList";
 							existing_filter[0]['get_data'] = function(txt) {
 								return frappe.db.get_link_options(dimension["doctype"], txt);
-							}
+							};
 						}
 					});
 				}
@@ -255,7 +255,7 @@ $.extend(erpnext.utils, {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	make_pricing_rule: function(doctype, docname) {
@@ -269,7 +269,7 @@ $.extend(erpnext.utils, {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	/**
@@ -277,8 +277,8 @@ $.extend(erpnext.utils, {
 	* @param child_table - Child table Doctype
 	* @return {Boolean}
 	**/
-	first_row_is_empty: function(child_table){
-		if($.isArray(child_table) && child_table.length > 0) {
+	first_row_is_empty: function(child_table) {
+		if ($.isArray(child_table) && child_table.length > 0) {
 			return !child_table[0].item_code;
 		}
 		return false;
@@ -290,9 +290,9 @@ $.extend(erpnext.utils, {
 	* @param {String} child_table_name - The child table field name
 	* @return {Boolean}
 	**/
-	remove_empty_first_row: function(frm, child_table_name){
+	remove_empty_first_row: function(frm, child_table_name) {
 		const rows = frm['doc'][child_table_name];
-		if (this.first_row_is_empty(rows)){
+		if (this.first_row_is_empty(rows)) {
 			frm['doc'][child_table_name] = rows.splice(1);
 		}
 		return rows;
@@ -303,10 +303,12 @@ $.extend(erpnext.utils, {
 		let user_permission = frappe.defaults.get_user_permissions();
 		let options;
 
-		if(user_permission && user_permission[unscrub_option]) {
+		if (user_permission && user_permission[unscrub_option]) {
 			options = user_permission[unscrub_option].map(perm => perm.doc);
 		} else {
-			options = $.map(locals[`:${unscrub_option}`], function(c) { return c.name; }).sort();
+			options = $.map(locals[`:${unscrub_option}`], function(c) {
+ return c.name; 
+}).sort();
 		}
 
 		// filter unique values, as there may be multiple user permissions for any value
@@ -315,7 +317,7 @@ $.extend(erpnext.utils, {
 	get_tree_default: function(option) {
 		// set default for a field based on user permission
 		let options = this.get_tree_options(option);
-		if(options.includes(frappe.defaults.get_default(option))) {
+		if (options.includes(frappe.defaults.get_default(option))) {
 			return frappe.defaults.get_default(option);
 		} else {
 			return options[0];
@@ -343,9 +345,9 @@ $.extend(erpnext.utils, {
 	// check if payments app is installed on site, if not warn user.
 	check_payments_app: () => {
 		if (frappe.boot.versions && !frappe.boot.versions.payments) {
-			const marketplace_link = '<a href="https://frappecloud.com/marketplace/apps/payments">Marketplace</a>'
-			const github_link = '<a href="https://github.com/frappe/payments/">GitHub</a>'
-			const msg = __("payments app is not installed. Please install it from {0} or {1}", [marketplace_link, github_link])
+			const marketplace_link = '<a href="https://frappecloud.com/marketplace/apps/payments">Marketplace</a>';
+			const github_link = '<a href="https://github.com/frappe/payments/">GitHub</a>';
+			const msg = __("payments app is not installed. Please install it from {0} or {1}", [marketplace_link, github_link]);
 			frappe.msgprint(msg);
 		}
 
@@ -361,7 +363,7 @@ erpnext.utils.select_alternate_items = function(opts) {
 	const dialog = new frappe.ui.Dialog({
 		title: __("Select Alternate Item"),
 		fields: [
-			{fieldtype:'Section Break', label: __('Items')},
+			{fieldtype: 'Section Break', label: __('Items')},
 			{
 				fieldname: "alternative_items", fieldtype: "Table", cannot_add_rows: true,
 				in_place_edit: true, data: this.data,
@@ -369,19 +371,19 @@ erpnext.utils.select_alternate_items = function(opts) {
 					return this.data;
 				},
 				fields: [{
-					fieldtype:'Data',
-					fieldname:"docname",
+					fieldtype: 'Data',
+					fieldname: "docname",
 					hidden: 1
 				}, {
-					fieldtype:'Link',
-					fieldname:"item_code",
+					fieldtype: 'Link',
+					fieldname: "item_code",
 					options: 'Item',
 					in_list_view: 1,
 					read_only: 1,
 					label: __('Item Code')
 				}, {
-					fieldtype:'Link',
-					fieldname:"alternate_item",
+					fieldtype: 'Link',
+					fieldname: "alternate_item",
 					options: 'Item',
 					default: "",
 					in_list_view: 1,
@@ -400,7 +402,7 @@ erpnext.utils.select_alternate_items = function(opts) {
 									this.grid_row.on_grid_fields_dict
 										.actual_qty.set_value(r.message || 0);
 								}
-							})
+							});
 						}
 					},
 					get_query: (e) => {
@@ -412,8 +414,8 @@ erpnext.utils.select_alternate_items = function(opts) {
 						};
 					}
 				}, {
-					fieldtype:'Link',
-					fieldname:"warehouse",
+					fieldtype: 'Link',
+					fieldname: "warehouse",
 					options: 'Warehouse',
 					default: "",
 					in_list_view: 1,
@@ -432,12 +434,12 @@ erpnext.utils.select_alternate_items = function(opts) {
 									this.grid_row.on_grid_fields_dict
 										.actual_qty.set_value(r.message || 0);
 								}
-							})
+							});
 						}
 					},
 				}, {
-					fieldtype:'Float',
-					fieldname:"actual_qty",
+					fieldtype: 'Float',
+					fieldname: "actual_qty",
 					default: 0,
 					read_only: 1,
 					in_list_view: 1,
@@ -482,12 +484,12 @@ erpnext.utils.select_alternate_items = function(opts) {
 				"actual_qty": d.actual_qty
 			});
 		}
-	})
+	});
 
 	this.data = dialog.fields_dict.alternative_items.df.data;
 	dialog.fields_dict.alternative_items.grid.refresh();
 	dialog.show();
-}
+};
 
 erpnext.utils.update_child_items = function(opts) {
 	const frm = opts.frm;
@@ -507,17 +509,17 @@ erpnext.utils.update_child_items = function(opts) {
 			"qty": d.qty,
 			"rate": d.rate,
 			"uom": d.uom
-		}
+		};
 	});
 
 	const fields = [{
-		fieldtype:'Data',
-		fieldname:"docname",
+		fieldtype: 'Data',
+		fieldname: "docname",
 		read_only: 1,
 		hidden: 1,
 	}, {
-		fieldtype:'Link',
-		fieldname:"item_code",
+		fieldtype: 'Link',
+		fieldname: "item_code",
 		options: 'Item',
 		in_list_view: 1,
 		read_only: 0,
@@ -544,8 +546,8 @@ erpnext.utils.update_child_items = function(opts) {
 			};
 		}
 	}, {
-		fieldtype:'Link',
-		fieldname:'uom',
+		fieldtype: 'Link',
+		fieldname: 'uom',
 		options: 'UOM',
 		read_only: 0,
 		label: __('UOM'),
@@ -555,7 +557,7 @@ erpnext.utils.update_child_items = function(opts) {
 				method: "erpnext.stock.get_item_details.get_conversion_factor",
 				args: { item_code: this.doc.item_code, uom: this.value },
 				callback: r => {
-					if(!r.exc) {
+					if (!r.exc) {
 						if (this.doc.conversion_factor == r.message.conversion_factor) return;
 
 						const docname = this.doc.docname;
@@ -565,22 +567,22 @@ erpnext.utils.update_child_items = function(opts) {
 								dialog.fields_dict.trans_items.grid.refresh();
 								return true;
 							}
-						})
+						});
 					}
 				}
 			});
 		}
 	}, {
-		fieldtype:'Float',
-		fieldname:"qty",
+		fieldtype: 'Float',
+		fieldname: "qty",
 		default: 0,
 		read_only: 0,
 		in_list_view: 1,
 		label: __('Qty'),
 		precision: get_precision("qty")
 	}, {
-		fieldtype:'Currency',
-		fieldname:"rate",
+		fieldtype: 'Currency',
+		fieldname: "rate",
 		options: "currency",
 		default: 0,
 		read_only: 0,
@@ -596,14 +598,14 @@ erpnext.utils.update_child_items = function(opts) {
 			in_list_view: 1,
 			label: frm.doc.doctype == 'Sales Order' ? __("Delivery Date") : __("Reqd by date"),
 			reqd: 1
-		})
+		});
 		fields.splice(3, 0, {
 			fieldtype: 'Float',
 			fieldname: "conversion_factor",
 			in_list_view: 1,
 			label: __("Conversion Factor"),
 			precision: get_precision('conversion_factor')
-		})
+		});
 	}
 
 	new frappe.ui.Dialog({
@@ -643,13 +645,13 @@ erpnext.utils.update_child_items = function(opts) {
 		},
 		primary_action_label: __('Update')
 	}).show();
-}
+};
 
 erpnext.utils.map_current_doc = function(opts) {
 	function _map() {
-		if($.isArray(cur_frm.doc.items) && cur_frm.doc.items.length > 0) {
+		if ($.isArray(cur_frm.doc.items) && cur_frm.doc.items.length > 0) {
 			// remove first item row if empty
-			if(!cur_frm.doc.items[0].item_code) {
+			if (!cur_frm.doc.items[0].item_code) {
 				cur_frm.doc.items = cur_frm.doc.items.splice(1);
 			}
 
@@ -660,7 +662,8 @@ erpnext.utils.map_current_doc = function(opts) {
 			// source_doctype
 			var link_fieldname = null;
 			frappe.get_meta(items_doctype).fields.forEach(function(d) {
-				if(d.options===opts.source_doctype) link_fieldname = d.fieldname; });
+				if (d.options===opts.source_doctype) link_fieldname = d.fieldname; 
+});
 
 			// search in existing items if the source_name is already set and full qty fetched
 			var already_set = false;
@@ -668,7 +671,7 @@ erpnext.utils.map_current_doc = function(opts) {
 
 			$.each(cur_frm.doc.items, function(i, d) {
 				opts.source_name.forEach(function(src) {
-					if(d[link_fieldname]==src) {
+					if (d[link_fieldname]==src) {
 						already_set = true;
 						if (item_qty_map[d.item_code])
 							item_qty_map[d.item_code] += flt(d.qty);
@@ -678,25 +681,25 @@ erpnext.utils.map_current_doc = function(opts) {
 				});
 			});
 
-			if(already_set) {
+			if (already_set) {
 				opts.source_name.forEach(function(src) {
 					frappe.model.with_doc(opts.source_doctype, src, function(r) {
 						var source_doc = frappe.model.get_doc(opts.source_doctype, src);
 						$.each(source_doc.items || [], function(i, row) {
-							if(row.qty > flt(item_qty_map[row.item_code])) {
+							if (row.qty > flt(item_qty_map[row.item_code])) {
 								already_set = false;
 								return false;
 							}
-						})
-					})
+						});
+					});
 
-					if(already_set) {
+					if (already_set) {
 						frappe.msgprint(__("You have already selected items from {0} {1}",
 							[opts.source_doctype, src]));
 						return;
 					}
 
-				})
+				});
 			}
 		}
 
@@ -712,7 +715,7 @@ erpnext.utils.map_current_doc = function(opts) {
 				"args": opts.args
 			},
 			callback: function(r) {
-				if(!r.exc) {
+				if (!r.exc) {
 					var doc = frappe.model.sync(r.message);
 					cur_frm.dirty();
 					cur_frm.refresh();
@@ -749,7 +752,7 @@ erpnext.utils.map_current_doc = function(opts) {
 			action: function(selections, args) {
 				let values = selections;
 				if (values.length === 0) {
-					frappe.msgprint(__("Please select {0}", [opts.source_doctype]))
+					frappe.msgprint(__("Please select {0}", [opts.source_doctype]));
 					return;
 				}
 				opts.source_name = values;
@@ -769,7 +772,7 @@ erpnext.utils.map_current_doc = function(opts) {
 		opts.source_name = [opts.source_name];
 		_map();
 	}
-}
+};
 
 frappe.form.link_formatters['Item'] = function(value, doc) {
 	if (doc && value && doc.item_name && doc.item_name !== value && doc.item_code === value) {
@@ -781,7 +784,7 @@ frappe.form.link_formatters['Item'] = function(value, doc) {
 		// if value is blank in report view or item code and name are the same, return as is
 		return value;
 	}
-}
+};
 
 frappe.form.link_formatters['Employee'] = function(value, doc) {
 	if (doc && value && doc.employee_name && doc.employee_name !== value && doc.employee === value) {
@@ -793,7 +796,7 @@ frappe.form.link_formatters['Employee'] = function(value, doc) {
 		// if value is blank in report view or project name and name are the same, return as is
 		return value;
 	}
-}
+};
 
 frappe.form.link_formatters['Project'] = function(value, doc) {
 	if (doc && value && doc.project_name && doc.project_name !== value && doc.project === value) {
@@ -809,7 +812,7 @@ frappe.form.link_formatters['Project'] = function(value, doc) {
 
 // add description on posting time
 $(document).on('app_ready', function() {
-	if(!frappe.datetime.is_timezone_same()) {
+	if (!frappe.datetime.is_timezone_same()) {
 		$.each(["Stock Reconciliation", "Stock Entry", "Stock Ledger Entry",
 			"Delivery Note", "Purchase Receipt", "Sales Invoice"], function(i, d) {
 			frappe.ui.form.on(d, "onload", function(frm) {

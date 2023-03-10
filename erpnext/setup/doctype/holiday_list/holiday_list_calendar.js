@@ -19,4 +19,4 @@ frappe.views.calendar["Holiday List"] = {
 			'label': __('Holiday List')
 		}
 	]
-}
+};

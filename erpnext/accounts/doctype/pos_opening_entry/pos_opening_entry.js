@@ -19,8 +19,8 @@ frappe.ui.form.on('POS Opening Entry', {
 
 	refresh(frm) {
 		// set default posting date / time
-		if(frm.doc.docstatus == 0) {
-			if(!frm.doc.posting_date) {
+		if (frm.doc.docstatus == 0) {
+			if (!frm.doc.posting_date) {
 				frm.set_value('posting_date', frappe.datetime.nowdate());
 			}
 			frm.trigger('set_posting_date_read_only');
@@ -28,7 +28,7 @@ frappe.ui.form.on('POS Opening Entry', {
 	},
 
 	set_posting_date_read_only(frm) {
-		if(frm.doc.docstatus == 0 && frm.doc.set_posting_date) {
+		if (frm.doc.docstatus == 0 && frm.doc.set_posting_date) {
 			frm.set_df_property('posting_date', 'read_only', 0);
 		} else {
 			frm.set_df_property('posting_date', 'read_only', 1);
@@ -47,7 +47,7 @@ frappe.ui.form.on('POS Opening Entry', {
 						frm.doc.balance_details = [];
 						payments.forEach(({ mode_of_payment }) => {
 							frm.add_child("balance_details", { mode_of_payment });
-						})
+						});
 						frm.refresh_field("balance_details");
 					}
 				});

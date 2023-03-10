@@ -45,7 +45,7 @@ frappe.query_reports["Trial Balance for Party"] = {
 			"default": frappe.defaults.get_user_default("year_end_date"),
 		},
 		{
-			"fieldname":"party_type",
+			"fieldname": "party_type",
 			"label": __("Party Type"),
 			"fieldtype": "Link",
 			"options": "Party Type",
@@ -53,13 +53,13 @@ frappe.query_reports["Trial Balance for Party"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"party",
+			"fieldname": "party",
 			"label": __("Party"),
 			"fieldtype": "Dynamic Link",
 			"get_options": function() {
 				var party_type = frappe.query_report.get_filter_value('party_type');
 				var party = frappe.query_report.get_filter_value('party');
-				if(party && !party_type) {
+				if (party && !party_type) {
 					frappe.throw(__("Please select Party Type first"));
 				}
 				return party_type;
@@ -77,7 +77,7 @@ frappe.query_reports["Trial Balance for Party"] = {
 					"filters": {
 						"company": company,
 					}
-				}
+				};
 			}
 		},
 		{
@@ -86,4 +86,4 @@ frappe.query_reports["Trial Balance for Party"] = {
 			"fieldtype": "Check"
 		}
 	]
-}
+};

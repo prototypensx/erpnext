@@ -26,19 +26,19 @@ frappe.ui.form.on('Budget', {
 	},
 
 	refresh: function(frm) {
-		frm.trigger("toggle_reqd_fields")
+		frm.trigger("toggle_reqd_fields");
 	},
 
 	budget_against: function(frm) {
-		frm.trigger("set_null_value")
-		frm.trigger("toggle_reqd_fields")
+		frm.trigger("set_null_value");
+		frm.trigger("toggle_reqd_fields");
 	},
 
 	set_null_value: function(frm) {
-		if(frm.doc.budget_against == 'Cost Center') {
-			frm.set_value('project', null)
+		if (frm.doc.budget_against == 'Cost Center') {
+			frm.set_value('project', null);
 		} else {
-			frm.set_value('cost_center', null)
+			frm.set_value('cost_center', null);
 		}
 	},
 

@@ -3,7 +3,7 @@
 frappe.query_reports["Sales Payment Summary"] = {
 	"filters": [
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.get_today(),
@@ -11,33 +11,33 @@ frappe.query_reports["Sales Payment Summary"] = {
 			"width": "80"
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"reqd": 1,
 			"default": frappe.datetime.get_today()
 		},
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
-			"fieldname":"owner",
+			"fieldname": "owner",
 			"label": __("Owner"),
 			"fieldtype": "Link",
 			"options": "User",
 			"defaults": user
 		},
 		{
-			"fieldname":"is_pos",
+			"fieldname": "is_pos",
 			"label": __("Show only POS"),
 			"fieldtype": "Check"
 		},
 		{
-			"fieldname":"payment_detail",
+			"fieldname": "payment_detail",
 			"label": __("Show Payment Details"),
 			"fieldtype": "Check"
 		},

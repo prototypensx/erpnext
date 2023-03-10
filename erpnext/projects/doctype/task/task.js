@@ -10,7 +10,7 @@ frappe.ui.form.on("Task", {
 				method: 'erpnext.projects.doctype.task.task.make_timesheet',
 				frm: frm
 			})
-		}
+		};
 	},
 
 	onload: function (frm) {
@@ -22,7 +22,7 @@ frappe.ui.form.on("Task", {
 			return {
 				filters: filters
 			};
-		})
+		});
 
 		frm.set_query("parent_task", function () {
 			let filters = {
@@ -32,7 +32,7 @@ frappe.ui.form.on("Task", {
 			if (frm.doc.project) filters["project"] = frm.doc.project;
 			return {
 				filters: filters
-			}
+			};
 		});
 	},
 
@@ -51,7 +51,7 @@ frappe.ui.form.on("Task", {
 					frm.reload_doc();
 				}
 			}
-		})
+		});
 	},
 
 	validate: function (frm) {

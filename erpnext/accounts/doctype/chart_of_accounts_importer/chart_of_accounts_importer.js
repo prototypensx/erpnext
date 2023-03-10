@@ -28,7 +28,7 @@ frappe.ui.form.on('Chart of Accounts Importer', {
 			title: __("Download Template"),
 			fields: [
 				{
-					label : "File Type",
+					label: "File Type",
 					fieldname: "file_type",
 					fieldtype: "Select",
 					reqd: 1,
@@ -93,7 +93,7 @@ frappe.ui.form.on('Chart of Accounts Importer', {
 					company: frm.doc.company
 				},
 				callback: function(r) {
-					if(r.message===false) {
+					if (r.message===false) {
 						frm.set_value("company", "");
 						frappe.throw(__("Transactions against the Company already exist! Chart of Accounts can only be imported for a Company with no transactions."));
 					} else {

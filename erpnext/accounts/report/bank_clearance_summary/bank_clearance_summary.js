@@ -4,20 +4,20 @@
 frappe.query_reports["Bank Clearance Summary"] = {
 	"filters": [
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.defaults.get_user_default("year_start_date"),
 			"width": "80"
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"default": frappe.datetime.get_today()
 		},
 		{
-			"fieldname":"account",
+			"fieldname": "account",
 			"label": __("Bank Account"),
 			"fieldtype": "Link",
 			"options": "Account",
@@ -31,8 +31,8 @@ frappe.query_reports["Bank Clearance Summary"] = {
 						['Account', 'account_type', 'in', 'Bank, Cash'],
 						['Account', 'is_group', '=', 0],
 					]
-				}
+				};
 			}
 		},
 	]
-}
+};

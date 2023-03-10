@@ -19,16 +19,16 @@ frappe.ui.form.on('Promotional Scheme', {
 		var options = [""];
 		var applicable_for = frm.doc.applicable_for;
 
-		if(frm.doc.selling) {
+		if (frm.doc.selling) {
 			options = $.merge(options, ["Customer", "Customer Group", "Territory", "Sales Partner", "Campaign"]);
 		}
-		if(frm.doc.buying) {
+		if (frm.doc.buying) {
 			$.merge(options, ["Supplier", "Supplier Group"]);
 		}
 
 		set_field_options("applicable_for", options.join("\n"));
 
-		if(!in_list(options, applicable_for)) applicable_for = null;
+		if (!in_list(options, applicable_for)) applicable_for = null;
 		frm.set_value("applicable_for", applicable_for);
 	},
 

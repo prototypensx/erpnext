@@ -33,7 +33,7 @@ frappe.listview_settings['Sales Order'] = {
 			// to bill
 			return [__("To Bill"), "orange",
 				"per_delivered,=,100|per_billed,<,100|status,!=,Closed"];
-		} else if (doc.skip_delivery_note && flt(doc.per_billed, 6) < 100){
+		} else if (doc.skip_delivery_note && flt(doc.per_billed, 6) < 100) {
 			return [__("To Bill"), "orange", "per_billed,<,100|status,!=,Closed"];
 		}
 	},

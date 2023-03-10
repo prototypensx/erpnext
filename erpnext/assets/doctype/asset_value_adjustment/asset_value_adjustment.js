@@ -12,7 +12,7 @@ frappe.ui.form.on('Asset Value Adjustment', {
 					company: frm.doc.company,
 					is_group: 0
 				}
-			}
+			};
 		});
 		frm.set_query('asset', function() {
 			return {
@@ -25,7 +25,7 @@ frappe.ui.form.on('Asset Value Adjustment', {
 	},
 
 	onload: function(frm) {
-		if(frm.is_new() && frm.doc.asset) {
+		if (frm.is_new() && frm.doc.asset) {
 			frm.trigger("set_current_asset_value");
 		}
 

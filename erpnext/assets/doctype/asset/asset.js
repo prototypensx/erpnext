@@ -46,7 +46,7 @@ frappe.ui.form.on('Asset', {
 				frappe.call({
 				method: "erpnext.assets.doctype.asset.asset.make_asset_movement",
 				freeze: true,
-				args:{
+				args: {
 					"assets": [{ name: cur_frm.doc.name }]
 				},
 				callback: function (r) {
@@ -57,19 +57,19 @@ frappe.ui.form.on('Asset', {
 				}
 			});
 			},
-		}
+		};
 
 		frm.set_query("purchase_receipt", (doc) => {
 			return {
 				query: "erpnext.controllers.queries.get_purchase_receipts",
 				filters: { item_code: doc.item_code }
-			}
+			};
 		});
 		frm.set_query("purchase_invoice", (doc) => {
 			return {
 				query: "erpnext.controllers.queries.get_purchase_invoices",
 				filters: { item_code: doc.item_code }
-			}
+			};
 		});
 	},
 
@@ -166,22 +166,18 @@ frappe.ui.form.on('Asset', {
 		if (frm.doc.purchase_receipt && frm.doc.purchase_invoice && frm.doc.docstatus === 1) {
 			frm.set_df_property('purchase_invoice', 'read_only', 1);
 			frm.set_df_property('purchase_receipt', 'read_only', 1);
-		}
-		else if (frm.doc.is_existing_asset) {
+		} else if (frm.doc.is_existing_asset) {
 			frm.toggle_reqd('purchase_receipt', 0);
 			frm.toggle_reqd('purchase_invoice', 0);
-		}
-		else if (frm.doc.purchase_receipt) {
+		} else if (frm.doc.purchase_receipt) {
 			// if purchase receipt link is set then set PI disabled
 			frm.toggle_reqd('purchase_invoice', 0);
 			frm.set_df_property('purchase_invoice', 'read_only', 1);
-		}
-		else if (frm.doc.purchase_invoice) {
+		} else if (frm.doc.purchase_invoice) {
 			// if purchase invoice link is set then set PR disabled
 			frm.toggle_reqd('purchase_receipt', 0);
 			frm.set_df_property('purchase_receipt', 'read_only', 1);
-		}
-		else {
+		} else {
 			frm.toggle_reqd('purchase_receipt', 1);
 			frm.set_df_property('purchase_receipt', 'read_only', 0);
 			frm.toggle_reqd('purchase_invoice', 1);
@@ -201,19 +197,19 @@ frappe.ui.form.on('Asset', {
 					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 				}
 			}
-		})
+		});
 	},
 
 	setup_chart: async function(frm) {
-		if(frm.doc.finance_books.length > 1) {
-			return
+		if (frm.doc.finance_books.length > 1) {
+			return;
 		}
 
 		var x_intervals = [frappe.format(frm.doc.purchase_date, { fieldtype: 'Date' })];
 		var asset_values = [frm.doc.gross_purchase_amount];
 
-		if(frm.doc.calculate_depreciation) {
-			if(frm.doc.opening_accumulated_depreciation) {
+		if (frm.doc.calculate_depreciation) {
+			if (frm.doc.opening_accumulated_depreciation) {
 				var depreciation_date = frappe.datetime.add_months(
 					frm.doc.finance_books[0].depreciation_start_date,
 					-1 * frm.doc.finance_books[0].frequency_of_depreciation
@@ -234,18 +230,18 @@ frappe.ui.form.on('Asset', {
 			$.each(depr_schedule || [], function(i, v) {
 				x_intervals.push(frappe.format(v.schedule_date, { fieldtype: 'Date' }));
 				var asset_value = flt(frm.doc.gross_purchase_amount - v.accumulated_depreciation_amount, precision('gross_purchase_amount'));
-				if(v.journal_entry) {
+				if (v.journal_entry) {
 					asset_values.push(asset_value);
 				} else {
 					if (in_list(["Scrapped", "Sold"], frm.doc.status)) {
 						asset_values.push(null);
 					} else {
-						asset_values.push(asset_value)
+						asset_values.push(asset_value);
 					}
 				}
 			});
 		} else {
-			if(frm.doc.opening_accumulated_depreciation) {
+			if (frm.doc.opening_accumulated_depreciation) {
 				x_intervals.push(frappe.format(frm.doc.creation.split(" ")[0], { fieldtype: 'Date' }));
 				asset_values.push(flt(frm.doc.gross_purchase_amount - frm.doc.opening_accumulated_depreciation, precision('gross_purchase_amount')));
 			}
@@ -257,12 +253,12 @@ frappe.ui.form.on('Asset', {
 
 			$.each(depr_entries || [], function(i, v) {
 				x_intervals.push(frappe.format(v.posting_date, { fieldtype: 'Date' }));
-				let last_asset_value = asset_values[asset_values.length - 1]
+				let last_asset_value = asset_values[asset_values.length - 1];
 				asset_values.push(flt(last_asset_value - v.value, precision('gross_purchase_amount')));
 			});
 		}
 
-		if(in_list(["Scrapped", "Sold"], frm.doc.status)) {
+		if (in_list(["Scrapped", "Sold"], frm.doc.status)) {
 			x_intervals.push(frappe.format(frm.doc.disposal_date, { fieldtype: 'Date' }));
 			asset_values.push(0);
 		}
@@ -283,7 +279,7 @@ frappe.ui.form.on('Asset', {
 
 
 	item_code: function(frm) {
-		if(frm.doc.item_code && frm.doc.calculate_depreciation) {
+		if (frm.doc.item_code && frm.doc.calculate_depreciation) {
 			frm.trigger('set_finance_book');
 		} else {
 			frm.set_value('finance_books', []);
@@ -298,11 +294,11 @@ frappe.ui.form.on('Asset', {
 				asset_category: frm.doc.asset_category
 			},
 			callback: function(r, rt) {
-				if(r.message) {
+				if (r.message) {
 					frm.set_value('finance_books', r.message);
 				}
 			}
-		})
+		});
 	},
 
 	is_existing_asset: function(frm) {
@@ -323,7 +319,7 @@ frappe.ui.form.on('Asset', {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	create_asset_maintenance: function(frm) {
@@ -340,7 +336,7 @@ frappe.ui.form.on('Asset', {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	create_asset_repair: function(frm) {
@@ -407,7 +403,7 @@ frappe.ui.form.on('Asset', {
 				var doclist = frappe.model.sync(r.message);
 				frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 			}
-		})
+		});
 	},
 
 	calculate_depreciation: function(frm) {
@@ -422,7 +418,7 @@ frappe.ui.form.on('Asset', {
 	gross_purchase_amount: function(frm) {
 		frm.doc.finance_books.forEach(d => {
 			frm.events.set_depreciation_rate(frm, d);
-		})
+		});
 	},
 
 	purchase_receipt: (frm) => {
@@ -430,7 +426,7 @@ frappe.ui.form.on('Asset', {
 		if (frm.doc.purchase_receipt) {
 			if (frm.doc.item_code) {
 				frappe.db.get_doc('Purchase Receipt', frm.doc.purchase_receipt).then(pr_doc => {
-					frm.events.set_values_from_purchase_doc(frm, 'Purchase Receipt', pr_doc)
+					frm.events.set_values_from_purchase_doc(frm, 'Purchase Receipt', pr_doc);
 				});
 			} else {
 				frm.set_value('purchase_receipt', '');
@@ -447,7 +443,7 @@ frappe.ui.form.on('Asset', {
 		if (frm.doc.purchase_invoice) {
 			if (frm.doc.item_code) {
 				frappe.db.get_doc('Purchase Invoice', frm.doc.purchase_invoice).then(pi_doc => {
-					frm.events.set_values_from_purchase_doc(frm, 'Purchase Invoice', pi_doc)
+					frm.events.set_values_from_purchase_doc(frm, 'Purchase Invoice', pi_doc);
 				});
 			} else {
 				frm.set_value('purchase_invoice', '');
@@ -468,7 +464,7 @@ frappe.ui.form.on('Asset', {
 		}
 		const item = purchase_doc.items.find(item => item.item_code === frm.doc.item_code);
 		if (!item) {
-			doctype_field = frappe.scrub(doctype)
+			doctype_field = frappe.scrub(doctype);
 			frm.set_value(doctype_field, '');
 			frappe.msgprint({
 				title: __('Invalid {0}', [__(doctype)]),
@@ -523,7 +519,7 @@ frappe.ui.form.on('Asset Finance Book', {
 	},
 
 	rate_of_depreciation: function(frm, cdt, cdn) {
-		if(!frappe.flags.dont_change_rate) {
+		if (!frappe.flags.dont_change_rate) {
 			frappe.model.set_value(cdt, cdn, "expected_value_after_useful_life", 0);
 		}
 
@@ -550,8 +546,8 @@ erpnext.asset.scrap_asset = function(frm) {
 			callback: function(r) {
 				cur_frm.reload_doc();
 			}
-		})
-	})
+		});
+	});
 };
 
 erpnext.asset.restore_asset = function(frm) {
@@ -564,15 +560,15 @@ erpnext.asset.restore_asset = function(frm) {
 			callback: function(r) {
 				cur_frm.reload_doc();
 			}
-		})
-	})
+		});
+	});
 };
 
 erpnext.asset.transfer_asset = function() {
 	frappe.call({
 		method: "erpnext.assets.doctype.asset.asset.make_asset_movement",
 		freeze: true,
-		args:{
+		args: {
 			"assets": [{ name: cur_frm.doc.name }],
 			"purpose": "Transfer"
 		},

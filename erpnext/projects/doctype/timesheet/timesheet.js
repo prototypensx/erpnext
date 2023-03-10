@@ -7,7 +7,7 @@ frappe.ui.form.on("Timesheet", {
 
 		frm.fields_dict.employee.get_query = function() {
 			return {
-				filters:{
+				filters: {
 					'status': 'Active'
 				}
 			};
@@ -15,7 +15,7 @@ frappe.ui.form.on("Timesheet", {
 
 		frm.fields_dict['time_logs'].grid.get_field('task').get_query = function(frm, cdt, cdn) {
 			var child = locals[cdt][cdn];
-			return{
+			return {
 				filters: {
 					'project': child.project,
 					'status': ["!=", "Cancelled"]
@@ -24,7 +24,7 @@ frappe.ui.form.on("Timesheet", {
 		};
 
 		frm.fields_dict['time_logs'].grid.get_field('project').get_query = function() {
-			return{
+			return {
 				filters: {
 					'company': frm.doc.company
 				}
@@ -68,7 +68,7 @@ frappe.ui.form.on("Timesheet", {
 				var flag = true;
 				$.each(frm.doc.time_logs || [], function(i, row) {
 					// Fetch the row for which from_time is not present
-					if (flag && row.activity_type && !row.from_time){
+					if (flag && row.activity_type && !row.from_time) {
 						erpnext.timesheet.timer(frm, row);
 						row.from_time = frappe.datetime.now_datetime();
 						frm.refresh_fields("time_logs");
@@ -88,7 +88,7 @@ frappe.ui.form.on("Timesheet", {
 				}
 			}).addClass("btn-primary");
 		}
-		if(frm.doc.per_billed > 0) {
+		if (frm.doc.per_billed > 0) {
 			frm.fields_dict["time_logs"].grid.toggle_enable("billing_hours", false);
 			frm.fields_dict["time_logs"].grid.toggle_enable("is_billable", false);
 		}
@@ -195,7 +195,7 @@ frappe.ui.form.on("Timesheet", {
 
 		dialog.set_primary_action(__('Create Sales Invoice'), () => {
 			var args = dialog.get_values();
-			if(!args) return;
+			if (!args) return;
 			dialog.hide();
 			return frappe.call({
 				type: "GET",
@@ -208,7 +208,7 @@ frappe.ui.form.on("Timesheet", {
 				},
 				freeze: true,
 				callback: function(r) {
-					if(!r.exc) {
+					if (!r.exc) {
 						frappe.model.sync(r.message);
 						frappe.set_route("Form", r.message.doctype, r.message.name);
 					}
@@ -244,14 +244,14 @@ frappe.ui.form.on("Timesheet Detail", {
 	to_time: function(frm, cdt, cdn) {
 		var child = locals[cdt][cdn];
 
-		if(frm._setting_hours) return;
+		if (frm._setting_hours) return;
 
 		var hours = moment(child.to_time).diff(moment(child.from_time), "seconds") / 3600;
 		frappe.model.set_value(cdt, cdn, "hours", hours);
 	},
 
 	time_logs_add: function(frm, cdt, cdn) {
-		if(frm.doc.parent_project) {
+		if (frm.doc.parent_project) {
 			frappe.model.set_value(cdt, cdn, 'project', frm.doc.parent_project);
 		}
 	},
@@ -308,13 +308,13 @@ frappe.ui.form.on("Timesheet Detail", {
 var calculate_end_time = function(frm, cdt, cdn) {
 	let child = locals[cdt][cdn];
 
-	if(!child.from_time) {
+	if (!child.from_time) {
 		// if from_time value is not available then set the current datetime
 		frappe.model.set_value(cdt, cdn, "from_time", frappe.datetime.get_datetime_as_string());
 	}
 
 	let d = moment(child.from_time);
-	if(child.hours) {
+	if (child.hours) {
 		d.add(child.hours, "hours");
 		frm._setting_hours = true;
 		frappe.model.set_value(cdt, cdn, "to_time",
@@ -365,7 +365,7 @@ var calculate_time_and_amount = function(frm) {
 	let total_billing_hr = 0;
 	let total_billable_amount = 0;
 	let total_costing_amount = 0;
-	for(var i=0; i<tl.length; i++) {
+	for (var i=0; i<tl.length; i++) {
 		if (tl[i].hours) {
 			total_working_hr += tl[i].hours;
 			total_billable_amount += tl[i].billing_amount;
@@ -397,7 +397,7 @@ const set_employee_and_company = function(frm) {
 };
 
 function set_project_in_timelog(frm) {
-	if(frm.doc.parent_project) {
+	if (frm.doc.parent_project) {
 		$.each(frm.doc.time_logs || [], function(i, item) {
 			frappe.model.set_value(item.doctype, item.name, "project", frm.doc.parent_project);
 		});

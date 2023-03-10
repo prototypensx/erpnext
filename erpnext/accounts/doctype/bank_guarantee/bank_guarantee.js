@@ -22,7 +22,7 @@ frappe.ui.form.on('Bank Guarantee', {
 					company: frm.doc.company,
 					bank: frm.doc.bank
 				}
-			}
+			};
 		});
 		frm.set_query("project", function() {
 			return {

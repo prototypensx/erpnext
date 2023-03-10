@@ -4,7 +4,7 @@
 erpnext.get_purchase_trends_filters = function() {
 	return [
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
@@ -12,7 +12,7 @@ erpnext.get_purchase_trends_filters = function() {
 			"default": frappe.defaults.get_user_default("Company")
 		},
 		{
-			"fieldname":"period",
+			"fieldname": "period",
 			"label": __("Period"),
 			"fieldtype": "Select",
 			"options": [
@@ -24,14 +24,14 @@ erpnext.get_purchase_trends_filters = function() {
 			"default": "Monthly"
 		},
 		{
-			"fieldname":"fiscal_year",
+			"fieldname": "fiscal_year",
 			"label": __("Fiscal Year"),
 			"fieldtype": "Link",
-			"options":'Fiscal Year',
+			"options": 'Fiscal Year',
 			"default": frappe.sys_defaults.fiscal_year
 		},
 		{
-			"fieldname":"period_based_on",
+			"fieldname": "period_based_on",
 			"label": __("Period based On"),
 			"fieldtype": "Select",
 			"options": [
@@ -41,7 +41,7 @@ erpnext.get_purchase_trends_filters = function() {
 			"default": "posting_date"
 		},
 		{
-			"fieldname":"based_on",
+			"fieldname": "based_on",
 			"label": __("Based On"),
 			"fieldtype": "Select",
 			"options": [
@@ -57,7 +57,7 @@ erpnext.get_purchase_trends_filters = function() {
 			}
 		},
 		{
-			"fieldname":"group_by",
+			"fieldname": "group_by",
 			"label": __("Group By"),
 			"fieldtype": "Select",
 			"options": [
@@ -68,4 +68,4 @@ erpnext.get_purchase_trends_filters = function() {
 			"default": ""
 		},
 	];
-}
+};

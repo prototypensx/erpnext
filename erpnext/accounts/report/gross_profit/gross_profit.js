@@ -85,4 +85,4 @@ frappe.query_reports["Gross Profit"] = {
 
 		return value;
 	},
-}
+};

@@ -5,8 +5,8 @@ frappe.ui.form.on('Stock Settings', {
 	refresh: function(frm) {
 		let filters = function() {
 			return {
-				filters : {
-					is_group : 0
+				filters: {
+					is_group: 0
 				}
 			};
 		};
@@ -21,7 +21,7 @@ frappe.ui.form.on('Stock Settings', {
 
 		let msg = __("Using negative stock disables FIFO/Moving average valuation when inventory is negative.");
 		msg += " ";
-		msg += __("This is considered dangerous from accounting point of view.")
+		msg += __("This is considered dangerous from accounting point of view.");
 		msg += "<br>";
 		msg += ("Do you still want to enable negative inventory?");
 

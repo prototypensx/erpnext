@@ -1,7 +1,7 @@
 // Copyright (c) 2018, Frappe Technologies Pvt. Ltd. and contributors
 // For license information, please see license.txt
 
-frappe.ready(function(){
+frappe.ready(function() {
 
 	var loyalty_points_input = document.getElementById("loyalty-point-to-redeem");
 	var loyalty_points_status = document.getElementById("loyalty-points-status");
@@ -19,14 +19,14 @@ frappe.ready(function(){
 				},
 				callback: function(r) {
 					if (r) {
-						var message = ""
+						var message = "";
 						let loyalty_amount = flt(r.message*loyalty_points);
 						if (doc_info.grand_total && doc_info.grand_total < loyalty_amount) {
 							let redeemable_amount = parseInt(doc_info.grand_total/r.message);
 							message = "You can only redeem max " + redeemable_amount + " points in this order.";
 							frappe.msgprint(__(message));
 						} else {
-							message = loyalty_points + " Loyalty Points of amount "+ loyalty_amount + " is applied."
+							message = loyalty_points + " Loyalty Points of amount "+ loyalty_amount + " is applied.";
 							frappe.msgprint(__(message));
 							var remaining_amount = flt(doc_info.grand_total) - flt(loyalty_amount);
 							var payment_button = document.getElementById("pay-for-order");
@@ -39,4 +39,4 @@ frappe.ready(function(){
 			});
 		}
 	}
-})
+});

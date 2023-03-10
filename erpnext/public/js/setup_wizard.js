@@ -1,7 +1,7 @@
 frappe.provide("erpnext.setup");
 
 frappe.pages['setup-wizard'].on_page_load = function(wrapper) {
-	if(frappe.sys_defaults.company) {
+	if (frappe.sys_defaults.company) {
 		frappe.set_route("desk");
 		return;
 	}
@@ -114,7 +114,7 @@ erpnext.setup.slides_settings = [
 								.add_options(r.message);
 						}
 					}
-				})
+				});
 			}
 		},
 
@@ -129,14 +129,16 @@ erpnext.setup.slides_settings = [
 
 			slide.get_input("view_coa").on("click", function() {
 				let chart_template = slide.form.fields_dict.chart_of_accounts.get_value();
-				if(!chart_template) return;
+				if (!chart_template) return;
 
 				me.charts_modal(slide, chart_template);
 			});
 
 			slide.get_input("company_name").on("change", function () {
 				let parts = slide.get_input("company_name").val().split(" ");
-				let abbr = $.map(parts, function (p) { return p ? p.substr(0, 1) : null }).join("");
+				let abbr = $.map(parts, function (p) {
+ return p ? p.substr(0, 1) : null; 
+}).join("");
 				slide.get_field("company_abbr").set_value(abbr.slice(0, 10).toUpperCase());
 			}).val(frappe.boot.sysdefaults.company_name || "").trigger("change");
 
@@ -165,7 +167,9 @@ erpnext.setup.slides_settings = [
 							// collapse all nodes
 							coa_tree.get_all_nodes(coa_tree.root_node.data.value, coa_tree.root_node.is_root)
 								.then(data_list => {
-									data_list.map(d => { coa_tree.toggle_node(coa_tree.nodes[d.parent]); });
+									data_list.map(d => {
+ coa_tree.toggle_node(coa_tree.nodes[d.parent]); 
+});
 								});
 						}
 					}
@@ -194,7 +198,7 @@ erpnext.setup.slides_settings = [
 			form_container.addClass('flex');
 			buttons.map((index, button) => {
 				$(button).css({"margin-right": "1em"});
-			})
+			});
 
 			dialog.show();
 			coa_tree.load_children(coa_tree.root_node, true); // expand all node trigger

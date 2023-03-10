@@ -53,7 +53,7 @@ frappe.query_reports["Budget Variance Report"] = {
 			}
 		},
 		{
-			fieldname:"budget_against_filter",
+			fieldname: "budget_against_filter",
 			label: __('Dimension Filter'),
 			fieldtype: "MultiSelectList",
 			get_data: function(txt) {
@@ -66,7 +66,7 @@ frappe.query_reports["Budget Variance Report"] = {
 			}
 		},
 		{
-			fieldname:"show_cumulative",
+			fieldname: "show_cumulative",
 			label: __("Show Cumulative Amount"),
 			fieldtype: "Check",
 			default: 0,
@@ -79,15 +79,14 @@ frappe.query_reports["Budget Variance Report"] = {
 
 			if (data[column.fieldname] < 0) {
 				value = "<span style='color:red'>" + value + "</span>";
-			}
-			else if (data[column.fieldname] > 0) {
+			} else if (data[column.fieldname] > 0) {
 				value = "<span style='color:green'>" + value + "</span>";
 			}
 		}
 
 		return value;
 	}
-}
+};
 
 erpnext.dimension_filters.forEach((dimension) => {
 	frappe.query_reports["Budget Variance Report"].filters[4].options.push(dimension["document_type"]);

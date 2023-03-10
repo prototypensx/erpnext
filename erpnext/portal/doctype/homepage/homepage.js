@@ -6,8 +6,8 @@ frappe.ui.form.on('Homepage', {
 		frm.fields_dict["products"].grid.get_field("item").get_query = function() {
 			return {
 				filters: {'published': 1}
-			}
-		}
+			};
+		};
 	},
 
 	refresh: function(frm) {

@@ -14,4 +14,4 @@ frappe.query_reports["Item Prices"] = {
 			}
 		}
 	]
-}
+};

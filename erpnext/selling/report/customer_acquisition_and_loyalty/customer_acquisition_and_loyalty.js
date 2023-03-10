@@ -12,7 +12,7 @@ frappe.query_reports["Customer Acquisition and Loyalty"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"company",
+			"fieldname": "company",
 			"label": __("Company"),
 			"fieldtype": "Link",
 			"options": "Company",
@@ -20,14 +20,14 @@ frappe.query_reports["Customer Acquisition and Loyalty"] = {
 			"reqd": 1
 		},
 		{
-			"fieldname":"from_date",
+			"fieldname": "from_date",
 			"label": __("From Date"),
 			"fieldtype": "Date",
 			"default": frappe.defaults.get_user_default("year_start_date"),
 			"reqd": 1
 		},
 		{
-			"fieldname":"to_date",
+			"fieldname": "to_date",
 			"label": __("To Date"),
 			"fieldtype": "Date",
 			"default": frappe.defaults.get_user_default("year_end_date"),
@@ -41,4 +41,4 @@ frappe.query_reports["Customer Acquisition and Loyalty"] = {
 		}
 		return value;
 	}
-}
+};

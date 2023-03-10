@@ -4,4 +4,4 @@ frappe.listview_settings["Video"] = {
 			frappe.set_route("Form","Video Settings", "Video Settings");
 		});
 	}
-}
+};

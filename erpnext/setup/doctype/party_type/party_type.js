@@ -9,7 +9,7 @@ frappe.ui.form.on('Party Type', {
 					"istable": 0,
 					"is_submittable": 0
 				}
-			}
-		}
+			};
+		};
 	}
 });

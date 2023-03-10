@@ -34,7 +34,7 @@ frappe.query_reports["Accounts Payable"] = {
 					filters: {
 						'company': company
 					}
-				}
+				};
 			}
 		},
 		{
@@ -161,6 +161,6 @@ frappe.query_reports["Accounts Payable"] = {
 			frappe.set_route('query-report', 'Accounts Payable Summary', {company: filters.company});
 		});
 	}
-}
+};
 
 erpnext.utils.add_dimensions('Accounts Payable', 9);

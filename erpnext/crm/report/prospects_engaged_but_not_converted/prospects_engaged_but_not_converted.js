@@ -22,4 +22,4 @@ frappe.query_reports["Prospects Engaged But Not Converted"] = {
 			"default": 60
 		},
 	]
-}
+};

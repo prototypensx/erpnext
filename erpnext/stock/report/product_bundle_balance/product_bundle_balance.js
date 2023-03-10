@@ -4,7 +4,7 @@
 frappe.query_reports["Product Bundle Balance"] = {
 	"filters": [
 		{
-			"fieldname":"date",
+			"fieldname": "date",
 			"label": __("Date"),
 			"fieldtype": "Date",
 			"width": "80",
@@ -32,7 +32,7 @@ frappe.query_reports["Product Bundle Balance"] = {
 			"options": "Item Group"
 		},
 		{
-			"fieldname":"brand",
+			"fieldname": "brand",
 			"label": __("Brand"),
 			"fieldtype": "Link",
 			"options": "Brand"

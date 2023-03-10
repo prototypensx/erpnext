@@ -23,13 +23,13 @@ frappe.query_reports["Sales Person-wise Transaction Summary"] = {
 			default: frappe.defaults.get_user_default("year_start_date"),
 		},
 		{
-			fieldname:"to_date",
+			fieldname: "to_date",
 			label: __("To Date"),
 			fieldtype: "Date",
 			default: frappe.datetime.get_today()
 		},
 		{
-			fieldname:"company",
+			fieldname: "company",
 			label: __("Company"),
 			fieldtype: "Link",
 			options: "Company",
@@ -37,34 +37,34 @@ frappe.query_reports["Sales Person-wise Transaction Summary"] = {
 			reqd: 1
 		},
 		{
-			fieldname:"item_group",
+			fieldname: "item_group",
 			label: __("Item Group"),
 			fieldtype: "Link",
 			options: "Item Group",
 		},
 		{
-			fieldname:"brand",
+			fieldname: "brand",
 			label: __("Brand"),
 			fieldtype: "Link",
 			options: "Brand",
 		},
 		{
-			fieldname:"customer",
+			fieldname: "customer",
 			label: __("Customer"),
 			fieldtype: "Link",
 			options: "Customer",
 		},
 		{
-			fieldname:"territory",
+			fieldname: "territory",
 			label: __("Territory"),
 			fieldtype: "Link",
 			options: "Territory",
 		},
 		{
-			fieldname:"show_return_entries",
+			fieldname: "show_return_entries",
 			label: __("Show Return Entries"),
 			fieldtype: "Check",
 			default: 0,
 		},
 	]
-}
+};

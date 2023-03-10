@@ -23,7 +23,7 @@ frappe.ui.form.on('Maintenance Schedule', {
 		}, 10);
 	},
 	customer: function (frm) {
-		erpnext.utils.get_party_details(frm)
+		erpnext.utils.get_party_details(frm);
 	},
 	customer_address: function (frm) {
 		erpnext.utils.get_address_display(frm, 'customer_address', 'address_display');
@@ -38,12 +38,12 @@ frappe.ui.form.on('Maintenance Schedule', {
 			frm.call('generate_schedule');
 		}
 	}
-})
+});
 
 // TODO commonify this code
 erpnext.maintenance.MaintenanceSchedule = class MaintenanceSchedule extends frappe.ui.form.Controller {
 	refresh() {
-		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'}
+		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'};
 
 		var me = this;
 

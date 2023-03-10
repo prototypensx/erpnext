@@ -13,7 +13,7 @@ frappe.ui.form.on("Customer", {
 				method: "erpnext.selling.doctype.customer.customer.make_opportunity",
 				frm: cur_frm
 			})
-		}
+		};
 
 		frm.add_fetch('lead_name', 'company_name', 'customer_name');
 		frm.add_fetch('default_sales_partner','commission_rate','default_commission_rate');
@@ -27,12 +27,12 @@ frappe.ui.form.on("Customer", {
 				"is_group": 0
 			};
 
-			if(doc.party_account_currency) {
+			if (doc.party_account_currency) {
 				$.extend(filters, {"account_currency": doc.party_account_currency});
 			}
 			return {
 				filters: filters
-			}
+			};
 		});
 
 		if (frm.doc.__islocal == 1) {
@@ -45,27 +45,27 @@ frappe.ui.form.on("Customer", {
 				filters: {
 					'customer': doc.name
 				}
-			}
-		})
+			};
+		});
 		frm.set_query('customer_primary_address', function(doc) {
 			return {
 				filters: {
 					'link_doctype': 'Customer',
 					'link_name': doc.name
 				}
-			}
-		})
+			};
+		});
 
 		frm.set_query('default_bank_account', function() {
 			return {
 				filters: {
 					'is_company_account': 1
 				}
-			}
+			};
 		});
 	},
-	customer_primary_address: function(frm){
-		if(frm.doc.customer_primary_address){
+	customer_primary_address: function(frm) {
+		if (frm.doc.customer_primary_address) {
 			frappe.call({
 				method: 'frappe.contacts.doctype.address.address.get_address_display',
 				args: {
@@ -76,7 +76,7 @@ frappe.ui.form.on("Customer", {
 				}
 			});
 		}
-		if(!frm.doc.customer_primary_address){
+		if (!frm.doc.customer_primary_address) {
 			frm.set_value("primary_address", "");
 		}
 	},
@@ -84,41 +84,40 @@ frappe.ui.form.on("Customer", {
 	is_internal_customer: function(frm) {
 		if (frm.doc.is_internal_customer == 1) {
 			frm.toggle_reqd("represents_company", true);
-		}
-		else {
+		} else {
 			frm.toggle_reqd("represents_company", false);
 		}
 	},
 
-	customer_primary_contact: function(frm){
-		if(!frm.doc.customer_primary_contact){
+	customer_primary_contact: function(frm) {
+		if (!frm.doc.customer_primary_contact) {
 			frm.set_value("mobile_no", "");
 			frm.set_value("email_id", "");
 		}
 	},
 
 	loyalty_program: function(frm) {
-		if(frm.doc.loyalty_program) {
+		if (frm.doc.loyalty_program) {
 			frm.set_value('loyalty_program_tier', null);
 		}
 	},
 
 	refresh: function(frm) {
-		if(frappe.defaults.get_default("cust_master_name")!="Naming Series") {
+		if (frappe.defaults.get_default("cust_master_name")!="Naming Series") {
 			frm.toggle_display("naming_series", false);
 		} else {
 			erpnext.toggle_naming_series();
 		}
 
-		frappe.dynamic_link = {doc: frm.doc, fieldname: 'name', doctype: 'Customer'}
+		frappe.dynamic_link = {doc: frm.doc, fieldname: 'name', doctype: 'Customer'};
 
-		if(!frm.doc.__islocal) {
+		if (!frm.doc.__islocal) {
 			frappe.contacts.render_address_and_contact(frm);
 
 			// custom buttons
 
 			frm.add_custom_button(__('Accounts Receivable'), function () {
-				frappe.set_route('query-report', 'Accounts Receivable', {customer:frm.doc.name});
+				frappe.set_route('query-report', 'Accounts Receivable', {customer: frm.doc.name});
 			}, __('View'));
 
 			frm.add_custom_button(__('Accounting Ledger'), function () {
@@ -152,7 +151,7 @@ frappe.ui.form.on("Customer", {
 		grid.set_column_disp("incentives", false);
 	},
 	validate: function(frm) {
-		if(frm.doc.lead_name) frappe.model.clear_doc("Lead", frm.doc.lead_name);
+		if (frm.doc.lead_name) frappe.model.clear_doc("Lead", frm.doc.lead_name);
 
 	},
 	get_customer_group_details: function(frm) {

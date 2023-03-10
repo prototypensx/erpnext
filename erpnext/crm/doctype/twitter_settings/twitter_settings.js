@@ -3,13 +3,13 @@
 
 frappe.ui.form.on('Twitter Settings', {
 	onload: function(frm) {
-		if (frm.doc.session_status == 'Expired' && frm.doc.consumer_key && frm.doc.consumer_secret){
+		if (frm.doc.session_status == 'Expired' && frm.doc.consumer_key && frm.doc.consumer_secret) {
 			frappe.confirm(
 				__('Session not valid, Do you want to login?'),
-				function(){
+				function() {
 					frm.trigger("login");
 				},
-				function(){
+				function() {
 					window.close();
 				}
 			);
@@ -22,8 +22,7 @@ frappe.ui.form.on('Twitter Settings', {
 			msg = __("Session Active");
 			color = 'green';
 			flag = true;
-		}
-		else if(frm.doc.consumer_key && frm.doc.consumer_secret) {
+		} else if (frm.doc.consumer_key && frm.doc.consumer_secret) {
 			msg = __("Session Not Active. Save doc to login.");
 			color = 'red';
 			flag = true;
@@ -40,12 +39,12 @@ frappe.ui.form.on('Twitter Settings', {
 		}
 	},
 	login: function(frm) {
-		if (frm.doc.consumer_key && frm.doc.consumer_secret){
+		if (frm.doc.consumer_key && frm.doc.consumer_secret) {
 			frappe.dom.freeze();
 			frappe.call({
 				doc: frm.doc,
 				method: "get_authorize_url",
-				callback : function(r) {
+				callback: function(r) {
 					window.location.href = r.message;
 				}
 			}).fail(function() {

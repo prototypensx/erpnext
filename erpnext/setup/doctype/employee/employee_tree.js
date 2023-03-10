@@ -3,7 +3,7 @@ frappe.treeview_settings['Employee'] = {
 	filters: [
 		{
 			fieldname: "company",
-			fieldtype:"Select",
+			fieldtype: "Select",
 			options: ['All Companies'].concat(erpnext.utils.get_tree_options("company")),
 			label: __("Company"),
 			default: erpnext.utils.get_tree_default("company")
@@ -15,7 +15,7 @@ frappe.treeview_settings['Employee'] = {
 	toolbar: [
 		{ toggle_btn: true },
 		{
-			label:__("Edit"),
+			label: __("Edit"),
 			condition: function(node) {
 				return !node.is_root;
 			},

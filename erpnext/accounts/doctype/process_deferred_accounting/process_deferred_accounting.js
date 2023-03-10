@@ -30,7 +30,7 @@ frappe.ui.form.on('Process Deferred Accounting', {
 		return new Promise((resolve) => {
 			return frappe.db.get_single_value('Accounts Settings', 'automatically_process_deferred_accounting_entry')
 				.then(value => {
-					if(value) {
+					if (value) {
 						frappe.throw(__('Manual entry cannot be created! Disable automatic entry for deferred accounting in accounts settings and try again'));
 					}
 					resolve(value);

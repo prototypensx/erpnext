@@ -6,38 +6,36 @@ frappe.ui.form.on('Process Statement Of Accounts', {
 		frappe.route_options = {doc_type: 'Customer'};
 		frappe.set_route("Form", "Customize Form");
 	},
-	refresh: function(frm){
-		if(!frm.doc.__islocal) {
-			frm.add_custom_button(__('Send Emails'), function(){
-				if (frm.is_dirty()) frappe.throw(__("Please save before proceeding."))
+	refresh: function(frm) {
+		if (!frm.doc.__islocal) {
+			frm.add_custom_button(__('Send Emails'), function() {
+				if (frm.is_dirty()) frappe.throw(__("Please save before proceeding."));
 				frappe.call({
 					method: "erpnext.accounts.doctype.process_statement_of_accounts.process_statement_of_accounts.send_emails",
 					args: {
 						"document_name": frm.doc.name,
 					},
 					callback: function(r) {
-						if(r && r.message) {
+						if (r && r.message) {
 							frappe.show_alert({message: __('Emails Queued'), indicator: 'blue'});
-						}
-						else{
-							frappe.msgprint(__('No Records for these settings.'))
+						} else {
+							frappe.msgprint(__('No Records for these settings.'));
 						}
 					}
 				});
 			});
-			frm.add_custom_button(__('Download'), function(){
-				if (frm.is_dirty()) frappe.throw(__("Please save before proceeding."))
+			frm.add_custom_button(__('Download'), function() {
+				if (frm.is_dirty()) frappe.throw(__("Please save before proceeding."));
 				let url = frappe.urllib.get_full_url(
 					'/api/method/erpnext.accounts.doctype.process_statement_of_accounts.process_statement_of_accounts.download_statements?'
-					+ 'document_name='+encodeURIComponent(frm.doc.name))
+					+ 'document_name='+encodeURIComponent(frm.doc.name));
 				$.ajax({
 					url: url,
 					type: 'GET',
 					success: function(result) {
-						if(jQuery.isEmptyObject(result)){
+						if (jQuery.isEmptyObject(result)) {
 							frappe.msgprint(__('No Records for these settings.'));
-						}
-						else{
+						} else {
 							window.location = url;
 						}
 					}
@@ -46,12 +44,12 @@ frappe.ui.form.on('Process Statement Of Accounts', {
 		}
 	},
 	onload: function(frm) {
-		frm.set_query('currency', function(){
+		frm.set_query('currency', function() {
 			return {
 				filters: {
 					'enabled': 1
 				}
-			}
+			};
 		});
 		frm.set_query("account", function() {
 			return {
@@ -60,27 +58,26 @@ frappe.ui.form.on('Process Statement Of Accounts', {
 				}
 			};
 		});
-		if(frm.doc.__islocal){
+		if (frm.doc.__islocal) {
 			frm.set_value('from_date', frappe.datetime.add_months(frappe.datetime.get_today(), -1));
 			frm.set_value('to_date', frappe.datetime.get_today());
 		}
 	},
-	customer_collection: function(frm){
+	customer_collection: function(frm) {
 		frm.set_value('collection_name', '');
-		if(frm.doc.customer_collection){
+		if (frm.doc.customer_collection) {
 			frm.get_field('collection_name').set_label(frm.doc.customer_collection);
 		}
 	},
-	frequency: function(frm){
-		if(frm.doc.frequency != ''){
+	frequency: function(frm) {
+		if (frm.doc.frequency != '') {
 			frm.set_value('start_date', frappe.datetime.get_today());
-		}
-		else{
+		} else {
 			frm.set_value('start_date', '');
 		}
 	},
-	fetch_customers: function(frm){
-		if(frm.doc.collection_name){
+	fetch_customers: function(frm) {
+		if (frm.doc.collection_name) {
 			frappe.call({
 				method: "erpnext.accounts.doctype.process_statement_of_accounts.process_statement_of_accounts.fetch_customers",
 				args: {
@@ -89,34 +86,32 @@ frappe.ui.form.on('Process Statement Of Accounts', {
 					'primary_mandatory': frm.doc.primary_mandatory
 				},
 				callback: function(r) {
-					if(!r.exc) {
-						if(r.message.length){
+					if (!r.exc) {
+						if (r.message.length) {
 							frm.clear_table('customers');
-							for (const customer of r.message){
+							for (const customer of r.message) {
 								var row = frm.add_child('customers');
 								row.customer = customer.name;
 								row.primary_email = customer.primary_email;
 								row.billing_email = customer.billing_email;
 							}
 							frm.refresh_field('customers');
-						}
-						else{
+						} else {
 							frappe.throw(__('No Customers found with selected options.'));
 						}
 					}
 				}
 			});
-		}
-		else {
+		} else {
 			frappe.throw('Enter ' + frm.doc.customer_collection + ' name.');
 		}
 	}
 });
 
 frappe.ui.form.on('Process Statement Of Accounts Customer', {
-	customer: function(frm, cdt, cdn){
+	customer: function(frm, cdt, cdn) {
 		var row = locals[cdt][cdn];
-		if (!row.customer){
+		if (!row.customer) {
 			return;
 		}
 		frappe.call({
@@ -125,17 +120,16 @@ frappe.ui.form.on('Process Statement Of Accounts Customer', {
 				'customer_name': row.customer,
 				'primary_mandatory': frm.doc.primary_mandatory
 			},
-			callback: function(r){
-				if(!r.exe){
-					if(r.message.length){
-						frappe.model.set_value(cdt, cdn, "primary_email", r.message[0])
-						frappe.model.set_value(cdt, cdn, "billing_email", r.message[1])
-					}
-					else {
-						return
+			callback: function(r) {
+				if (!r.exe) {
+					if (r.message.length) {
+						frappe.model.set_value(cdt, cdn, "primary_email", r.message[0]);
+						frappe.model.set_value(cdt, cdn, "billing_email", r.message[1]);
+					} else {
+						return;
 					}
 				}
 			}
-		})
+		});
 	}
 });

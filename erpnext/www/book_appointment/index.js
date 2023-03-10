@@ -1,6 +1,6 @@
 frappe.ready(async () => {
     initialise_select_date();
-})
+});
 
 async function initialise_select_date() {
     navigate_to_page(1);
@@ -16,13 +16,13 @@ async function get_global_variables() {
         method: 'erpnext.www.book_appointment.index.get_appointment_settings'
     })).message;
     window.timezones = (await frappe.call({
-        method:'erpnext.www.book_appointment.index.get_timezones'
+        method: 'erpnext.www.book_appointment.index.get_timezones'
     })).message;
 }
 
 function setup_timezone_selector() {
     let timezones_element = document.getElementById('appointment-timezone');
-    let local_timezone = moment.tz.guess()
+    let local_timezone = moment.tz.guess();
     window.timezones.forEach(timezone => {
         let opt = document.createElement('option');
         opt.value = timezone;
@@ -30,7 +30,7 @@ function setup_timezone_selector() {
             opt.selected = true;
         }
         opt.innerHTML = timezone;
-        timezones_element.appendChild(opt)
+        timezones_element.appendChild(opt);
     });
 }
 
@@ -66,7 +66,7 @@ function on_date_or_timezone_select() {
     window.selected_timezone = timezone.value;
     update_time_slots(date_picker.value, timezone.value);
     let lead_text = document.getElementById('lead-text');
-    lead_text.innerHTML = __("Select Time")
+    lead_text.innerHTML = __("Select Time");
 }
 
 async function get_time_slots(date, timezone) {
@@ -88,27 +88,27 @@ async function update_time_slots(selected_date, selected_timezone) {
         let message_div = document.createElement('p');
         message_div.innerHTML = __("There are no slots available on this date");
         timeslot_container.appendChild(message_div);
-        return
+        return;
     }
     window.slots.forEach((slot, index) => {
         // Get and append timeslot div
-        let timeslot_div = get_timeslot_div_layout(slot)
+        let timeslot_div = get_timeslot_div_layout(slot);
         timeslot_container.appendChild(timeslot_div);
     });
     set_default_timeslot();
 }
 
 function get_timeslot_div_layout(timeslot) {
-    let start_time = new Date(timeslot.time)
+    let start_time = new Date(timeslot.time);
     let timeslot_div = document.createElement('div');
     timeslot_div.classList.add('time-slot');
     if (!timeslot.availability) {
-        timeslot_div.classList.add('unavailable')
+        timeslot_div.classList.add('unavailable');
     }
     timeslot_div.innerHTML = get_slot_layout(start_time);
     timeslot_div.id = timeslot.time.substring(11, 19);
     timeslot_div.addEventListener('click', select_time);
-    return timeslot_div
+    return timeslot_div;
 }
 
 function clear_time_slots() {
@@ -138,7 +138,7 @@ function select_time() {
         show_next_button();
         return;
     }
-    selected_element = selected_element[0]
+    selected_element = selected_element[0];
     window.selected_time = this.id;
     selected_element.classList.remove('selected');
     this.classList.add('selected');
@@ -146,7 +146,7 @@ function select_time() {
 }
 
 function set_default_timeslot() {
-    let timeslots = document.getElementsByClassName('time-slot')
+    let timeslots = document.getElementsByClassName('time-slot');
     // Can't use a forEach here since, we need to break the loop after a timeslot is selected
     for (let i = 0; i < timeslots.length; i++) {
         const timeslot = timeslots[i];
@@ -175,7 +175,7 @@ function navigate_to_page(page_number) {
 }
 
 function setup_details_page() {
-    navigate_to_page(2)
+    navigate_to_page(2);
     let date_container = document.getElementsByClassName('date-span')[0];
     let time_container = document.getElementsByClassName('time-span')[0];
     setup_search_params();
@@ -185,20 +185,20 @@ function setup_details_page() {
 
 function setup_search_params() {
     let search_params = new URLSearchParams(window.location.search);
-    let customer_name = search_params.get("name")
-    let customer_email = search_params.get("email")
-    let detail = search_params.get("details")
+    let customer_name = search_params.get("name");
+    let customer_email = search_params.get("email");
+    let detail = search_params.get("details");
     if (customer_name) {
         let name_input = document.getElementById("customer_name");
         name_input.value = customer_name;
         name_input.disabled = true;
     }
-    if(customer_email) {
+    if (customer_email) {
         let email_input = document.getElementById("customer_email");
         email_input.value = customer_email;
         email_input.disabled = true;
     }
-    if(detail) {
+    if (detail) {
         let detail_input = document.getElementById("customer_notes");
         detail_input.value = detail;
         detail_input.disabled = true;
@@ -220,20 +220,21 @@ async function submit() {
             'date': window.selected_date,
             'time': window.selected_time,
             'contact': contact,
-            'tz':window.selected_timezone
+            'tz': window.selected_timezone
         },
         callback: (response)=>{
             if (response.message.status == "Unverified") {
-                frappe.show_alert(__("Please check your email to confirm the appointment"))
+                frappe.show_alert(__("Please check your email to confirm the appointment"));
             } else {
                 frappe.show_alert(__("Appointment Created Successfully"));
             }
             setTimeout(()=>{
                 let redirect_url = "/";
-                if (window.appointment_settings.success_redirect_url){
+                if (window.appointment_settings.success_redirect_url) {
                     redirect_url += window.appointment_settings.success_redirect_url;
                 }
-                window.location.href = redirect_url;},5000)
+                window.location.href = redirect_url;
+},5000);
         },
         error: (err)=>{
             frappe.show_alert(__("Something went wrong please try again"));
@@ -245,6 +246,6 @@ async function submit() {
 function get_form_data() {
     contact = {};
     let inputs = ['name', 'skype', 'number', 'notes', 'email'];
-    inputs.forEach((id) => contact[id] = document.getElementById(`customer_${id}`).value)
-    return contact
+    inputs.forEach((id) => contact[id] = document.getElementById(`customer_${id}`).value);
+    return contact;
 }

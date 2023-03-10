@@ -65,12 +65,12 @@ frappe.ui.form.on('Maintenance Visit', {
 	contact_person: function (frm) {
 		erpnext.utils.get_contact_details(frm);
 	}
-})
+});
 
 // TODO commonify this code
 erpnext.maintenance.MaintenanceVisit = class MaintenanceVisit extends frappe.ui.form.Controller {
 	refresh() {
-		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'}
+		frappe.dynamic_link = {doc: this.frm.doc, fieldname: 'customer', doctype: 'Customer'};
 
 		var me = this;
 
@@ -92,7 +92,7 @@ erpnext.maintenance.MaintenanceVisit = class MaintenanceVisit extends frappe.ui.
 							docstatus: 1,
 							company: me.frm.doc.company
 						}
-					})
+					});
 				}, __("Get Items From"));
 			this.frm.add_custom_button(__('Warranty Claim'),
 				function () {
@@ -108,7 +108,7 @@ erpnext.maintenance.MaintenanceVisit = class MaintenanceVisit extends frappe.ui.
 							status: ["in", "Open, Work in Progress"],
 							company: me.frm.doc.company
 						}
-					})
+					});
 				}, __("Get Items From"));
 			this.frm.add_custom_button(__('Sales Order'),
 				function () {
@@ -128,7 +128,7 @@ erpnext.maintenance.MaintenanceVisit = class MaintenanceVisit extends frappe.ui.
 							company: me.frm.doc.company,
 							order_type: me.frm.doc.order_type,
 						}
-					})
+					});
 				}, __("Get Items From"));
 		}
 	}

@@ -33,6 +33,6 @@ frappe.query_reports["BOM Stock Report"] = {
 				value = `<a style='color:red' href="/app/item/${data['item']}" data-doctype="Item">${data['item']}</a>`;
 			}
 		}
-		return value
+		return value;
 	}
-}
+};

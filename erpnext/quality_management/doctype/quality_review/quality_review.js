@@ -9,7 +9,7 @@ frappe.ui.form.on('Quality Review', {
 				doctype: "Quality Goal",
 				name: frm.doc.goal
 			},
-			callback: function(data){
+			callback: function(data) {
 				frm.fields_dict.reviews.grid.remove_all();
 				let objectives = data.message.objectives;
 				for (var i in objectives) {

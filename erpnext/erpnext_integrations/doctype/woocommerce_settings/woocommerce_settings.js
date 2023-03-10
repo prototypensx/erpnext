@@ -25,8 +25,8 @@ frappe.ui.form.on('Woocommerce Settings', {
 				__("Apps using current key won't be able to access, are you sure?"),
 				() => {
 					frappe.call({
-						type:"POST",
-						method:"erpnext.erpnext_integrations.doctype.woocommerce_settings.woocommerce_settings.generate_secret",
+						type: "POST",
+						method: "erpnext.erpnext_integrations.doctype.woocommerce_settings.woocommerce_settings.generate_secret",
 					}).done(() => {
 						frm.reload_doc();
 					}).fail(() => {

@@ -11,7 +11,7 @@ QUnit.test("test project", function(assert) {
 			(task) => {
 				// Creating timesheet for a project
 				return frappe.tests.make('Timesheet', [
-					{time_logs:[
+					{time_logs: [
 						[
 							{activity_type: 'Communication'},
 							{from_time: start_time},
@@ -28,22 +28,19 @@ QUnit.test("test project", function(assert) {
 			},
 			// To check if a correct billable and costing amount is calculated for every task
 			() => {
-				if(title=== 'Documentation')
-				{
+				if (title=== 'Documentation') {
 					assert.ok(cur_frm.get_field('total_billable_amount').get_value()==20,
 						'Billable amount for Documentation task is correctly calculated');
 					assert.ok(cur_frm.get_field('total_costing_amount').get_value()==16,
 						'Costing amount for Documentation task is correctly calculated');
 				}
-				if(title=== 'Implementation')
-				{
+				if (title=== 'Implementation') {
 					assert.ok(cur_frm.get_field('total_billable_amount').get_value()==40,
 						'Billable amount for Implementation task is correctly calculated');
 					assert.ok(cur_frm.get_field('total_costing_amount').get_value()==32,
 						'Costing amount for Implementation task is correctly calculated');
 				}
-				if(title=== 'Testing')
-				{
+				if (title=== 'Testing') {
 					assert.ok(cur_frm.get_field('total_billable_amount').get_value()==60,
 						'Billable amount for Testing task correctly calculated');
 					assert.ok(cur_frm.get_field('total_costing_amount').get_value()==50,
@@ -60,7 +57,7 @@ QUnit.test("test project", function(assert) {
 				{ expected_start_date: '2017-07-22'},
 				{ expected_end_date: '2017-09-22'},
 				{ estimated_costing: '10,000.00'},
-				{ tasks:[
+				{ tasks: [
 					[
 						{title: 'Documentation'},
 						{start_date: '2017-07-24'},

@@ -25,12 +25,12 @@ frappe.ui.form.on('Share Transfer', {
 		frm.toggle_reqd("asset_account", frm.doc.transfer_type != "Transfer");
 	},
 	no_of_shares: (frm) => {
-		if (frm.doc.rate != undefined || frm.doc.rate != null){
+		if (frm.doc.rate != undefined || frm.doc.rate != null) {
 			erpnext.share_transfer.update_amount(frm);
 		}
 	},
 	rate: (frm) => {
-		if (frm.doc.no_of_shares != undefined || frm.doc.no_of_shares != null){
+		if (frm.doc.no_of_shares != undefined || frm.doc.no_of_shares != null) {
 			erpnext.share_transfer.update_amount(frm);
 		}
 	},
@@ -40,7 +40,7 @@ frappe.ui.form.on('Share Transfer', {
 			frm.set_query("equity_or_liability_account", function() {
 				return {
 					filters: {
-						"is_group":0,
+						"is_group": 0,
 						"root_type": ["in",["Equity","Liability"]],
 						"company": frm.doc.company,
 						"account_currency": currency
@@ -50,8 +50,8 @@ frappe.ui.form.on('Share Transfer', {
 			frm.set_query("asset_account", function() {
 				return {
 					filters: {
-						"is_group":0,
-						"root_type":"Asset",
+						"is_group": 0,
+						"root_type": "Asset",
 						"company": frm.doc.company,
 						"account_currency": currency
 					}
@@ -81,16 +81,14 @@ erpnext.share_transfer.make_jv = function (frm) {
 		credit_applicant = frm.doc.to_shareholder;
 		debit_applicant_type = "Shareholder";
 		debit_applicant = frm.doc.from_shareholder;
-	}
-	else if (frm.doc.transfer_type == "Issue") {
+	} else if (frm.doc.transfer_type == "Issue") {
 		account = frm.doc.asset_account;
 		payment_account = frm.doc.equity_or_liability_account;
 		credit_applicant_type = "Shareholder";
 		credit_applicant = frm.doc.to_shareholder;
 		debit_applicant_type = "";
 		debit_applicant = "";
-	}
-	else {
+	} else {
 		account = frm.doc.equity_or_liability_account;
 		payment_account = frm.doc.asset_account;
 		credit_applicant_type = "";

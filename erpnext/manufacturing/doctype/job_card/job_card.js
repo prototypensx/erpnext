@@ -176,8 +176,8 @@ frappe.ui.form.on('Job Card', {
 			frappe.call({
 				method: "erpnext.manufacturing.doctype.job_card.job_card.get_operation_details",
 				args: {
-					"work_order":frm.doc.work_order,
-					"operation":frm.doc.operation
+					"work_order": frm.doc.work_order,
+					"operation": frm.doc.operation
 				},
 				callback: function (r) {
 					if (r.message) {
@@ -200,7 +200,7 @@ frappe.ui.form.on('Job Card', {
 						frm.trigger("toggle_operation_number");
 					}
 				}
-			})
+			});
 		}
 	},
 
@@ -319,7 +319,7 @@ frappe.ui.form.on('Job Card', {
 	},
 
 	make_dashboard: function(frm) {
-		if(frm.doc.__islocal)
+		if (frm.doc.__islocal)
 			return;
 
 		frm.dashboard.refresh();
@@ -380,7 +380,7 @@ frappe.ui.form.on('Job Card', {
 			callback: function() {
 				refresh_field("items");
 			}
-		})
+		});
 	},
 
 	make_material_request: function(frm) {
@@ -400,7 +400,7 @@ frappe.ui.form.on('Job Card', {
 	},
 
 	timer: function(frm) {
-		return `<button> Start </button>`
+		return `<button> Start </button>`;
 	},
 
 	set_total_completed_qty: function(frm) {
@@ -423,4 +423,4 @@ frappe.ui.form.on('Job Card Time Log', {
 	to_time: function(frm) {
 		frm.set_value('started_time', '');
 	}
-})
+});

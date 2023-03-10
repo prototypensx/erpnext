@@ -5,13 +5,13 @@ frappe.provide("erpnext.cheque_print");
 
 frappe.ui.form.on('Cheque Print Template', {
 	refresh: function(frm) {
-		if(!frm.doc.__islocal) {
+		if (!frm.doc.__islocal) {
 			frm.add_custom_button(frm.doc.has_print_format?__("Update Print Format"):__("Create Print Format"),
 				function() {
 					erpnext.cheque_print.view_cheque_print(frm);
 				}).addClass("btn-primary");
 
-			$(frm.fields_dict.cheque_print_preview.wrapper).empty()
+			$(frm.fields_dict.cheque_print_preview.wrapper).empty();
 
 
 			var template = '<div style="position: relative; overflow-x: scroll;">\
@@ -48,7 +48,7 @@ frappe.ui.form.on('Cheque Print Template', {
 				</div>\
 			</div>';
 
-			$(frappe.render(template, frm.doc)).appendTo(frm.fields_dict.cheque_print_preview.wrapper)
+			$(frappe.render(template, frm.doc)).appendTo(frm.fields_dict.cheque_print_preview.wrapper);
 
 			if (frm.doc.scanned_cheque) {
 				$(frm.fields_dict.cheque_print_preview.wrapper).find("#cheque_preview").css('background-image', 'url(' + frm.doc.scanned_cheque + ')');
@@ -61,17 +61,16 @@ frappe.ui.form.on('Cheque Print Template', {
 erpnext.cheque_print.view_cheque_print = function(frm) {
 	frappe.call({
 		method: "erpnext.accounts.doctype.cheque_print_template.cheque_print_template.create_or_update_cheque_print_format",
-		args:{
+		args: {
 			"template_name": frm.doc.name
 		},
 		callback: function(r) {
 			if (!r.exe && !frm.doc.has_print_format) {
 				var doc = frappe.model.sync(r.message);
 				frappe.set_route("Form", r.message.doctype, r.message.name);
-			}
-			else {
-				frappe.msgprint(__("Print settings updated in respective print format"))
+			} else {
+				frappe.msgprint(__("Print settings updated in respective print format"));
 			}
 		}
-	})
-}
+	});
+};

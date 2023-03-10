@@ -8,7 +8,7 @@ frappe.ui.form.on('Global Defaults', {
 	validate: function(frm) {
 		frm.call('get_defaults', null, r => {
 			frappe.sys_defaults = r.message;
-		})
+		});
 	},
 	get_distance_uoms: function (frm) {
 		let units = [];

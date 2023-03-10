@@ -104,7 +104,7 @@ erpnext.utils.get_party_details = function(frm, method, args, callback) {
 			}
 		}
 	});
-}
+};
 
 erpnext.utils.add_item = function(frm) {
 	if (frm.is_new()) {
@@ -118,7 +118,7 @@ erpnext.utils.add_item = function(frm) {
 			frappe.model.set_value(item.doctype, item.name, 'item_code', prev_route[2]);
 		}
 	}
-}
+};
 
 erpnext.utils.get_address_display = function(frm, address_field, display_field, is_your_company_address) {
 	if (frm.updating_party_details) return;
@@ -138,10 +138,10 @@ erpnext.utils.get_address_display = function(frm, address_field, display_field, 
 			args: {"address_dict": frm.doc[address_field] },
 			callback: function(r) {
 				if (r.message) {
-					frm.set_value(display_field, r.message)
+					frm.set_value(display_field, r.message);
 				}
 			}
-		})
+		});
 	} else {
 		frm.set_value(display_field, '');
 	}
@@ -172,7 +172,7 @@ erpnext.utils.set_taxes_from_address = function(frm, triggered_from_field, billi
 			"shipping_address": frm.doc[shipping_address_field]
 		},
 		callback: function(r) {
-			if (!r.exc){
+			if (!r.exc) {
 				if (frm.doc.tax_category != r.message) {
 					frm.set_value("tax_category", r.message);
 				} else {
@@ -212,7 +212,7 @@ erpnext.utils.set_taxes = function(frm, triggered_from_field) {
 	} else if (frm.doc.supplier) {
 		party_type = 'Supplier';
 		party = frm.doc.supplier;
-	} else if (frm.doc.quotation_to){
+	} else if (frm.doc.quotation_to) {
 		party_type = frm.doc.quotation_to;
 		party = frm.doc.party_name;
 	}
@@ -235,8 +235,8 @@ erpnext.utils.set_taxes = function(frm, triggered_from_field) {
 			"shipping_address": frm.doc.shipping_address_name
 		},
 		callback: function(r) {
-			if (r.message){
-				frm.set_value("taxes_and_charges", r.message)
+			if (r.message) {
+				frm.set_value("taxes_and_charges", r.message);
 			}
 		}
 	});
@@ -270,11 +270,11 @@ erpnext.utils.validate_mandatory = function(frm, label, value, trigger_on) {
 	if (!value) {
 		frm.doc[trigger_on] = "";
 		refresh_field(trigger_on);
-		frappe.throw({message:__("Please enter {0} first", [label]), title:__("Mandatory")});
+		frappe.throw({message: __("Please enter {0} first", [label]), title: __("Mandatory")});
 		return false;
 	}
 	return true;
-}
+};
 
 erpnext.utils.get_shipping_address = function(frm, callback) {
 	if (frm.doc.company) {
@@ -292,11 +292,11 @@ erpnext.utils.get_shipping_address = function(frm, callback) {
 			},
 			callback: function(r) {
 				if (r.message) {
-					frm.set_value("shipping_address", r.message[0]) //Address title or name
-					frm.set_value("shipping_address_display", r.message[1]) //Address to be displayed on the page
+					frm.set_value("shipping_address", r.message[0]); //Address title or name
+					frm.set_value("shipping_address_display", r.message[1]); //Address to be displayed on the page
 				}
 
-				if (callback){
+				if (callback) {
 					return callback();
 				}
 			}
@@ -304,4 +304,4 @@ erpnext.utils.get_shipping_address = function(frm, callback) {
 	} else {
 		frappe.msgprint(__("Select company first"));
 	}
-}
+};

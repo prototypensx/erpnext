@@ -9,14 +9,14 @@ frappe.ui.form.on('Asset Movement', {
 					company: doc.company
 				}
 			};
-		})
+		});
 		frm.set_query("from_employee", "assets", (doc) => {
 			return {
 				filters: {
 					company: doc.company
 				}
 			};
-		})
+		});
 		frm.set_query("reference_name", (doc) => {
 			return {
 				filters: {
@@ -24,7 +24,7 @@ frappe.ui.form.on('Asset Movement', {
 					docstatus: 1
 				}
 			};
-		})
+		});
 		frm.set_query("reference_doctype", () => {
 			return {
 				filters: {
@@ -37,8 +37,8 @@ frappe.ui.form.on('Asset Movement', {
 				filters: {
 					status: ["not in", ["Draft"]]
 				}
-			}
-		})
+			};
+		});
 	},
 
 	onload: (frm) => {
@@ -58,16 +58,14 @@ frappe.ui.form.on('Asset Movement', {
 				from_employee: { read_only: 1, reqd: 0 },
 				to_employee: { read_only: 1, reqd: 0 }
 			};
-		}
-		else if (frm.doc.purpose === 'Receipt') {
+		} else if (frm.doc.purpose === 'Receipt') {
 			fieldnames_to_be_altered = {
 				target_location: { read_only: 0, reqd: 1 },
 				source_location: { read_only: 1, reqd: 0 },
 				from_employee: { read_only: 0, reqd: 1 },
 				to_employee: { read_only: 1, reqd: 0 }
 			};
-		}
-		else if (frm.doc.purpose === 'Issue') {
+		} else if (frm.doc.purpose === 'Issue') {
 			fieldnames_to_be_altered = {
 				target_location: { read_only: 1, reqd: 0 },
 				source_location: { read_only: 1, reqd: 1 },
@@ -90,10 +88,10 @@ frappe.ui.form.on('Asset Movement Item', {
 	asset: function(frm, cdt, cdn) {
 		// on manual entry of an asset auto sets their source location / employee
 		const asset_name = locals[cdt][cdn].asset;
-		if (asset_name){
+		if (asset_name) {
 			frappe.db.get_doc('Asset', asset_name).then((asset_doc) => {
-				if(asset_doc.location) frappe.model.set_value(cdt, cdn, 'source_location', asset_doc.location);
-				if(asset_doc.custodian) frappe.model.set_value(cdt, cdn, 'from_employee', asset_doc.custodian);
+				if (asset_doc.location) frappe.model.set_value(cdt, cdn, 'source_location', asset_doc.location);
+				if (asset_doc.custodian) frappe.model.set_value(cdt, cdn, 'from_employee', asset_doc.custodian);
 			}).catch((err) => {
 				console.log(err); // eslint-disable-line
 			});

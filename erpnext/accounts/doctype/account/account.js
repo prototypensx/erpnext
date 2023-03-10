@@ -103,7 +103,7 @@ frappe.ui.form.on('Account', {
 			title: __('Merge with Existing Account'),
 			fields: [
 				{
-					"label" : "Name",
+					"label": "Name",
 					"fieldname": "name",
 					"fieldtype": "Data",
 					"reqd": 1,
@@ -122,8 +122,8 @@ frappe.ui.form.on('Account', {
 						company: frm.doc.company
 					},
 					callback: function(r) {
-						if(!r.exc) {
-							if(r.message) {
+						if (!r.exc) {
+							if (r.message) {
 								frappe.set_route("Form", "Account", r.message);
 							}
 							d.hide();
@@ -156,7 +156,7 @@ frappe.ui.form.on('Account', {
 			],
 			primary_action: function() {
 				var data = d.get_values();
-				if(data.account_number === frm.doc.account_number && data.account_name === frm.doc.account_name) {
+				if (data.account_number === frm.doc.account_number && data.account_name === frm.doc.account_name) {
 					d.hide();
 					return;
 				}
@@ -169,8 +169,8 @@ frappe.ui.form.on('Account', {
 						name: frm.doc.name
 					},
 					callback: function(r) {
-						if(!r.exc) {
-							if(r.message) {
+						if (!r.exc) {
+							if (r.message) {
 								frappe.set_route("Form", "Account", r.message);
 							} else {
 								frm.set_value("account_number", data.account_number);

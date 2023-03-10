@@ -24,7 +24,7 @@ frappe.ui.form.on('Delivery Trip', {
 					}
 				};
 			}
-		})
+		});
 
 		frm.set_query("contact", "delivery_stops", function (doc, cdt, cdn) {
 			var row = locals[cdt][cdn];
@@ -37,7 +37,7 @@ frappe.ui.form.on('Delivery Trip', {
 					}
 				};
 			}
-		})
+		});
 	},
 
 	refresh: function (frm) {
@@ -61,7 +61,7 @@ frappe.ui.form.on('Delivery Trip', {
 						docstatus: 1,
 						company: frm.doc.company,
 					}
-				})
+				});
 			}, __("Get customers from"));
 		}
 	},
@@ -92,7 +92,7 @@ frappe.ui.form.on('Delivery Trip', {
 					frm.set_value("driver_email", data.message.email);
 				}
 			});
-		};
+		}
 	},
 
 	optimize_route: function (frm) {
@@ -156,18 +156,15 @@ frappe.ui.form.on('Delivery Stop', {
 					if (r.message) {
 						if (r.message["shipping_address"]) {
 							frappe.model.set_value(cdt, cdn, "address", r.message["shipping_address"].parent);
-						}
-						else {
+						} else {
 							frappe.model.set_value(cdt, cdn, "address", '');
 						}
 						if (r.message["contact_person"]) {
 							frappe.model.set_value(cdt, cdn, "contact", r.message["contact_person"].parent);
-						}
-						else {
+						} else {
 							frappe.model.set_value(cdt, cdn, "contact", '');
 						}
-					}
-					else {
+					} else {
 						frappe.model.set_value(cdt, cdn, "address", '');
 						frappe.model.set_value(cdt, cdn, "contact", '');
 					}

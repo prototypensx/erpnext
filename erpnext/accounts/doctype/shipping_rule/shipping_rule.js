@@ -18,8 +18,8 @@ frappe.ui.form.on('Shipping Rule', {
 				filters: {
 					company: frm.doc.company
 				}
-			}
-		})
+			};
+		});
 
 		frm.trigger('toggle_reqd');
 	},

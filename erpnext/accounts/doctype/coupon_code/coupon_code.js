@@ -11,12 +11,12 @@ frappe.ui.form.on('Coupon Code', {
 			};
 		});
 	},
-	coupon_name:function(frm){
+	coupon_name: function(frm) {
 		if (frm.doc.__islocal===1) {
 			frm.trigger("make_coupon_code");
 		}
 	},
-	coupon_type:function(frm){
+	coupon_type: function(frm) {
 		if (frm.doc.__islocal===1) {
 			frm.trigger("make_coupon_code");
 		}
@@ -26,8 +26,7 @@ frappe.ui.form.on('Coupon Code', {
 		var coupon_code;
 		if (frm.doc.coupon_type=='Gift Card') {
 			coupon_code=Math.random().toString(12).substring(2, 12).toUpperCase();
-		}
-		else if(frm.doc.coupon_type=='Promotional'){
+		} else if (frm.doc.coupon_type=='Promotional') {
 			coupon_name=coupon_name.replace(/\s/g,'');
 			coupon_code=coupon_name.toUpperCase().slice(0,8);
 		}
@@ -36,7 +35,7 @@ frappe.ui.form.on('Coupon Code', {
 	},
 	refresh: function(frm) {
 		if (frm.doc.pricing_rule) {
-			frm.add_custom_button(__("Add/Edit Coupon Conditions"), function(){
+			frm.add_custom_button(__("Add/Edit Coupon Conditions"), function() {
 				frappe.set_route("Form", "Pricing Rule", frm.doc.pricing_rule);
 			});
 		}

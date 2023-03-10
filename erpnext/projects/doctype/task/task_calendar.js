@@ -20,4 +20,4 @@ frappe.views.calendar["Task"] = {
 		}
 	],
 	get_events_method: "frappe.desk.calendar.get_events"
-}
+};

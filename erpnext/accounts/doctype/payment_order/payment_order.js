@@ -6,9 +6,9 @@ frappe.ui.form.on('Payment Order', {
 		frm.set_query("company_bank_account", function() {
 			return {
 				filters: {
-					"is_company_account":1
+					"is_company_account": 1
 				}
-			}
+			};
 		});
 
 		frm.set_df_property('references', 'cannot_add_rows', true);
@@ -93,25 +93,25 @@ frappe.ui.form.on('Payment Order', {
 		});
 	},
 
-	make_payment_records: function(frm){
+	make_payment_records: function(frm) {
 		var dialog = new frappe.ui.Dialog({
 			title: __("For Supplier"),
 			fields: [
-				{"fieldtype": "Link", "label": __("Supplier"), "fieldname": "supplier", "options":"Supplier",
+				{"fieldtype": "Link", "label": __("Supplier"), "fieldname": "supplier", "options": "Supplier",
 					"get_query": function () {
 						return {
-							query:"erpnext.accounts.doctype.payment_order.payment_order.get_supplier_query",
+							query: "erpnext.accounts.doctype.payment_order.payment_order.get_supplier_query",
 							filters: {'parent': frm.doc.name}
-						}
+						};
 					}, "reqd": 1
 				},
 
-				{"fieldtype": "Link", "label": __("Mode of Payment"), "fieldname": "mode_of_payment", "options":"Mode of Payment",
+				{"fieldtype": "Link", "label": __("Mode of Payment"), "fieldname": "mode_of_payment", "options": "Mode of Payment",
 					"get_query": function () {
 						return {
-							query:"erpnext.accounts.doctype.payment_order.payment_order.get_mop_query",
+							query: "erpnext.accounts.doctype.payment_order.payment_order.get_mop_query",
 							filters: {'parent': frm.doc.name}
-						}
+						};
 					}
 				}
 			]
@@ -119,7 +119,7 @@ frappe.ui.form.on('Payment Order', {
 
 		dialog.set_primary_action(__("Submit"), function() {
 			var args = dialog.get_values();
-			if(!args) return;
+			if (!args) return;
 
 			return frappe.call({
 				method: "erpnext.accounts.doctype.payment_order.payment_order.make_payment_records",
@@ -133,8 +133,8 @@ frappe.ui.form.on('Payment Order', {
 					dialog.hide();
 					frm.refresh();
 				}
-			})
-		})
+			});
+		});
 
 		dialog.show();
 	},

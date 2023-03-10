@@ -9,15 +9,15 @@ frappe.ui.form.on(cur_frm.doctype, {
 	setup: function(frm) {
 		// set conditional display for rate column in taxes
 		$(frm.wrapper).on('grid-row-render', function(e, grid_row) {
-			if(in_list(['Sales Taxes and Charges', 'Purchase Taxes and Charges'], grid_row.doc.doctype)) {
+			if (in_list(['Sales Taxes and Charges', 'Purchase Taxes and Charges'], grid_row.doc.doctype)) {
 				erpnext.taxes.set_conditional_mandatory_rate_or_amount(grid_row);
 			}
 		});
 	},
 	onload: function(frm) {
-		if(frm.get_field("taxes")) {
+		if (frm.get_field("taxes")) {
 			frm.set_query("account_head", "taxes", function(doc) {
-				if(frm.cscript.tax_table == "Sales Taxes and Charges") {
+				if (frm.cscript.tax_table == "Sales Taxes and Charges") {
 					var account_type = ["Tax", "Chargeable", "Expense Account"];
 				} else {
 					var account_type = ["Tax", "Chargeable", "Income Account", "Expenses Included In Valuation"];
@@ -30,7 +30,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 						"company": doc.company,
 						"disabled": 0
 					}
-				}
+				};
 			});
 			frm.set_query("cost_center", "taxes", function(doc) {
 				return {
@@ -44,7 +44,7 @@ frappe.ui.form.on(cur_frm.doctype, {
 	},
 	validate: function(frm) {
 		// neither is absolutely mandatory
-		if(frm.get_docfield("taxes")) {
+		if (frm.get_docfield("taxes")) {
 			frm.get_docfield("taxes", "rate").reqd = 0;
 			frm.get_docfield("taxes", "tax_amount").reqd = 0;
 		}
@@ -55,14 +55,14 @@ frappe.ui.form.on(cur_frm.doctype, {
 	},
 
 	allocate_advances_automatically: function(frm) {
-		if(frm.doc.allocate_advances_automatically) {
+		if (frm.doc.allocate_advances_automatically) {
 			frappe.call({
 				doc: frm.doc,
 				method: "set_advances",
 				callback: function(r, rt) {
 					refresh_field("advances");
 				}
-			})
+			});
 		}
 	}
 });
@@ -70,9 +70,9 @@ frappe.ui.form.on(cur_frm.doctype, {
 frappe.ui.form.on('Sales Invoice Payment', {
 	mode_of_payment: function(frm, cdt, cdn) {
 		var d = locals[cdt][cdn];
-		get_payment_mode_account(frm, d.mode_of_payment, function(account){
-			frappe.model.set_value(cdt, cdn, 'account', account)
-		})
+		get_payment_mode_account(frm, d.mode_of_payment, function(account) {
+			frappe.model.set_value(cdt, cdn, 'account', account);
+		});
 	}
 });
 
@@ -84,9 +84,9 @@ frappe.ui.form.on("Sales Invoice", {
 
 frappe.ui.form.on('Purchase Invoice', {
 	mode_of_payment: function(frm) {
-		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account){
+		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account) {
 			frm.set_value('cash_bank_account', account);
-		})
+		});
 	},
 
 	payment_terms_template: function() {
@@ -103,27 +103,27 @@ frappe.ui.form.on("Payment Schedule", {
 
 frappe.ui.form.on('Payment Entry', {
 	mode_of_payment: function(frm) {
-		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account){
+		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account) {
 			var payment_account_field = frm.doc.payment_type == "Receive" ? "paid_to" : "paid_from";
 			frm.set_value(payment_account_field, account);
-		})
+		});
 	}
-})
+});
 
 frappe.ui.form.on('Salary Structure', {
 	mode_of_payment: function(frm) {
-		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account){
+		get_payment_mode_account(frm, frm.doc.mode_of_payment, function(account) {
 			frm.set_value("payment_account", account);
-		})
+		});
 	}
-})
+});
 
 var get_payment_mode_account = function(frm, mode_of_payment, callback) {
-	if(!frm.doc.company) {
-		frappe.throw({message:__("Please select a Company first."), title: __("Mandatory")});
+	if (!frm.doc.company) {
+		frappe.throw({message: __("Please select a Company first."), title: __("Mandatory")});
 	}
 
-	if(!mode_of_payment) {
+	if (!mode_of_payment) {
 		return;
 	}
 
@@ -134,12 +134,12 @@ var get_payment_mode_account = function(frm, mode_of_payment, callback) {
 			"company": frm.doc.company
 		},
 		callback: function(r, rt) {
-			if(r.message) {
-				callback(r.message.account)
+			if (r.message) {
+				callback(r.message.account);
 			}
 		}
 	});
-}
+};
 
 cur_frm.cscript.account_head = function(doc, cdt, cdn) {
 	var d = locals[cdt][cdn];
@@ -149,23 +149,23 @@ cur_frm.cscript.account_head = function(doc, cdt, cdn) {
 		return;
 	}
 
-	if(!d.charge_type && d.account_head){
+	if (!d.charge_type && d.account_head) {
 		frappe.msgprint(__("Please select Charge Type first"));
 		frappe.model.set_value(cdt, cdn, "account_head", "");
 	} else if (d.account_head) {
 		frappe.call({
-			type:"GET",
+			type: "GET",
 			method: "erpnext.controllers.accounts_controller.get_tax_rate",
-			args: {"account_head":d.account_head},
+			args: {"account_head": d.account_head},
 			callback: function(r) {
 				if (d.charge_type!=="Actual") {
 					frappe.model.set_value(cdt, cdn, "rate", r.message.tax_rate || 0);
 				}
 				frappe.model.set_value(cdt, cdn, "description", r.message.account_name);
 			}
-		})
+		});
 	}
-}
+};
 
 cur_frm.cscript.validate_taxes_and_charges = function(cdt, cdn) {
 	var d = locals[cdt][cdn];
@@ -201,43 +201,45 @@ cur_frm.cscript.validate_taxes_and_charges = function(cdt, cdn) {
 		frappe.throw(msg);
 	}
 
-}
+};
 
 cur_frm.cscript.validate_inclusive_tax = function(tax) {
 	var actual_type_error = function() {
-		var msg = __("Actual type tax cannot be included in Item rate in row {0}", [tax.idx])
+		var msg = __("Actual type tax cannot be included in Item rate in row {0}", [tax.idx]);
 		frappe.throw(msg);
 	};
 
 	var on_previous_row_error = function(row_range) {
 		var msg = __("For row {0} in {1}. To include {2} in Item rate, rows {3} must also be included",
-			[tax.idx, __(tax.doctype), tax.charge_type, row_range])
+			[tax.idx, __(tax.doctype), tax.charge_type, row_range]);
 		frappe.throw(msg);
 	};
 
-	if(cint(tax.included_in_print_rate)) {
-		if(tax.charge_type == "Actual") {
+	if (cint(tax.included_in_print_rate)) {
+		if (tax.charge_type == "Actual") {
 			// inclusive tax cannot be of type Actual
 			actual_type_error();
-		} else if(tax.charge_type == "On Previous Row Amount" &&
+		} else if (tax.charge_type == "On Previous Row Amount" &&
 			!cint(this.frm.doc["taxes"][tax.row_id - 1].included_in_print_rate)
 		) {
 			// referred row should also be an inclusive tax
 			on_previous_row_error(tax.row_id);
-		} else if(tax.charge_type == "On Previous Row Total") {
+		} else if (tax.charge_type == "On Previous Row Total") {
 			var taxes_not_included = $.map(this.frm.doc["taxes"].slice(0, tax.row_id),
-				function(t) { return cint(t.included_in_print_rate) ? null : t; });
-			if(taxes_not_included.length > 0) {
+				function(t) {
+ return cint(t.included_in_print_rate) ? null : t; 
+});
+			if (taxes_not_included.length > 0) {
 				// all rows above this tax should be inclusive
 				on_previous_row_error(tax.row_id == 1 ? "1" : "1 - " + tax.row_id);
 			}
-		} else if(tax.category == "Valuation") {
+		} else if (tax.category == "Valuation") {
 			frappe.throw(__("Valuation type charges can not marked as Inclusive"));
 		}
 	}
-}
+};
 
-if(!erpnext.taxes.flags[cur_frm.cscript.tax_table]) {
+if (!erpnext.taxes.flags[cur_frm.cscript.tax_table]) {
 	erpnext.taxes.flags[cur_frm.cscript.tax_table] = true;
 
 	frappe.ui.form.on(cur_frm.cscript.tax_table, "row_id", function(frm, cdt, cdn) {
@@ -255,7 +257,7 @@ if(!erpnext.taxes.flags[cur_frm.cscript.tax_table]) {
 	frappe.ui.form.on(cur_frm.cscript.tax_table, "charge_type", function(frm, cdt, cdn) {
 		frm.cscript.validate_taxes_and_charges(cdt, cdn);
 		var open_form = frm.open_grid_row();
-		if(open_form) {
+		if (open_form) {
 			erpnext.taxes.set_conditional_mandatory_rate_or_amount(open_form);
 		} else {
 			// apply in current row
@@ -268,7 +270,7 @@ if(!erpnext.taxes.flags[cur_frm.cscript.tax_table]) {
 		try {
 			cur_frm.cscript.validate_taxes_and_charges(cdt, cdn);
 			cur_frm.cscript.validate_inclusive_tax(tax);
-		} catch(e) {
+		} catch (e) {
 			tax.included_in_print_rate = 0;
 			refresh_field("included_in_print_rate", tax.name, tax.parentfield);
 			throw e;
@@ -277,8 +279,8 @@ if(!erpnext.taxes.flags[cur_frm.cscript.tax_table]) {
 }
 
 erpnext.taxes.set_conditional_mandatory_rate_or_amount = function(grid_row) {
-	if(grid_row) {
-		if(grid_row.doc.charge_type==="Actual") {
+	if (grid_row) {
+		if (grid_row.doc.charge_type==="Actual") {
 			grid_row.toggle_editable("tax_amount", true);
 			grid_row.toggle_reqd("tax_amount", true);
 			grid_row.toggle_editable("rate", false);
@@ -290,4 +292,4 @@ erpnext.taxes.set_conditional_mandatory_rate_or_amount = function(grid_row) {
 			grid_row.toggle_reqd("tax_amount", false);
 		}
 	}
-}
+};

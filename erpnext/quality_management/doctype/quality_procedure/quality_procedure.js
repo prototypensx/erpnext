@@ -11,7 +11,7 @@ frappe.ui.form.on('Quality Procedure', {
 			};
 		});
 
-		frm.set_query('parent_quality_procedure', function(){
+		frm.set_query('parent_quality_procedure', function() {
 			return {
 				filters: {
 					is_group: 1

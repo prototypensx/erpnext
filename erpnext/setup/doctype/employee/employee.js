@@ -8,10 +8,11 @@ erpnext.setup.EmployeeController = class EmployeeController extends frappe.ui.fo
 			return {
 				query: "frappe.core.doctype.user.user.user_query",
 				filters: {ignore_user_type: 1}
-			}
-		}
+			};
+		};
 		this.frm.fields_dict.reports_to.get_query = function(doc, cdt, cdn) {
-			return { query: "erpnext.controllers.queries.employee_query"} }
+			return { query: "erpnext.controllers.queries.employee_query"}; 
+};
 	}
 
 	refresh() {

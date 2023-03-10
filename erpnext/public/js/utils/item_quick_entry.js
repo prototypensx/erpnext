@@ -12,7 +12,7 @@ frappe.ui.form.ItemQuickEntryForm = class ItemQuickEntryForm extends frappe.ui.f
 		super.render_dialog();
 		this.init_post_render_dialog_operations();
 		this.preset_fields_for_template();
-		this.dialog.$wrapper.find('.edit-full').text(__('Edit in full page for more options like assets, serial nos, batches etc.'))
+		this.dialog.$wrapper.find('.edit-full').text(__('Edit in full page for more options like assets, serial nos, batches etc.'));
 	}
 
 	check_naming_series_based_on() {
@@ -154,7 +154,7 @@ frappe.ui.form.ItemQuickEntryForm = class ItemQuickEntryForm extends frappe.ui.f
 		var attribute_fields = [{
 			fieldname: 'attribute_html',
 			fieldtype: 'HTML'
-		}]
+		}];
 
 		attribute_fields = attribute_fields.concat(this.get_manufacturing_fields());
 		return attribute_fields;
@@ -227,7 +227,7 @@ frappe.ui.form.ItemQuickEntryForm = class ItemQuickEntryForm extends frappe.ui.f
 				me.dialog.get_field('attribute_html').toggle(false);
 				me.init_post_template_trigger_operations(false, [], true);
 			}
-		}
+		};
 	}
 
 	init_post_template_trigger_operations(is_manufacturer, attributes, attributes_flag) {
@@ -378,7 +378,7 @@ frappe.ui.form.ItemQuickEntryForm = class ItemQuickEntryForm extends frappe.ui.f
 						});
 					}
 				}
-			})
+			});
 		}
 		return variant_doc;
 	}
@@ -395,7 +395,7 @@ frappe.ui.form.ItemQuickEntryForm = class ItemQuickEntryForm extends frappe.ui.f
 			} else {
 				mandatory.push(attr.attribute);
 			}
-		})
+		});
 
 		if (this.is_manufacturer) {
 			$.each(this.manufacturer_fields, function(index, field) {

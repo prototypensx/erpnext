@@ -27,4 +27,4 @@ frappe.listview_settings['Issue'] = {
 			return [__(doc.status), "gray", "status,=," + doc.status];
 		}
 	}
-}
+};

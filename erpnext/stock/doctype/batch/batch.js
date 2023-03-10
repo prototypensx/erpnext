@@ -6,15 +6,15 @@ frappe.ui.form.on('Batch', {
 		frm.fields_dict['item'].get_query = function(doc, cdt, cdn) {
 			return {
 				query: "erpnext.controllers.queries.item_query",
-				filters:{
+				filters: {
 					'is_stock_item': 1,
 					'has_batch_no': 1
 				}
-			}
-		}
+			};
+		};
 	},
 	refresh: (frm) => {
-		if(!frm.is_new()) {
+		if (!frm.is_new()) {
 			frm.add_custom_button(__("View Ledger"), () => {
 				frappe.route_options = {
 					batch_no: frm.doc.name
@@ -32,31 +32,33 @@ frappe.ui.form.on('Batch', {
 			if (r.has_expiry_date && r.shelf_life_in_days) {
 				// Calculate expiry date based on shelf_life_in_days
 				frm.set_value('expiry_date', frappe.datetime.add_days(frm.doc.manufacturing_date, r.shelf_life_in_days));
-			}else if(r.has_expiry_date){
+			} else if (r.has_expiry_date) {
 				frm.toggle_reqd('expiry_date', r.has_expiry_date);
 			}
-		})
+		});
 	},
 	make_dashboard: (frm) => {
-		if(!frm.is_new()) {
+		if (!frm.is_new()) {
 			frappe.call({
 				method: 'erpnext.stock.doctype.batch.batch.get_batch_qty',
 				args: {batch_no: frm.doc.name},
 				callback: (r) => {
-					if(!r.message) {
+					if (!r.message) {
 						return;
 					}
 
 					const section = frm.dashboard.add_section('', __("Stock Levels"));
 
 					// sort by qty
-					r.message.sort(function(a, b) { a.qty > b.qty ? 1 : -1 });
+					r.message.sort(function(a, b) {
+ a.qty > b.qty ? 1 : -1; 
+});
 
 					var rows = $('<div></div>').appendTo(section);
 
 					// show
 					(r.message || []).forEach(function(d) {
-						if(d.qty > 0) {
+						if (d.qty > 0) {
 							$(`<div class='row' style='margin-bottom: 10px;'>
 								<div class='col-sm-3 small' style='padding-top: 3px;'>${d.warehouse}</div>
 								<div class='col-sm-3 small text-right' style='padding-top: 3px;'>${d.qty}</div>
@@ -145,20 +147,20 @@ frappe.ui.form.on('Batch', {
 						__('Split Batch'),
 						__('Split')
 						);
-					})
+					});
 
 					frm.dashboard.show();
 				}
 			});
 		}
 	}
-})
+});
 
-frappe.ui.form.on('Batch', 'manufacturing_date', function (frm){
+frappe.ui.form.on('Batch', 'manufacturing_date', function (frm) {
 	frappe.db.get_value('Item', {name: frm.doc.item}, ['shelf_life_in_days', 'has_expiry_date'], (r) => {
 		if (r.has_expiry_date && r.shelf_life_in_days) {
 			// Calculate expiry date based on shelf_life_in_days
 			frm.set_value('expiry_date', frappe.datetime.add_days(frm.doc.manufacturing_date, r.shelf_life_in_days));
 		}
-	})
-})
+	});
+});

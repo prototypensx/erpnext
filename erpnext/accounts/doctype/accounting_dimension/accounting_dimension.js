@@ -35,7 +35,7 @@ frappe.ui.form.on('Accounting Dimension', {
 					callback: function(r) {
 						let message = frm.doc.disabled ? "Dimension Disabled" : "Dimension Enabled";
 						frm.save();
-						frappe.show_alert({message:__(message), indicator:'green'});
+						frappe.show_alert({message: __(message), indicator: 'green'});
 					}
 				});
 			});

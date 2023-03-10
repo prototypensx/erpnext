@@ -28,11 +28,13 @@ frappe.ui.form.on('Invoice Discounting', {
 			["company", "=", frm.doc.company],
 			["is_group", "=", 0]
 		];
-		if(addl_filters){
+		if (addl_filters) {
 			filters = $.merge(filters , addl_filters);
 		}
 
-		frm.set_query(fieldname, () => { return { "filters": filters }; });
+		frm.set_query(fieldname, () => {
+ return { "filters": filters }; 
+});
 	},
 
 	refresh_filters: (frm) =>{
@@ -141,7 +143,7 @@ frappe.ui.form.on('Invoice Discounting', {
 						filters: data
 					},
 					callback: function(r) {
-						if(!r.exc) {
+						if (!r.exc) {
 							d.hide();
 							$.each(r.message, function(i, v) {
 								frm.doc.invoices = frm.doc.invoices.filter(row => row.sales_invoice);
@@ -161,10 +163,10 @@ frappe.ui.form.on('Invoice Discounting', {
 
 	create_disbursement_entry: (frm) => {
 		frappe.call({
-			method:"create_disbursement_entry",
+			method: "create_disbursement_entry",
 			doc: frm.doc,
 			callback: function(r) {
-				if(!r.exc){
+				if (!r.exc) {
 					var doclist = frappe.model.sync(r.message);
 					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 				}
@@ -175,10 +177,10 @@ frappe.ui.form.on('Invoice Discounting', {
 
 	close_loan: (frm) => {
 		frappe.call({
-			method:"close_loan",
+			method: "close_loan",
 			doc: frm.doc,
 			callback: function(r) {
-				if(!r.exc){
+				if (!r.exc) {
 					var doclist = frappe.model.sync(r.message);
 					frappe.set_route("Form", doclist[0].doctype, doclist[0].name);
 				}
@@ -188,7 +190,7 @@ frappe.ui.form.on('Invoice Discounting', {
 	},
 
 	show_general_ledger: (frm) => {
-		if(frm.doc.docstatus > 0) {
+		if (frm.doc.docstatus > 0) {
 			cur_frm.add_custom_button(__('Accounting Ledger'), function() {
 				frappe.route_options = {
 					voucher_no: frm.doc.name,
